@@ -72,7 +72,7 @@ function init() {
 
   function render(){
       material.uniforms.uRnd.value = Math.random();
-      plane.scale.set(1,(Math.rondom()/2.0)+1.0,1);
+      plane.scale.set(1,(Math.random()/2.0)+1.0,1);
       requestAnimationFrame(render);
       renderer.render(scene, camera);
   }
