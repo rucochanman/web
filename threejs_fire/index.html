@@ -25,7 +25,7 @@
     uniform sampler2D uTex; //three.jsから渡されたテクスチャ情報
     uniform float uRnd;
     void main() {
-        float rndx = sin( vUv.x*3.14 ) * (uRnd * vUv.x) * vUv.y;
+        float rndx = sin( vUv.x*3.14 ) * uRnd * vUv.y;
         float rndy = max( uRnd*vUv.y,vUv.y );
         vec4 color = texture2D( uTex, vec2( rndx,rndy ) ).rgba; //頂点ごとのテクスチャの色取得
         vec3 rgb = vec3(color.r, color.g, color.b);
