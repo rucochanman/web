@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/105/three.min.js"></script>
+    <script src="three.js"></script>
+  </head>
+  <body>
+    <canvas id="myCanvas"></canvas>
+    <div id="webgl"></div>
+    <!-- 頂点シェーダー -->
+    <script id="vert" type="x-shader/x-vertex">
+    varying vec2 vUv; //フラグメントシェーダーに頂点情報を渡す用の変数
+    void main() {
+        vUv = uv; //頂点情報を格納
+        //座標情報のpositionをカメラ座標に変換
+        vec4 pos = modelViewMatrix * vec4(position, 1.0);
+        gl_Position = projectionMatrix * pos;
+    }
+    </script>
+
+    <!-- フラグメントシェーダー -->
+    <script id="frag" type="x-shader/x-fragment">
+    varying vec2 vUv; //頂点シェーダから渡された変数
+    uniform sampler2D uTex; //three.jsから渡されたテクスチャ情報
+    uniform float uRnd;
+    void main() {
+        float rndx = sin( vUv.x*3.14 ) * uRnd * vUv.y;
+        float rndy = max( uRnd*vUv.y,vUv.y );
+        vec4 color = texture2D( uTex, vec2( rndx,rndy ) ).rgba; //頂点ごとのテクスチャの色取得
+        vec3 rgb = vec3(color.r, color.g, color.b);
+        float alpha = max(color.a-vUv.y, 0.0);
+        gl_FragColor = vec4(rgb, alpha);
+    }
+    </script>
+  </body>
+</html>
