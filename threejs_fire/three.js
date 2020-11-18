@@ -10,7 +10,7 @@ function init() {
 
 
   //画面サイズを指定
-  const width = 800;
+  const width = 400;
   const height = 400;
 
   //レンダラーを作成
