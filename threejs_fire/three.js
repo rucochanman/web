@@ -17,7 +17,7 @@ function init() {
   let renderer = new THREE.WebGLRenderer({
         canvas: document.querySelector('#myCanvas')
       });
-  renderer.setClearColor(new THREE.Color('grey'));//背景色の設定
+  renderer.setClearColor(new THREE.Color('black'));//背景色の設定
   document.body.appendChild( renderer.domElement );
   renderer.setSize(width, height);
 
@@ -42,7 +42,7 @@ function init() {
   const geometry = new THREE.PlaneGeometry( 20, 20, 1 );
   //(2)テクスチャローダーを作成し画像を読み込み
   const loader = new THREE.TextureLoader();
-  const tex = loader.load('img/fire2.png');
+  const tex = loader.load('img/fire.png');
   //(3)マテリアル(材質)にShaderMaterialを指定する
   const vert = document.getElementById('vert').textContent;
   const frag = document.getElementById('frag').textContent;
