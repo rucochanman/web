@@ -23,13 +23,14 @@
     <script id="frag" type="x-shader/x-fragment">
     varying vec2 vUv; //頂点シェーダから渡された変数
     uniform sampler2D uTex; //three.jsから渡されたテクスチャ情報
-    uniform float uRnd;
+    uniform float uRnd; //three.jsから渡されたランダム値
     void main() {
-        float rndx = sin( vUv.x*3.14 ) * uRnd * vUv.y;
-        float rndy = max( uRnd*vUv.y,vUv.y );
-        vec4 color = texture2D( uTex, vec2( rndx,rndy ) ).rgba; //頂点ごとのテクスチャの色取得
+        float freq = uRnd*5.0; //うねうねの数
+        float amp = ((1.0-uRnd)*vUv.y)/2.0; //うねうね大きさ
+        float rndx = amp*sin(freq*vUv.y*3.14)+vUv.x;
+        vec4 color = texture2D( uTex, vec2( rndx,vUv.y ) ).rgba; //頂点ごとのテクスチャの色取得
         vec3 rgb = vec3(color.r, color.g, color.b);
-        float alpha = max(color.a-vUv.y, 0.0);
+        float alpha = max(color.a-vUv.y, 0.0); //上に行くほど透明に
         gl_FragColor = vec4(rgb, alpha);
     }
     </script>
