@@ -39,10 +39,10 @@ function init() {
   ////////////////////////////////////////////////////////
 
   //(1)Planeジオメトリ(座標)を作成
-  const geometry = new THREE.PlaneGeometry( 15, 20, 1 );
+  const geometry = new THREE.PlaneGeometry( 20, 20, 1 );
   //(2)テクスチャローダーを作成し画像を読み込み
   const loader = new THREE.TextureLoader();
-  const tex = loader.load('img/fire.png');
+  const tex = loader.load('img/fire2.png');
   //(3)マテリアル(材質)にShaderMaterialを指定する
   const vert = document.getElementById('vert').textContent;
   const frag = document.getElementById('frag').textContent;
@@ -62,8 +62,6 @@ function init() {
   scene.add( plane );
 
 
-
-
   /////////////////////////////////////////////////////////
   //                     レンダリング                     //
   ////////////////////////////////////////////////////////
@@ -71,8 +69,10 @@ function init() {
   render();
 
   function render(){
-      material.uniforms.uRnd.value = Math.random();
-      plane.scale.set(1,(Math.random()/2.0)+1.0,1);
+      var scale = Math.random();
+      material.uniforms.uRnd.value = scale; //シェーダに乱数渡す
+      plane.scale.set(1, 1+scale, 1); //planeの縦をランダムに拡大する
+      plane.position.y = 10*scale; //拡大した分planeのy位置をずらす
       requestAnimationFrame(render);
       renderer.render(scene, camera);
   }
