@@ -38,9 +38,9 @@ function init() {
   ////////////////////////////////////////////////////////
 
   /* 炎パーティクルを設定する変数 */
-  const fireParticles = []; //パーティクルを格納する配列
-  const fireParticlesNum = 50; //炎パーティクルの数
-  const firePos = -5; //炎パーティクルのy軸初期位置
+  const fireParticles = [];
+  const fireParticlesNum = 50;
+  const firePos = -5;
   const fireSize = 20;
 
   /* テクスチャの用意 */
@@ -63,6 +63,22 @@ function init() {
     scene.add(particle);
   }
 
+  /* 根本の炎作る */
+  const fireRoot = [];
+  const fireRootNum = 4;
+  for(let i = 0; i < fireRootNum; i++){
+    const material = new THREE.MeshLambertMaterial({
+      map: texture,
+      transparent: true,
+      color: new THREE.Color(0.85,0.85,1.0)
+    })
+    const particle = new THREE.Mesh(geometry,material);
+    particle.position.y = firePos-2;
+    fireRoot.push(particle);
+    scene.add(particle);
+  }
+
+
   ////////////////////////////////////////////////////////
   //                   レンダリング                      //
   ////////////////////////////////////////////////////////
@@ -72,30 +88,45 @@ function init() {
   function render(){
 
      /* パーティクルのアニメーション設定 */
-    const limit = fireSize*1.5; //炎が上昇する距離
     for(let i = 0; i < fireParticlesNum; i++){
+
+      /* 座標の動き */
+      const limit = fireSize*1.5; //炎が上昇する距離
       if(fireParticles[i].position.y < firePos+limit){
         fireParticles[i].position.y += Math.random()*(fireSize/20); //上昇
+        fireParticles[i].rotation.z += 0.01; //回転
       }else{
-        fireParticles[i].position.y = firePos; //上昇限界位置まで行ったら初期位置に戻る
+        fireParticles[i].position.y = firePos; //limitまで行ったら初期位置に戻る
       }
-      /* 大きさ */
-      let y = ((firePos+limit)-fireParticles[i].position.y)/limit; //y座標を1～0に変換
-      fireParticles[i].material.opacity = 2*Math.pow(y,4); //上に行くほど透明に
-      fireParticles[i].rotation.z += (1-y)*0.01; //上にいくほど回転強く
+
+      /* y座標を1～0に変換 */
+      let y = ((firePos+limit)-fireParticles[i].position.y)/limit;
+
+        /* 大きさ */
       fireParticles[i].scale.x = y*0.6; //上に行くほど横幅小さく
       fireParticles[i].scale.y = y; //上に行くほど横幅小さく
+
       /* うねうね */
       let amp = (fireSize/15)*Math.random(); //うねうね大きさ
       let freq = 2*Math.random()+5; //うねうね量
       fireParticles[i].position.x = amp * Math.sin(freq*y*Math.PI);
+
       /* 色 */
+      fireParticles[i].material.opacity = Math.pow(y,4); //上に行くほど透明に
       let r = Math.sin(Math.PI/4*y+Math.PI/2);
       let b = Math.pow(y, 20);
       fireParticles[i].material.color = new THREE.Color(r, y, b);
     }
 
-    //render回す
+    /* 根本のアニメーション */
+    for(let i = 0; i < fireRootNum; i++){
+      fireRoot[i].material.opacity = Math.random()*0.8;
+      let size = 0.5*Math.random() + 0.5;
+      fireRoot[i].scale.y = size;
+      fireRoot[i].rotation.z = Math.random()*Math.PI*2;
+    }
+
+    /* render回す */
     requestAnimationFrame(render);
     renderer.render(scene, camera);
   }
