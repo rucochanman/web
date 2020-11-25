@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <!-- 必要ソース読み込み　-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/105/three.min.js"></script>
+    <script src="three.js"></script>
+  </head>
+  <body>
+    <canvas id="myCanvas"></canvas>
+    <div id="webgl"></div>
+
+    <!-- 頂点シェーダー -->
+    <script id="vert" type="x-shader/x-vertex">
+        varying vec2 vUv; //フラグメントシェーダーに頂点情報を渡す用の変数
+        uniform float uRnd;
+        void main() {
+            vUv = uv; //頂点情報を格納
+            vec4 pos = vec4(position, 1.0);
+            float scaley = uRnd+1.0;
+            float freq = 10.0 * uRnd;
+            float amp =  0.5*(0.5+pos.y) * uRnd;
+
+            pos.x += amp * sin( freq * pos.y * 3.14 );
+            pos.y = pos.y * scaley + (scaley/2.0);
+
+            //カメラ座標に変換
+            gl_Position = projectionMatrix * modelViewMatrix * pos;
+        }
+    </script>
+
+    <!-- フラグメントシェーダー -->
+    <script id="frag" type="x-shader/x-fragment">
+    varying vec2 vUv; //頂点シェーダから渡された変数
+    uniform sampler2D uTex; //three.jsから渡されたテクスチャ情報
+    uniform float uRnd; //three.jsから渡されたランダム値
+    uniform float uNum; //three.jsから渡されたランダム値
+    void main() {
+        vec4 color = texture2D( uTex, vUv ).rgba; //頂点ごとのテクスチャの色取得
+
+        float alpha = color.a - (uRnd*.8) - uNum;
+
+        gl_FragColor = vec4(vec3(color), alpha);
+    }
+    </script>
+  </body>
+</html>
