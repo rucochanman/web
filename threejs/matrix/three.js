@@ -44,8 +44,8 @@ function init() {
   const loader = new THREE.GLTFLoader();
   loader.load( './model/bullet.gltf' , function( gltf ){
     //console.log( gltf );
-    //var sofa = gltf.scene;
-    //scene.add(sofa);
+    var sofa = gltf.scene;
+    scene.add(sofa);
   });
 
 
