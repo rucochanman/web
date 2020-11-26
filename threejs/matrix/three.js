@@ -78,7 +78,7 @@ function init() {
  //scene.add( plane1 );
 
  const geometry2 = new THREE.PlaneGeometry( 12, 6 );
- const tex2 = texLoader.load('./img/neo.png');
+ const tex2 = texLoader.load('./img/image.png');
  const mat2 = new THREE.MeshLambertMaterial({ map: tex2, transparent: true});
  const plane2 = new THREE.Mesh( geometry2, mat2 );
  scene.add( plane2 );
