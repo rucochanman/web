@@ -72,13 +72,13 @@ function init() {
  const texLoader = new THREE.TextureLoader();
 
  const geometry1 = new THREE.PlaneGeometry( 24, 12 );
- const tex1 = texLoader.load('img/back.png');
+ const tex1 = texLoader.load('./img/back.png');
  const mat1 = new THREE.MeshLambertMaterial({ map: tex1 });
  const plane1 = new THREE.Mesh( geometry1, mat1 );
  //scene.add( plane1 );
 
  const geometry2 = new THREE.PlaneGeometry( 12, 6 );
- const tex2 = texLoader.load('img/kianu.png');
+ const tex2 = texLoader.load('./img/kianu.png');
  const mat2 = new THREE.MeshLambertMaterial({ map: tex2, transparent: true});
  const plane2 = new THREE.Mesh( geometry2, mat2 );
  scene.add( plane2 );
