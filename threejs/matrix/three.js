@@ -54,7 +54,7 @@ function init() {
   const cone = new THREE.Mesh( geometry, material );
   cone.rotation.x = -Math.PI / 2;
   cone.position.x = 25;
-  scene.add( cone );
+  //scene.add( cone );
 
 
   const vectort = new THREE.Vector3( 2, 1, -1 ).normalize();
