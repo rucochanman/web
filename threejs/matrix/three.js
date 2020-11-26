@@ -109,7 +109,7 @@ function init() {
             obj.position.z -= 0.05;
 
           }else{
-            obj.position.z -= 0.2;
+            obj.position.z -= 0.3;
           }
           //obj.applyQuaternion( quaternion);
           count++;
