@@ -47,18 +47,15 @@ function init() {
       });
 
 
-      const marker1 = new THREE.Group();
-      scene.add(marker1);
 
-
-      const arMarkerControls = new THREEx.ArMarkerControls(arToolkitContext, marker1, {
+      const arMarkerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
         type: 'pattern',
         patternUrl: 'data/patt.hiro',
-        //changeMatrixMode: 'cameraTransformMatrix'
+        changeMatrixMode: 'cameraTransformMatrix'
       });
 
       const mesh = new THREE.Mesh(
-        new THREE.CubeGeometry(0.5, 1, 1),
+        new THREE.CubeGeometry(1, 1, 1),
         new THREE.MeshNormalMaterial(),
       );
       mesh.position.y = 1.0;
