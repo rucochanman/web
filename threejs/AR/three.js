@@ -22,12 +22,6 @@ function init() {
     sourceType: 'webcam'
   });
 
-//  arToolkitSource.init(() => {
-//    setTimeout(() => {
-//      onResize();
-//    }, 2000);
-//  });
-
   arToolkitSource.init(function onReady(){
       onResize()
   })
@@ -37,6 +31,13 @@ function init() {
   });
 
   function onResize() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    // レンダラーのサイズを調整する
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(width, height);
+    
     arToolkitSource.onResizeElement();
     arToolkitSource.copyElementSizeTo(renderer.domElement);
     if (arToolkitContext.arController !== null) {
