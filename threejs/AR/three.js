@@ -31,13 +31,14 @@ function init() {
   });
 
   function onResize() {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+
+    let width = window.innerWidth;
+    let height = window.innerHeight;
 
     // レンダラーのサイズを調整する
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(width, height);
-    
+
     arToolkitSource.onResizeElement();
     arToolkitSource.copyElementSizeTo(renderer.domElement);
     if (arToolkitContext.arController !== null) {
