@@ -48,13 +48,13 @@ function init() {
         detectionMode: 'mono'
       });
 
-      arToolkitContext.init(() => {
-        camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
-      });
-      
-      //arToolkitContext.init(function onCompleted(){
-      //    camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
+      //arToolkitContext.init(() => {
+      //  camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
       //});
+      
+      arToolkitContext.init(function onCompleted(){
+          camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
+      });
 
 
       const marker1 = new THREE.Group();
