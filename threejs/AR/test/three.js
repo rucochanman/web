@@ -21,19 +21,19 @@ function init() {
         sourceType: 'webcam'
       });
 
-      //arToolkitSource.init(function onReady(){
-      //onResize()
-      //});
+      arToolkitSource.init(function onReady(){
+          onResize()
+      });
 
       window.addEventListener('resize', () => {
         onResize();
       });
 
-      arToolkitSource.init(() => {
-          setTimeout(() => {
-          onResize();
-      }, 2000);
-      });
+      //arToolkitSource.init(() => {
+      //    setTimeout(() => {
+      //    onResize();
+      //}, 2000);
+      //});
 
       function onResize() {
         arToolkitSource.onResizeElement();
@@ -52,12 +52,13 @@ function init() {
         camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
       });
 
+      const marker1 = new THREE.Group();
+      scene.add(marker1);
 
-
-      const arMarkerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
+      const arMarkerControls = new THREEx.ArMarkerControls(arToolkitContext, marker1, {
         type: 'pattern',
         patternUrl: 'data/patt.hiro',
-        changeMatrixMode: 'cameraTransformMatrix'
+        //changeMatrixMode: 'cameraTransformMatrix'
       });
 
       const mesh = new THREE.Mesh(
