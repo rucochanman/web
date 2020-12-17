@@ -29,11 +29,12 @@ function init() {
           onResize()
       });
 
-      //arToolkitSource.init(() => {
-      //    setTimeout(() => {
-      //    onResize();
-      //}, 2000);
-      //});
+      
+      arToolkitSource.init(() => {
+          setTimeout(() => {
+          onResize();
+      }, 2000);
+      });
 
       function onResize() {
         arToolkitSource.onResizeElement();
@@ -48,15 +49,10 @@ function init() {
         detectionMode: 'mono'
       });
 
-      //arToolkitContext.init(() => {
-      //  camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
-      //});
-      
-      arToolkitContext.init(function onCompleted(){
-          camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
+      arToolkitContext.init(() => {
+        camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
       });
-
-
+      
       const marker1 = new THREE.Group();
       scene.add(marker1);
 
