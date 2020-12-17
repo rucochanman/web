@@ -25,11 +25,6 @@ function init() {
         onResize();
       });
       
-      arToolkitSource.init(function onReady(){
-          onResize()
-      });
-
-      
       arToolkitSource.init(() => {
           setTimeout(() => {
           onResize();
@@ -68,19 +63,22 @@ function init() {
         new THREE.MeshNormalMaterial(),
       );
       mesh.position.y = 1.0;
-      marker1.add(mesh);
+      //marker1.add(mesh);
        //scene.add(mesh);
       
+      let sofa;
       const gltfloader = new THREE.GLTFLoader();
       gltfloader.load('./data/sofa.gltf',function(gltf){
-          //sofa1 = gltf.scene;
+           //sofa = gltf.scene;
+          
           //sofa1.scale.set(0.3,0.3,0.3);
-          //scene.add(gltf.scene);
+          marker1.add(gltf.scene);
           //sofa1.rotation.y = -PI/2;
           //sofa1.position.x = 2;
           //sofa1.position.y = 0.2;
           //sofa1.position.z = 2;
       });
+       //marker1.add(sofa);
 
       const clock = new THREE.Clock();
       requestAnimationFrame(function animate(){
@@ -90,8 +88,8 @@ function init() {
           scene.visible = camera.visible;
         }
         const delta = clock.getDelta();
-        mesh.rotation.x += delta * 1.0;
-        mesh.rotation.y += delta * 1.5;
+         //mesh.rotation.x += delta * 1.0;
+         //mesh.rotation.y += delta * 1.5;
         renderer.render(scene, camera);
       });
 
