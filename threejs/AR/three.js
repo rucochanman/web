@@ -6,7 +6,7 @@ function init() {
     antialias: true,
     alpha: true
   });
-  renderer.setClearColor(new THREE.Color(), 0);
+  renderer.setClearColor(new THREE.Color('black'), 0);
   renderer.setSize(640, 480);
   renderer.domElement.style.position = 'absolute';
   renderer.domElement.style.top = '0px';
