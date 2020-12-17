@@ -46,10 +46,15 @@ function init() {
         camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
       });
 
-      const arMarkerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
+
+      const marker1 = new THREE.Group();
+      scene.add(marker1);
+
+
+      const arMarkerControls = new THREEx.ArMarkerControls(arToolkitContext, marker1, {
         type: 'pattern',
         patternUrl: 'data/patt.hiro',
-        changeMatrixMode: 'cameraTransformMatrix'
+        //changeMatrixMode: 'cameraTransformMatrix'
       });
 
       const mesh = new THREE.Mesh(
@@ -68,7 +73,7 @@ function init() {
         }
         const delta = clock.getDelta();
         mesh.rotation.x += delta * 1.0;
-        mesh.rotation.y += delta * 1.5; 
+        mesh.rotation.y += delta * 1.5;
         renderer.render(scene, camera);
       });
 
