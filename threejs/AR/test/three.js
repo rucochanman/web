@@ -68,6 +68,17 @@ function init() {
       );
       mesh.position.y = 1.0;
       scene.add(mesh);
+      
+      const gltfloader = new THREE.GLTFLoader();
+      gltfloader.load('./data/sofa.gltf',function(gltf){
+          //sofa1 = gltf.scene;
+          //sofa1.scale.set(0.3,0.3,0.3);
+          //scene.add(gltf.scene);
+          //sofa1.rotation.y = -PI/2;
+          //sofa1.position.x = 2;
+          //sofa1.position.y = 0.2;
+          //sofa1.position.z = 2;
+      });
 
       const clock = new THREE.Clock();
       requestAnimationFrame(function animate(){
