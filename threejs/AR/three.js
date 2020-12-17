@@ -31,10 +31,10 @@ function init() {
 
     function onResize() {
         //レンダラーのサイズを調整する
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(width, height);
+        //const width = window.innerWidth;
+        //const height = window.innerHeight;
+        //renderer.setPixelRatio(window.devicePixelRatio);
+        //renderer.setSize(width, height);
         //リサイズ処理
         arToolkitSource.onResizeElement();
         arToolkitSource.copyElementSizeTo(renderer.domElement);
@@ -58,28 +58,27 @@ function init() {
     const arMarkerControls = new THREEx.ArMarkerControls(arToolkitContext, marker1, {
         type: 'pattern',
         patternUrl: 'data/patt.hiro',
-        //changeMatrixMode: 'cameraTransformMatrix'
     });
 
-  const mesh = new THREE.Mesh(
-    new THREE.CubeGeometry(1, 1, 1),
-    new THREE.MeshNormalMaterial(),
-  );
-  mesh.position.y = 1.0;
-  scene.add(mesh);
+    const mesh = new THREE.Mesh(
+        new THREE.CubeGeometry(1, 1, 1),
+        new THREE.MeshNormalMaterial(),
+    );
+    mesh.position.y = 1.0;
+    scene.add(mesh);
 
-  const clock = new THREE.Clock();
-  requestAnimationFrame(function animate(){
-    requestAnimationFrame(animate);
-    if (arToolkitSource.ready) {
-      arToolkitContext.update(arToolkitSource.domElement);
-      scene.visible = camera.visible;
-    }
-    const delta = clock.getDelta();
-    mesh.rotation.x += delta * 1.0;
-    mesh.rotation.y += delta * 1.5;
-    renderer.render(scene, camera);
-  });
+    const clock = new THREE.Clock();
+    requestAnimationFrame(function animate(){
+        requestAnimationFrame(animate);
+        if (arToolkitSource.ready) {
+            arToolkitContext.update(arToolkitSource.domElement);
+            scene.visible = camera.visible;
+        }
+        const delta = clock.getDelta();
+        mesh.rotation.x += delta * 1.0;
+        mesh.rotation.y += delta * 1.5;
+        renderer.render(scene, camera);
+    });
 
 
 
