@@ -21,15 +21,15 @@ function init() {
     const arToolkitSource = new THREEx.ArToolkitSource({
         sourceType: 'webcam'
     });
-    //arToolkitSource.init(function onReady(){
-    //    onResize()
-    //})
+    arToolkitSource.init(function onReady(){
+        onResize()
+    })
 
-    arToolkitSource.init(() => {
-        setTimeout(() => {
-        onResize();
-        }, 2000);
-    });
+    //arToolkitSource.init(() => {
+    //    setTimeout(() => {
+    //    onResize();
+    //    }, 2000);
+    //});
 
     window.addEventListener('resize', () => {
         onResize();
