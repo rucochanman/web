@@ -2,64 +2,64 @@ window.addEventListener("DOMContentLoaded", init);
 
 function init() {
 
-  const renderer = new THREE.WebGLRenderer({
-    antialias: true,
-    alpha: true
-  });
-  renderer.setClearColor(new THREE.Color(), 0);
-  renderer.setSize(480, 600);
-  renderer.domElement.style.position = 'absolute';
-  renderer.domElement.style.top = '0px';
-  renderer.domElement.style.left = '0px';
-  document.body.appendChild(renderer.domElement);
+    const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true
+    });
+    renderer.setClearColor(new THREE.Color(), 0);
+    renderer.setSize(480, 600);
+    renderer.domElement.style.position = 'absolute';
+    renderer.domElement.style.top = '0px';
+    renderer.domElement.style.left = '0px';
+    document.body.appendChild(renderer.domElement);
 
-  const scene = new THREE.Scene();
-  scene.visible = false;
-  const camera = new THREE.Camera();
-  scene.add(camera);
+    const scene = new THREE.Scene();
+    scene.visible = false;
+    const camera = new THREE.Camera();
+    scene.add(camera);
 
-  const arToolkitSource = new THREEx.ArToolkitSource({
-    sourceType: 'webcam'
-  });
+    const arToolkitSource = new THREEx.ArToolkitSource({
+        sourceType: 'webcam'
+    });
+    arToolkitSource.init(function onReady(){
+        onResize()
+    })
 
-  arToolkitSource.init(function onReady(){
-      onResize()
-  })
+    window.addEventListener('resize', () => {
+        onResize();
+    });
 
-  window.addEventListener('resize', () => {
-    onResize();
-  });
+    function onResize() {
+        //レンダラーのサイズを調整する
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(width, height);
+        //リサイズ処理
+        arToolkitSource.onResizeElement();
+        arToolkitSource.copyElementSizeTo(renderer.domElement);
+        if (arToolkitContext.arController !== null) {
+            arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas);
+        }
+    };
 
-  function onResize() {
+    const arToolkitContext = new THREEx.ArToolkitContext({
+        cameraParametersUrl: 'data/camera_para.dat',
+        detectionMode: 'mono'
+    });
 
-    let width = window.innerWidth;
-    let height = window.innerHeight;
+    arToolkitContext.init(() => {
+        camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
+    });
 
-    // レンダラーのサイズを調整する
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(width, height);
+    const marker1 = new THREE.Group();
+    scene.add(marker1);
 
-    arToolkitSource.onResizeElement();
-    arToolkitSource.copyElementSizeTo(renderer.domElement);
-    if (arToolkitContext.arController !== null) {
-      arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas);
-    }
-  };
-
-  const arToolkitContext = new THREEx.ArToolkitContext({
-    cameraParametersUrl: 'data/camera_para.dat',
-    detectionMode: 'mono'
-  });
-
-  arToolkitContext.init(() => {
-    camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
-  });
-
-  const arMarkerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
-    type: 'pattern',
-    patternUrl: 'data/patt.hiro',
-    changeMatrixMode: 'cameraTransformMatrix'
-  });
+    const arMarkerControls = new THREEx.ArMarkerControls(arToolkitContext, marker1, {
+        type: 'pattern',
+        patternUrl: 'data/patt.hiro',
+        //changeMatrixMode: 'cameraTransformMatrix'
+    });
 
   const mesh = new THREE.Mesh(
     new THREE.CubeGeometry(1, 1, 1),
