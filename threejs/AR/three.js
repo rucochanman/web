@@ -83,7 +83,7 @@ function init() {
 
 
   const mesh = new THREE.Mesh(
-    new THREE.CubeGeometry(1, 1, 1),
+    new THREE.CubeGeometry(0.5, 0.5, 0.5),
     new THREE.MeshNormalMaterial(),
   );
   mesh.position.y = 1.0;
