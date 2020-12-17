@@ -36,12 +36,6 @@ function init() {
     });
 
     function onResize() {
-        //レンダラーのサイズを調整する
-        //const width = window.innerWidth;
-        //const height = window.innerHeight;
-        //renderer.setPixelRatio(window.devicePixelRatio);
-        //renderer.setSize(width, height);
-        //リサイズ処理
         arToolkitSource.onResizeElement();
         arToolkitSource.copyElementSizeTo(renderer.domElement);
         if (arToolkitContext.arController !== null) {
