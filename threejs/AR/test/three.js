@@ -21,12 +21,12 @@ function init() {
         sourceType: 'webcam'
       });
 
-      arToolkitSource.init(function onReady(){
-          onResize()
-      });
-
       window.addEventListener('resize', () => {
         onResize();
+      });
+      
+      arToolkitSource.init(function onReady(){
+          onResize()
       });
 
       //arToolkitSource.init(() => {
@@ -48,9 +48,14 @@ function init() {
         detectionMode: 'mono'
       });
 
-      arToolkitContext.init(() => {
-        camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
+      //arToolkitContext.init(() => {
+      //  camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
+      //});
+      
+      arToolkitContext.init(function onCompleted(){
+          camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
       });
+
 
       const marker1 = new THREE.Group();
       scene.add(marker1);
