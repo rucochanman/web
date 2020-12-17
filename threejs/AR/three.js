@@ -21,6 +21,8 @@ function init() {
 
   // init scene and camera
   var scene	= new THREE.Scene();
+  scene.visible = false;
+
   var camera = new THREE.Camera();
   scene.add(camera);
   const light = new THREE.DirectionalLight( 0xffffff );
@@ -54,9 +56,15 @@ function init() {
   var arToolkitSource = new THREEx.ArToolkitSource({
     sourceType : 'webcam',
   })
-  arToolkitSource.init(function onReady(){
-    onResize()
-  })
+  //arToolkitSource.init(function onReady(){
+  //  onResize()
+  //})
+
+  arToolkitSource.init(() => {
+    setTimeout(() => {
+      onResize();
+    }, 2000);
+  });
 
   //atToolkitContext
   var arToolkitContext = new THREEx.ArToolkitContext({
