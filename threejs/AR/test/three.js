@@ -21,8 +21,10 @@ function init() {
         sourceType: 'webcam'
       });
 
-      arToolkitSource.init(function onReady(){
-        onResize()
+      arToolkitSource.init(() => {
+        setTimeout(() => {
+          onResize();
+        }, 2000);
       });
 
       window.addEventListener('resize', () => {
