@@ -68,13 +68,11 @@ function init() {
       //marker1.add(mesh);
       //scene.add(mesh);
       
-      let sofa;
+      let apple;
       const gltfloader = new THREE.GLTFLoader();
       gltfloader.load('./data/apple.gltf',function(gltf){
-          //sofa = gltf.scene;         
-          //sofa1.scale.set(0.3,0.3,0.3);
-          marker1.add(gltf.scene);
- 
+          apple = gltf.scene;         
+          marker1.add(apple);
       });
 
       const clock = new THREE.Clock();
@@ -85,8 +83,8 @@ function init() {
           scene.visible = camera.visible;
         }
         const delta = clock.getDelta();
-         //mesh.rotation.x += delta * 1.0;
-         //mesh.rotation.y += delta * 1.5;
+        //mesh.rotation.x += delta * 1.0;
+        apple.rotation.y += delta * 1.5;
         renderer.render(scene, camera);
       });
 
