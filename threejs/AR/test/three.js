@@ -16,6 +16,8 @@ function init() {
       scene.visible = false;
       const camera = new THREE.Camera();
       scene.add(camera);
+      const light = new THREE.AmbientLight(0xFFFFFF, 1.0);
+      scene.add(light);
 
       const arToolkitSource = new THREEx.ArToolkitSource({
         sourceType: 'webcam'
@@ -64,21 +66,16 @@ function init() {
       );
       mesh.position.y = 1.0;
       //marker1.add(mesh);
-       //scene.add(mesh);
+      //scene.add(mesh);
       
       let sofa;
       const gltfloader = new THREE.GLTFLoader();
       gltfloader.load('./data/apple.gltf',function(gltf){
-           //sofa = gltf.scene;
-          
+          //sofa = gltf.scene;         
           //sofa1.scale.set(0.3,0.3,0.3);
           marker1.add(gltf.scene);
-          //sofa1.rotation.y = -PI/2;
-          //sofa1.position.x = 2;
-          //sofa1.position.y = 0.2;
-          //sofa1.position.z = 2;
+ 
       });
-       //marker1.add(sofa);
 
       const clock = new THREE.Clock();
       requestAnimationFrame(function animate(){
