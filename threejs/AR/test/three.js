@@ -68,7 +68,7 @@ function init() {
       
       let sofa;
       const gltfloader = new THREE.GLTFLoader();
-      gltfloader.load('./data/sofa.gltf',function(gltf){
+      gltfloader.load('./data/apple.gltf',function(gltf){
            //sofa = gltf.scene;
           
           //sofa1.scale.set(0.3,0.3,0.3);
