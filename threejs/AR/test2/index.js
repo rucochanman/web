@@ -55,7 +55,7 @@ function init() {
     scene.add(marker1);
     const arMarkerControls = new THREEx.ArMarkerControls(arToolkitContext, marker1, {
         type: 'pattern',
-        patternUrl: 'data/patt.hiro',
+        patternUrl: 'data/pattern-sneak.patt',
     });
     
     //モデル読み込み
