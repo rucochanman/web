@@ -63,7 +63,7 @@ function init() {
     const gltfloader = new THREE.GLTFLoader();
     gltfloader.load('./data/apple.glb',function(gltf){
         apple = gltf.scene;
-        //apple.scale.set(0.5, 0.5, 0.5);
+        apple.scale.set(0.5, 0.5, 0.5);
         marker1.add(apple);
     });
 
