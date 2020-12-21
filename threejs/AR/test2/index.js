@@ -59,9 +59,12 @@ function init() {
     });
     
     //モデル読み込み
+    let apple;
     const gltfloader = new THREE.GLTFLoader();
     gltfloader.load('./data/apple.glb',function(gltf){
-        marker1.add(gltf.scene);
+        apple = gltf.scene;
+        apple.scale.set(0.5, 0.5, 0.5);
+        marker1.add(apple);
     });
 
     //レンダリング
@@ -71,6 +74,7 @@ function init() {
             arToolkitContext.update(arToolkitSource.domElement);
             scene.visible = camera.visible;
         }
+        apple.rotation.z += 0.01;
         renderer.render(scene, camera);
     });
 }
