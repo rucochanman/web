@@ -60,7 +60,7 @@ function init() {
     
     //モデル読み込み
     const gltfloader = new THREE.GLTFLoader();
-    gltfloader.load('./data/apple.gltf',function(gltf){
+    gltfloader.load('./data/apple.gl',function(gltf){
         marker1.add(gltf.scene);
     });
 
