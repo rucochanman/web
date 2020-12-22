@@ -74,7 +74,7 @@ function init() {
             arToolkitContext.update(arToolkitSource.domElement);
             scene.visible = camera.visible;
         }
-        //apple.rotation.z += 0.01;
+        apple.rotation.z += 0.01;
         renderer.render(scene, camera);
     });
 }
