@@ -31,30 +31,38 @@ function init() {
     //////////////////////////////////////////////
 
 
-
-    function armInit(){
-        const armThick = 5;
-        const upperArmThick = new Array(sect);
-        //thick
-        for( let i=0; i<( sect+1 ); i++ ){
-            let t = i / sect;
-            upperArmThick[i] = armThick;
-        }
-        const ep = new THREE.Vector2( 10, 10 );
-        const cp = new THREE.Vector2( 10, 0 );
-        //パイプを作成
-        const pt = makePipe( sect, edge, cp, ep, upperArmThick, upperArmThick );
-    　　//メッシュの作成
-        const geometry = makeGeometry(sect, edge, pt);
-        const material = new THREE.MeshNormalMaterial({
-            side:THREE.DoubleSide,
-        });
-        const plane = new THREE.Mesh( geometry, material );
-        scene.add( plane );
+    const armThick = 5;
+    const upperArmThick = new Array(seg);
+    //thick
+    for( let i=0; i<( seg+1 ); i++ ){
+        let t = i / seg;
+        upperArmThick[i] = armThick;
     }
+    const ep = new THREE.Vector2( 10, 10 );
+    const cp = new THREE.Vector2( 10, 0 );
+    //パイプを作成
+    const pt = makePipe( seg, edge, cp, ep, upperArmThick, upperArmThick );
 
-    armInit();
 
+
+    //メッシュの作成
+    let geometry = makeGeometry( seg, edge, pt );
+    const material = new THREE.MeshNormalMaterial({
+        side:THREE.DoubleSide,
+    });
+    const plane = new THREE.Mesh( geometry, material );
+
+
+
+    scene.add( plane );
+
+
+
+
+
+
+    const clock = new THREE.Clock();
+    let t = 0;
 
     ///////////////////////////////////////////////
     //    　　　　　レンダリング開始               //
@@ -62,6 +70,21 @@ function init() {
 
     render();
     function render(){
+        t += 0.01;
+        let y = 20 * Math.abs(sin(t));
+        let ep2 = new THREE.Vector2( 10, y );
+        let pt2 = makePipe( seg, edge, cp, ep2, upperArmThick, upperArmThick );
+        geometry.verticesNeedUpdte = true;
+        updateGeometry( seg, edge, pt2, geometry );
+        //console.log(y);
+        //geometry.verticesNeedUpdate = true;
+        //geometry.elementsNeedUpdate = true;
+        //updateGeometry( seg, edge, pt2, geometry );
+        //var delta = clock.getDelta();
+        //mixer.update(delta)
+        //cube.position.y = obj.userData.y;
+        //console.log(obj.userData[0]);
+        //console.log(material.opacity);
         requestAnimationFrame(render);
         renderer.render(scene, camera);
     }
