@@ -1,9 +1,8 @@
-
 ///////////////////////////////////////////////
 //    　　　     　   defs                   //
 //////////////////////////////////////////////
 
-const sect = 5;
+const seg = 5;
 const edge = 12;
 const PI = Math.PI;
 const center2D = new THREE.Vector2();
@@ -26,14 +25,14 @@ function pow( base,exp ){
 //    　　　　　　　 pipe作成                  //
 ///////////////////////////////////////////////
 
-function makePipe( sect, edge, cp, ep, sw, sh ){
+function makePipe( seg, edge, cp, ep, sw, sh ){
     //make bone
     const curve = new THREE.QuadraticBezierCurve( center2D, cp, ep );
-    const bone = curve.getPoints( sect );
+    const bone = curve.getPoints( seg );
     let zpos = bone[0];
     //set points
     const pt = [];
-    for( let i=0; i<( sect+1 ); i++ ){
+    for( let i=0; i<( seg+1 ); i++ ){
         //calc angle
         const diff = new THREE.Vector2().subVectors( bone[i], zpos );
         const angle = Math.atan2( diff.y, diff.x );
@@ -57,9 +56,9 @@ function makePipe( sect, edge, cp, ep, sw, sh ){
 //    　　　　　  vertexの作成                 //
 ///////////////////////////////////////////////
 
-function setVertices( sect, edge, pt ){
+function setVertices( seg, edge, pt ){
     const vert = [];
-    for( let i=0; i<sect; i++ ){
+    for( let i=0; i<seg; i++ ){
         vert[i] = [];
         for( let j=0; j<edge; j++ ){
             vert[i][j] = [];
@@ -76,8 +75,8 @@ function setVertices( sect, edge, pt ){
 //    　　　 　　  indexの作成                 //
 ///////////////////////////////////////////////
 
-function setIndices( sect, edge ){
-    const num_rect = sect * edge;
+function setIndices( seg, edge ){
+    const num_rect = seg * edge;
     const order = [0,3,2,2,1,0];
     const index = [];
     for( let i=0; i<num_rect; i++ ){
@@ -92,12 +91,28 @@ function setIndices( sect, edge ){
 //    　　   BufferGeometryの作成             //
 ///////////////////////////////////////////////
 
-function makeGeometry( sect, edge, pt ){
-  const vertices = setVertices( sect, edge, pt );
-  const indices = setIndices( sect, edge );
+function makeGeometry( seg, edge, pt ){
+  const vertices = setVertices( seg, edge, pt );
+  const indices = setIndices( seg, edge );
   const geometry = new THREE.BufferGeometry();
   geometry.addAttribute('position', new THREE.BufferAttribute( vertices, 3 ));
   geometry.setIndex(new THREE.BufferAttribute( indices, 1 ));
-  geometry.computeVertexNormals();
-  return geometry;
+  const merg = new THREE.Geometry().fromBufferGeometry( geometry );
+  merg.mergeVertices();
+  merg.computeVertexNormals();
+  return merg;
+}
+
+////////////////////////////////////////////////
+//    　　   geometryのアップデート            //
+///////////////////////////////////////////////
+
+function updateGeometry( seg, edge, pt, geometry ){
+    let geometry2 = makeGeometry( seg, edge, pt );
+    geometry.verticesNeedUpdate = true;
+    geometry.vertices = geometry2.vertices;
+    //geometry.elementNeedUpdate = true;
+
+    //geometry.attributes.position.needsUpdate = true;
+    geometry.computeVertexNormals();
 }
