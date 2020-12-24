@@ -40,6 +40,12 @@ function init() {
         this.width = width;
     }
 
+    const v1 = 2;
+    const bend1 = mapping( v1, -1.0, 2.0, PI/4, -PI/2 );
+    const { ep1, cp1 } = getBezierPt2( 10, bend1 );
+
+    console.log(sin(bend1));
+
     //armの設定
     const upperArmThick = new Array( limbSeg );
     for( let i=0; i<( limbSeg+1 ); i++ ){
@@ -51,6 +57,8 @@ function init() {
       upperArmThick,
       upperArmThick
     );
+
+
 
     //Armを作成
     const upperArmPt = makePipePt( upperArm );
@@ -103,3 +111,4 @@ function init() {
         renderer.render(scene, camera);
     }
 }
+
