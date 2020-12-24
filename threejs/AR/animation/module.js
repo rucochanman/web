@@ -20,6 +20,51 @@ function sin( r ){
 function pow( base,exp ){
     return Math.pow( base,exp );
 };
+function abs( r ){
+    return Math.abs( r );
+};
+
+function mapping( inVal, inMin, inMax, outMin, outMax ){
+    const ratio = ( inVal - inMin ) / ( inMax - inMin );
+    const outVal = ratio * ( outMax - outMin ) + outMin;
+    return outVal;
+};
+
+
+function getBezierPt( len1, len2, bend1, bend2 ){
+    //angle adjust
+    const diff = abs( bend1 ) * -PI/8;
+    const rad = bend1 + bend2 + diff;
+
+    //arm1
+    const x1 = len1 * cos( bend1 );
+    const y1 = len1 * sin( bend1 );
+    const ep1 = new THREE.Vector2( x1,y1 );
+    const cp1 = new THREE.Vector2();
+    ep1.y > 0 ? cp1.y = y1 / 2 : cp1.x = -y1 / 2;
+
+    //arm2
+    const joint_len = armThick * abs( bend2 );
+    len2 -= joint_len;
+    const x2 = len2 * cos( rad );
+    const y2 = len2 * sin( rad );
+    const ep2 = new THREE.Vector2( x2,y2 );
+    const cp2 = new THREE.Vector2( 0,0 );
+    return { ep1, cp1, ep2, cp2 }
+}
+
+
+function getBezierPt2( len1, bend1 ){
+    //arm1
+    const x1 = len1 * cos( bend1 );
+    const y1 = len1 * sin( bend1 );
+    const ep1 = new THREE.Vector2( x1,y1 );
+    const cp1 = new THREE.Vector2();
+    ep1.y > 0 ? cp1.y = y1 / 2 : cp1.x = -y1 / 2;
+
+    return { ep1, cp1 }
+}
+
 
 ////////////////////////////////////////////////
 //    　　　　　　　 pipe作成                  //
@@ -117,3 +162,4 @@ function updateGeometry( obj, pt, geometry ){
     geometry.elementsNeedUpdate = true;
     geometry.computeVertexNormals();
 }
+
