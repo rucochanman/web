@@ -25,7 +25,7 @@ function pow( base,exp ){
 //    　　　　　　　 pipe作成                  //
 ///////////////////////////////////////////////
 
-function makePipe( obj ){
+function makePipePt( obj ){
     //make bone
     const curve = new THREE.QuadraticBezierCurve( center2D, obj.cp, obj.ep );
     const bone = curve.getPoints( obj.seg );
@@ -95,7 +95,7 @@ function makeGeometry( obj, pt ){
     const vertices = setVertices( obj.seg, obj.edge, pt );
     const indices = setIndices( obj.seg, obj.edge );
     const geometry = new THREE.BufferGeometry();
-    geometry.addAttribute('position', new THREE.BufferAttribute( vertices, 3 ));
+    geometry.setAttribute('position', new THREE.BufferAttribute( vertices, 3 ));
     geometry.setIndex(new THREE.BufferAttribute( indices, 1 ));
     const merg = new THREE.Geometry().fromBufferGeometry( geometry );
     merg.mergeVertices();
@@ -110,7 +110,7 @@ function makeGeometry( obj, pt ){
 function updateGeometry( obj, pt, geometry ){
     const vertices = setVertices( obj.seg, obj.edge, pt );
     const newGeo = new THREE.BufferGeometry();
-    newGeo.addAttribute('position', new THREE.BufferAttribute( vertices, 3 ));
+    newGeo.setAttribute('position', new THREE.BufferAttribute( vertices, 3 ));
     const merg = new THREE.Geometry().fromBufferGeometry( newGeo );
     merg.mergeVertices();
     geometry.vertices = merg.vertices;
