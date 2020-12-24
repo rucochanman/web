@@ -30,42 +30,76 @@ function init() {
     //    　　　　 マテリアル配置                  //
     //////////////////////////////////////////////
 
-    const armThick = 5;
-    const upperArmThick = new Array(limbSeg);
-    for( let i=0; i<limbSeg+1; i++ ){
-        upperArmThick[i] = armThick;
-    }
-    function Limb(){
-        this.ep = new THREE.Vector2( 10, 10 );
-        this.cp = new THREE.Vector2( 10, 0 );
-        this.thick = upperArmThick;
-        this.width = upperArmThick;
+    //limbsクラス
+    function Limbs( ep, cp, thick, width ){
         this.seg = limbSeg;
         this.edge = limbEdge;
+        this.ep = ep;
+        this.cp = cp;
+        this.thick = thick;
+        this.width = width;
     }
-    const arm = new Limb();
-    //パイプを作成
-    const pt = makePipe( arm );
-    //メッシュの作成
-    const geometry = makeGeometry( arm, pt );
-    const material = new THREE.MeshNormalMaterial({
+
+    //armの設定
+    const upperArmThick = new Array( limbSeg );
+    for( let i=0; i<( limbSeg+1 ); i++ ){
+        upperArmThick[i] = 5;
+    }
+    const upperArm = new Limbs(
+      new THREE.Vector2( 10, 0 ),
+      new THREE.Vector2( 8, 0 ),
+      upperArmThick,
+      upperArmThick
+    );
+
+    //Armを作成
+    const upperArmPt = makePipePt( upperArm );
+    const upperArmGeo = makeGeometry( upperArm, upperArmPt );
+    const upperArmMat = new THREE.MeshNormalMaterial({
         side:THREE.DoubleSide,
     });
-    const plane = new THREE.Mesh( geometry, material );
-    scene.add( plane );
+    const upperArmMesh = new THREE.Mesh( upperArmGeo, upperArmMat );
+    scene.add( upperArmMesh );
 
     ///////////////////////////////////////////////
-    //    　　　　  　レンダリング開始               //
+    //    　　　　  　animation設定               //
+    //////////////////////////////////////////////
+
+    // POSITION
+    const upperArmMove = new THREE.Object3D();
+    const dur = [ 0, 3 ];
+    const val = [ 0, 10 ];
+    const v2 = [ 0, 0 ];
+    const v3 = [ 0, 0 ];
+    const upperArmPos = [];
+    for( let i=0; i<dur.length; i++ ){
+        upperArmPos.push( val[i] );
+        upperArmPos.push( v2[i] );
+        upperArmPos.push( v3[i] );
+    }
+
+    //const move = [];
+    const uppperArmKF = new THREE.NumberKeyframeTrack( '.userData', dur, val );
+    const clip = new THREE.AnimationClip( 'Action', 3, [ uppperArmKF ] );
+    const mixer = new THREE.AnimationMixer( upperArmMove );
+    const clipAction = mixer.clipAction( clip );
+    clipAction.play();
+
+    ///////////////////////////////////////////////
+    //    　　　　  　レンダリング開始             //
     //////////////////////////////////////////////
 
     const clock = new THREE.Clock();
     render();
     function render(){
+        //animation update
+        mixer.update(clock.getDelta());
+        const v = upperArmMove.userData;
+        upperArm.ep = new THREE.Vector2( 10, v );
+        const upperArmPt2 = makePipePt( upperArm );
+        updateGeometry( upperArm, upperArmPt2, upperArmGeo );
+        //loop
         requestAnimationFrame(render);
-        let y = 10 * Math.abs(sin(clock.getElapsedTime()));
-        arm.ep = new THREE.Vector2( 10, y );
-        const pt2 = makePipe( arm );
-        updateGeometry( arm, pt2, geometry );
         renderer.render(scene, camera);
     }
 }
