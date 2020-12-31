@@ -30,40 +30,61 @@ function init() {
     //    　　　　 マテリアル配置                  //
     //////////////////////////////////////////////
 
-    //limbsクラス
-    function Limbs( ep, cp, thick, width ){
-        this.seg = limbSeg;
-        this.edge = limbEdge;
-        this.ep = ep;
-        this.cp = cp;
-        this.thick = thick;
-        this.width = width;
-    }
-
-    const armAngle = 1;
-    const bend1 = mapping( armAngle, -1.0, 2.0, PI/4, -PI/2 );
-    const { ep, cp } = getBezierPt2( 20, bend1 );
-
-    //armの設定
-    const upperArmThick = new Array( limbSeg );
-    for( let i=0; i<( limbSeg+1 ); i++ ){
-        upperArmThick[i] = 5;
-    }
-    const upperArm = new Limbs(
-      ep,
-      cp,
-      upperArmThick,
-      upperArmThick
-    );
-
-    //Armを作成
-    const upperArmPt = makePipePt( upperArm );
-    const upperArmGeo = makeGeometry( upperArm, upperArmPt );
+    const upperArmLength = 20;
+    const upperArmThick = 5;
+    const upperArmObj = new Limbs();
     const upperArmMat = new THREE.MeshNormalMaterial({
         side:THREE.DoubleSide,
     });
-    const upperArmMesh = new THREE.Mesh( upperArmGeo, upperArmMat );
-    scene.add( upperArmMesh );
+    let upperArmGeo;
+
+    //limbsクラス
+    function Limbs(){
+        this.seg = limbSeg;
+        this.edge = limbEdge;
+        this.ep = new THREE.Vector2();
+        this.cp = new THREE.Vector2();
+        this.thick = 0;
+        this.width = 0;
+    }
+
+    function limbUpdate( angle ){
+        const bend = mapping( angle, -1.0, 2.0, PI/4, -PI/2 );
+        const { ep, cp } = getBezierPt2( upperArmLength, bend );
+        upperArmObj.ep = ep;
+        upperArmObj.cp = cp;
+        const pt = makePipePt( upperArmObj );
+        updateGeometry( upperArmObj, pt, upperArmGeo );
+    }
+
+    function upperArmInit(){
+        //set thick/width
+        const upperArmThicks = new Array( limbSeg );
+        for( let i=0; i<( limbSeg+1 ); i++ ){
+            upperArmThicks[i] = upperArmThick;
+        }
+        //set parameter
+        upperArmObj.ep = new THREE.Vector2(upperArmLength,0);
+        upperArmObj.thick = upperArmThicks;
+        upperArmObj.width = upperArmThicks;
+        //make mesh
+        const pt = makePipePt( upperArmObj );
+        upperArmGeo = makeGeometry( upperArmObj, pt );
+
+        const mesh = new THREE.Mesh( upperArmGeo, upperArmMat );
+        scene.add( mesh );
+    }
+
+    upperArmInit();
+    //limbUpdate( -1 );
+
+    //upperArmObj.ep = new THREE.Vector2( 10, 20 );
+    //const upperArmPt2 = makePipePt( upperArmObj );
+    //updateGeometry( upperArmObj, upperArmPt2, upperArmGeo );
+
+
+
+    //Armを作成
 
     ///////////////////////////////////////////////
     //    　　　　  　animation設定               //
@@ -71,8 +92,9 @@ function init() {
 
     // POSITION
     const upperArmMove = new THREE.Object3D();
-    const dur = [ 0, 3 ];
-    const val = [ 0, 10 ];
+    const dur = [ 0, 2, 4 ];
+    const val = [ -1, 2, -1 ];
+
     const v2 = [ 0, 0 ];
     const v3 = [ 0, 0 ];
     const upperArmPos = [];
@@ -84,7 +106,7 @@ function init() {
 
     //const move = [];
     const uppperArmKF = new THREE.NumberKeyframeTrack( '.userData', dur, val );
-    const clip = new THREE.AnimationClip( 'Action', 3, [ uppperArmKF ] );
+    const clip = new THREE.AnimationClip( 'Action', 4, [ uppperArmKF ] );
     const mixer = new THREE.AnimationMixer( upperArmMove );
     const clipAction = mixer.clipAction( clip );
     clipAction.play();
@@ -94,15 +116,14 @@ function init() {
     //////////////////////////////////////////////
 
     const clock = new THREE.Clock();
+    let armAngle;
     render();
     function render(){
         //animation update
-        //mixer.update(clock.getDelta());
-        //const v = upperArmMove.userData;
-        //upperArm.ep = new THREE.Vector2( 10, v );
-        //const upperArmPt2 = makePipePt( upperArm );
-        //updateGeometry( upperArm, upperArmPt2, upperArmGeo );
-        //loop
+        mixer.update(clock.getDelta());
+        armAngle = upperArmMove.userData;
+        limbUpdate( armAngle );
+        //cycle
         requestAnimationFrame(render);
         renderer.render(scene, camera);
     }
