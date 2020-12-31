@@ -2,8 +2,9 @@
 //    　　　     　   defs                   //
 //////////////////////////////////////////////
 
-const limbSeg = 8;
+const limbSeg = 12;
 const limbEdge = 12;
+const initLength = 10;
 const PI = Math.PI;
 const center2D = new THREE.Vector2();
 
