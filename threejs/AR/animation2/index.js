@@ -37,6 +37,10 @@ function init() {
         side:THREE.DoubleSide,
     });
     let upperArmGeo;
+    let jointArmGeo;
+    let lowerArmGeo;
+    let jointArmMesh;
+
 
     //limbsクラス
     function Limbs(){
@@ -70,21 +74,39 @@ function init() {
         //make mesh
         const pt = makePipePt( upperArmObj );
         upperArmGeo = makeGeometry( upperArmObj, pt );
-
         const mesh = new THREE.Mesh( upperArmGeo, upperArmMat );
         scene.add( mesh );
     }
 
+    function lowerArmInit(){
+
+
+    }
+
+    function jointInit(){
+        const pt = makeJointPt( upperArmObj, -0.01 );
+        jointArmGeo = makeGeometry( upperArmObj, pt );
+        jointArmMesh = new THREE.Mesh( jointArmGeo, upperArmMat );
+        scene.add( jointArmMesh );
+    }
+
+    function jointUpdate( angle ){
+        const bend = mapping( angle, 0.0, 1.5, -0.01, -3*PI/4 );
+        const pt = makeJointPt( upperArmObj, bend );
+        updateGeometry( upperArmObj, pt, jointArmGeo );
+        jointArmMesh.position.set( upperArmObj.ep.x,  upperArmObj.ep.y, 0 );
+    }
+
     upperArmInit();
-    //limbUpdate( -1 );
-
-    //upperArmObj.ep = new THREE.Vector2( 10, 20 );
-    //const upperArmPt2 = makePipePt( upperArmObj );
-    //updateGeometry( upperArmObj, upperArmPt2, upperArmGeo );
+    jointInit();
+    limbUpdate( 1 );
+    jointUpdate( 1 );
 
 
 
-    //Armを作成
+
+
+
 
     ///////////////////////////////////////////////
     //    　　　　  　animation設定               //
@@ -120,11 +142,12 @@ function init() {
     render();
     function render(){
         //animation update
-        mixer.update(clock.getDelta());
-        armAngle = upperArmMove.userData;
-        limbUpdate( armAngle );
+        //mixer.update(clock.getDelta());
+        //armAngle = upperArmMove.userData;
+        //limbUpdate( armAngle );
         //cycle
         requestAnimationFrame(render);
         renderer.render(scene, camera);
     }
 }
+
