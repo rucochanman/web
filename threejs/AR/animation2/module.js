@@ -2,11 +2,13 @@
 //    　　　     　   defs                   //
 //////////////////////////////////////////////
 
-const limbSeg = 12;
+const limbSeg = 8;
 const limbEdge = 12;
 const initLength = 10;
 const PI = Math.PI;
 const center2D = new THREE.Vector2();
+let lastAngle = 0;
+let lastBonePos;
 
 ////////////////////////////////////////////////
 //    　　　　　　　 Math関数                  //
@@ -97,10 +99,45 @@ function makePipePt( obj ){
             v.rotateAround( bone[i], angle );
             pt[i][j] = [v.x, v.y, w];
         }
+        //value update
         zpos = bone[i];
+        lastAngle = angle;
     }
     return pt;
 }
+
+
+
+function makeJointPt( obj, bend ){
+    //make bone center
+    const radius = obj.thick[0];
+    const origin = new THREE.Vector2( 0,-radius );
+    origin.rotateAround( center2D, lastAngle );
+    const bone = new THREE.Vector2();
+    //set pt
+    const pt = [];
+    for( let i=0; i<( obj.seg+1 ); i++ ){
+        pt[i] = [];
+        let angle = i==0 ? 0 : bend / obj.seg;
+        bone.rotateAround( origin, angle );
+        for( let j=0; j<obj.edge; j++ ){
+            const theta = j * 2 * PI / obj.edge;
+            const w = radius * cos( theta );
+            const h = radius * sin( theta );
+            const v = new THREE.Vector2( 0, h );
+            v.add( bone );
+            v.rotateAround( bone, i * angle + lastAngle );
+            pt[i][j] = [ v.x, v.y, w ];
+        }
+    }
+    //update values
+    lastAngle += bend;
+    lastBonePos = bone;
+    return pt;
+}
+
+
+
 
 ////////////////////////////////////////////////
 //    　　　　　  vertexの作成                 //
