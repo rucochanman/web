@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <!-- 必要ソース読み込み　-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r124/three.min.js"></script>
+        <script src="module.js"></script>
+        <script src="index.js"></script>
+    </head>
+    <body>
+        <canvas id="myCanvas"></canvas>
+        <div id="webgl"></div>
+
+        <!-- 頂点シェーダー -->
+        <script id="vert" type="x-shader/x-vertex">
+            void main() {
+                //カメラ座標に変換したものを最終的にgl_Positionに代入
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        </script>
+
+        <!-- フラグメントシェーダー -->
+        <script id="frag" type="x-shader/x-fragment">
+            void main() {
+                //全ピクセルを赤にする
+                gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+            }
+          </script>
+    </body>
+</html>
