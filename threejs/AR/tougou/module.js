@@ -8,7 +8,7 @@ const initLength = 10;
 const PI = Math.PI;
 const center2D = new THREE.Vector2();
 let lastAngle = 0;
-let lastBonePos;
+let lastBonePos = new THREE.Vector2();
 
 ////////////////////////////////////////////////
 //    　　　　　　　 Math関数                  //
@@ -33,7 +33,7 @@ function abs( r ){
 ///////////////////////////////////////////////
 
 
-function getBezierPt( len1, len2, bend1, bend2 ){
+function getBezierPt3( len1, len2, bend1, bend2 ){
     //angle adjust
     const diff = abs( bend1 ) * -PI/8;
     const rad = bend1 + bend2 + diff;
@@ -56,7 +56,7 @@ function getBezierPt( len1, len2, bend1, bend2 ){
 }
 
 
-function getBezierPt2( len, bend ){
+function getBezierPt( len, bend ){
     const ep_x = len * cos( bend );
     const ep_y = len * sin( bend );
     const cp_x = abs( ep_y / 2 );
@@ -67,6 +67,20 @@ function getBezierPt2( len, bend ){
     return { ep, cp }
 }
 
+function getBezierPt2( bend, len, thick ){
+  //  const joint_len = thick * abs( bend );
+    const rad = (2*PI*thick) * (bend/(2*PI));
+    const rad2 = thick * bend;
+    const len2 = len - rad2;
+    console.log(rad);
+    console.log(rad2);
+    const v = new THREE.Vector2( len, 0 );
+    v.rotateAround( center2D, lastAngle );
+    const ep2 = v.add( lastBonePos );
+    const cp2 = v.add( lastBonePos );
+
+    return { ep2, cp2 }
+}
 
 ////////////////////////////////////////////////
 //    　　　　　　　 pipe作成                  //
@@ -79,7 +93,38 @@ function makeBone( obj ){
 
 function makePipePt( obj ){
     //make bone
+    const curve = new THREE.QuadraticBezierCurve( lastBonePos, obj.cp, obj.ep );
+    const bone = curve.getPoints( obj.seg );
+    let zpos = lastBonePos;
+    //set points
+    const pt = [];
+    for( let i=0; i<( obj.seg+1 ); i++ ){
+        //calc angle
+        const diff = new THREE.Vector2().subVectors( bone[i], zpos );
+        const angle = Math.atan2( diff.y, diff.x );
+        //calc coords
+        pt[i] = [];
+        for( let j=0; j<obj.edge; j++ ){
+            const theta = j * 2 * PI / obj.edge;
+            const w = obj.thick[i] * cos( theta );
+            const h = obj.width[i] * sin( theta );
+            const v = new THREE.Vector2( 0, h );
+            v.add( bone[i] );
+            v.rotateAround( bone[i], angle );
+            pt[i][j] = [v.x, v.y, w];
+        }
+        zpos = bone[i];
+        lastAngle = angle;
+    }
+    lastBonePos = bone[obj.seg];
+    return pt;
+}
+
+
+function makePipePt2( obj ){
+    //make bone
     const curve = new THREE.QuadraticBezierCurve( center2D, obj.cp, obj.ep );
+    curve.add( lastBonePos );
     const bone = curve.getPoints( obj.seg );
     let zpos = bone[0];
     //set points
@@ -99,11 +144,10 @@ function makePipePt( obj ){
             v.rotateAround( bone[i], angle );
             pt[i][j] = [v.x, v.y, w];
         }
-        //value update
         zpos = bone[i];
         lastAngle = angle;
-        lastBonePos = zpos;
     }
+    lastBonePos = bone[obj.seg];
     return pt;
 }
 
