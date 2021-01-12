@@ -33,17 +33,21 @@ function init() {
     //    　　       　　 defs                   //
     //////////////////////////////////////////////
 
-    const upperArmLength = 20;
-    const upperArmThick = 5;
-    const upperArmObj = new Limbs();
-    const upperArmMat = new THREE.MeshNormalMaterial({
+    const armMat = new THREE.MeshNormalMaterial({
         side:THREE.DoubleSide,
     });
+
+    const upperArmLength = 20;
+    const lowerArmLength = 20;
+    const upperArmThick = 5;
+
+    const upperArmObj = new Limbs();
+    const jointArmObj = new Limbs();
+    const lowerArmObj = new Limbs();
+
     let upperArmGeo;
     let jointArmGeo;
     let lowerArmGeo;
-    let jointArmMesh;
-
 
 
     ///////////////////////////////////////////////
@@ -61,49 +65,49 @@ function init() {
     }
 
     function limbInit(){
-
-      //set thick/width
-      const upperArmThicks = new Array( limbSeg );
-      for( let i=0; i<( limbSeg+1 ); i++ ){
-          upperArmThicks[i] = upperArmThick;
-      }
-      //set parameter
-      upperArmObj.ep = new THREE.Vector2(upperArmLength,0);
-      upperArmObj.thick = upperArmThicks;
-      upperArmObj.width = upperArmThicks;
-      //make mesh
-      const pt1 = makePipePt( upperArmObj );
-      const pt2 = makeJointPt( upperArmObj, -1 );
-      const pt = pt1.concat(pt2);
-      upperArmObj.seg = limbSeg * 2;
-      upperArmGeo = makeGeometry( upperArmObj, pt );
-      const mesh = new THREE.Mesh( upperArmGeo, upperArmMat );
-      scene.add( mesh );
+        //upperArm
+        const upperArmThicks = new Array( limbSeg );
+        for( let i=0; i<( limbSeg+1 ); i++ ){
+            upperArmThicks[i] = upperArmThick;
+        }
+        //set parameter
+        upperArmObj.ep = new THREE.Vector2( upperArmLength,0 );
+        upperArmObj.thick = upperArmThicks;
+        upperArmObj.width = upperArmThicks;
+        jointArmObj.seg *= 2;
+        //make mesh
+        const pt1 = makePipePt( upperArmObj );
+        const pt2 = makeJointPt( upperArmObj, -0.05 );
+        const pt = pt1.concat(pt2);
+        upperArmGeo = makeGeometry( jointArmObj, pt );
+        const mesh = new THREE.Mesh( upperArmGeo, armMat );
+        scene.add( mesh );
     }
+
+
+
+    function limbupdate( angle1, angle2 ){
+        //upperArm
+        lastAngle = 0;
+        lastBonePos = new THREE.Vector2();
+        const bend1 = mapping( angle1, -1.0, 2.0, PI/4, -PI/2 );
+        const { ep, cp } = getBezierPt( upperArmLength, bend1 );
+        upperArmObj.ep = ep;
+        upperArmObj.cp = cp;
+        const pt1 = makePipePt( upperArmObj );
+        //jointArm
+        const bend2 = mapping( angle2, 0.0, 1.5, -0.05, -3*PI/4 );
+        const pt2 = makeJointPt( upperArmObj, bend2 );
+        const pt = pt1.concat( pt2 );
+        updateGeometry( jointArmObj, pt, upperArmGeo );
+    }
+
+
     limbInit();
-
-
-    function limbupdate(angle1, angle2){
-      lastAngle = 0;
-      const bend1 = mapping( angle1, -1.0, 2.0, PI/4, -PI/2 );
-      const { ep, cp } = getBezierPt2( upperArmLength, bend1 );
-      upperArmObj.ep = ep;
-      upperArmObj.cp = cp;
-      upperArmObj.seg = limbSeg;
-      const pt1 = makePipePt( upperArmObj );
-      const bend2 = mapping( angle2, 0.0, 1.5, -0.05, -3*PI/4 );
-      const pt2 = makeJointPt( upperArmObj, bend2 );
-      const pt = pt1.concat( pt2 );
-      upperArmObj.seg = limbSeg*2;
-      updateGeometry( upperArmObj, pt, upperArmGeo );
-    }
-
-    //limbupdate( -1,0.0 );
-
-
-
-
-
+    limbupdate( 0, 1 );
+    const { ep2, cp2 } = getBezierPt2( PI/2, upperArmLength, upperArmThick );
+    //console.log(lastAngle);
+    //console.log( ep2 );
 
 
     ///////////////////////////////////////////////
@@ -129,6 +133,7 @@ function init() {
     const mixer = new THREE.AnimationMixer( upperArmMove );
     const clipAction = mixer.clipAction( clip );
     clipAction.play();
+
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
     //////////////////////////////////////////////
@@ -137,11 +142,10 @@ function init() {
     render();
     function render(){
         //animation update
-        mixer.update(clock.getDelta());
-        let angle1 = upperArmMove.position.x;
-        let angle2 = upperArmMove.position.y;
-        //console.log(angle2);
-        limbupdate( angle1, angle2 );
+        //mixer.update(clock.getDelta());
+        //let angle1 = upperArmMove.position.x;
+        //let angle2 = upperArmMove.position.y;
+        //limbupdate( angle1, angle2 );
         //cycle
         requestAnimationFrame(render);
         renderer.render(scene, camera);
