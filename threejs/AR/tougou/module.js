@@ -1,14 +1,15 @@
+
 ///////////////////////////////////////////////
 //    　　　     　   defs                   //
 //////////////////////////////////////////////
 
 const limbSeg = 8;
-const limbEdge = 12;
+const limbEdge = 15;
 const initLength = 10;
 const PI = Math.PI;
 const center2D = new THREE.Vector2();
 let lastAngle = 0;
-let lastBonePos = new THREE.Vector2();
+let lastPos = new THREE.Vector2();
 
 ////////////////////////////////////////////////
 //    　　　　　　　 Math関数                  //
@@ -32,30 +33,6 @@ function abs( r ){
 //    　　　 　ベジエポイント取得               //
 ///////////////////////////////////////////////
 
-
-function getBezierPt3( len1, len2, bend1, bend2 ){
-    //angle adjust
-    const diff = abs( bend1 ) * -PI/8;
-    const rad = bend1 + bend2 + diff;
-
-    //arm1
-    const x1 = len1 * cos( bend1 );
-    const y1 = len1 * sin( bend1 );
-    const ep1 = new THREE.Vector2( x1,y1 );
-    const cp1 = new THREE.Vector2();
-    ep1.y > 0 ? cp1.y = y1 / 2 : cp1.x = -y1 / 2;
-
-    //arm2
-    const joint_len = armThick * abs( bend2 );
-    len2 -= joint_len;
-    const x2 = len2 * cos( rad );
-    const y2 = len2 * sin( rad );
-    const ep2 = new THREE.Vector2( x2,y2 );
-    const cp2 = new THREE.Vector2( 0,0 );
-    return { ep1, cp1, ep2, cp2 }
-}
-
-
 function getBezierPt( len, bend ){
     const ep_x = len * cos( bend );
     const ep_y = len * sin( bend );
@@ -63,76 +40,32 @@ function getBezierPt( len, bend ){
     const cp_y = Math.max( ep_y / 2, 0 );
     const ep = new THREE.Vector2( ep_x, ep_y );
     const cp = new THREE.Vector2( cp_x, cp_y );
-
     return { ep, cp }
 }
 
 function getBezierPt2( bend, len, thick ){
-  //  const joint_len = thick * abs( bend );
-    const rad = (2*PI*thick) * (bend/(2*PI));
-    const rad2 = thick * bend;
-    const len2 = len - rad2;
-    console.log(rad);
-    console.log(rad2);
-    const v = new THREE.Vector2( len, 0 );
-    v.rotateAround( center2D, lastAngle );
-    const ep2 = v.add( lastBonePos );
-    const cp2 = v.add( lastBonePos );
-
-    return { ep2, cp2 }
+    const joint_len = thick * abs( bend );
+    const v = new THREE.Vector2( len - joint_len, 0 );
+    const ep = v.rotateAround( center2D, lastAngle );
+    const cp = ep.clone();
+    return { ep, cp }
 }
 
 ////////////////////////////////////////////////
 //    　　　　　　　 pipe作成                  //
 ///////////////////////////////////////////////
 
-function makeBone( obj ){
-
-
-}
-
 function makePipePt( obj ){
     //make bone
-    const curve = new THREE.QuadraticBezierCurve( lastBonePos, obj.cp, obj.ep );
-    const bone = curve.getPoints( obj.seg );
-    let zpos = lastBonePos;
-    //set points
-    const pt = [];
-    for( let i=0; i<( obj.seg+1 ); i++ ){
-        //calc angle
-        const diff = new THREE.Vector2().subVectors( bone[i], zpos );
-        const angle = Math.atan2( diff.y, diff.x );
-        //calc coords
-        pt[i] = [];
-        for( let j=0; j<obj.edge; j++ ){
-            const theta = j * 2 * PI / obj.edge;
-            const w = obj.thick[i] * cos( theta );
-            const h = obj.width[i] * sin( theta );
-            const v = new THREE.Vector2( 0, h );
-            v.add( bone[i] );
-            v.rotateAround( bone[i], angle );
-            pt[i][j] = [v.x, v.y, w];
-        }
-        zpos = bone[i];
-        lastAngle = angle;
-    }
-    lastBonePos = bone[obj.seg];
-    return pt;
-}
-
-
-function makePipePt2( obj ){
-    //make bone
     const curve = new THREE.QuadraticBezierCurve( center2D, obj.cp, obj.ep );
-    curve.add( lastBonePos );
     const bone = curve.getPoints( obj.seg );
-    let zpos = bone[0];
+    let zpos = center2D;
     //set points
     const pt = [];
     for( let i=0; i<( obj.seg+1 ); i++ ){
         //calc angle
         const diff = new THREE.Vector2().subVectors( bone[i], zpos );
-        const angle = Math.atan2( diff.y, diff.x );
+        const angle = i==0 ? lastAngle : Math.atan2( diff.y, diff.x );
         //calc coords
         pt[i] = [];
         for( let j=0; j<obj.edge; j++ ){
@@ -142,28 +75,28 @@ function makePipePt2( obj ){
             const v = new THREE.Vector2( 0, h );
             v.add( bone[i] );
             v.rotateAround( bone[i], angle );
+            v.add( lastPos );
             pt[i][j] = [v.x, v.y, w];
         }
         zpos = bone[i];
         lastAngle = angle;
     }
-    lastBonePos = bone[obj.seg];
+    lastPos = bone[obj.seg].add( lastPos );
     return pt;
 }
-
 
 
 function makeJointPt( obj, bend ){
     //make bone center
     const radius = obj.thick[0];
-    const origin = new THREE.Vector2( 0,-radius );
+    const origin = new THREE.Vector2( 0, -radius );
     origin.rotateAround( center2D, lastAngle );
     //set points
     const bone = new THREE.Vector2();
     const pt = [];
-    for( let i=0; i<( obj.seg+1 ); i++ ){
+    for( let i=0; i<( obj.seg ); i++ ){
         pt[i] = [];
-        let angle = bend / obj.seg;
+        let angle = i==0 ? 0 : bend / ( obj.seg-1 );
         bone.rotateAround( origin, angle );
         for( let j=0; j<obj.edge; j++ ){
             const theta = j * 2 * PI / obj.edge;
@@ -172,17 +105,14 @@ function makeJointPt( obj, bend ){
             const v = new THREE.Vector2( 0, h );
             v.add( bone );
             v.rotateAround( bone, i * angle + lastAngle );
-            v.add( lastBonePos );
             pt[i][j] = [ v.x, v.y, w ];
         }
     }
     //update values
     lastAngle += bend;
-    lastBonePos = bone;
+    lastPos = bone;
     return pt;
 }
-
-
 
 
 ////////////////////////////////////////////////
@@ -241,9 +171,11 @@ function makeGeometry( obj, pt ){
 ///////////////////////////////////////////////
 
 function updateGeometry( obj, pt, geometry ){
+    const indices = setIndices( obj.seg, obj.edge );
     const vertices = setVertices( obj.seg, obj.edge, pt );
     const newGeo = new THREE.BufferGeometry();
     newGeo.setAttribute('position', new THREE.BufferAttribute( vertices, 3 ));
+    newGeo.setIndex(new THREE.BufferAttribute( indices, 1 ));
     const merg = new THREE.Geometry().fromBufferGeometry( newGeo );
     merg.mergeVertices();
     geometry.vertices = merg.vertices;
