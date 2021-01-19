@@ -1,4 +1,3 @@
-
 //ページの読み込みを待つ
 window.addEventListener('load', init);
 function init() {
@@ -113,7 +112,7 @@ function init() {
         //make pt
         const fingerPt = makePipePt( fingerObj );
         const upperArmpt = makePipePt( upperArmObj );
-        const jointArmPt = makeJointPt( upperArmObj, -0.05 );
+        const jointArmPt = makeJointPt( upperArmObj, -1 );
         const lowerArmPt = makePipePt( lowerArmObj );
         const lowerArmPts = jointArmPt.concat( lowerArmPt );
 
@@ -229,3 +228,4 @@ function init() {
         renderer.render(scene, camera);
     }
 }
+
