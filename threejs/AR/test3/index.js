@@ -64,7 +64,7 @@ function init() {
     //    　　      モデルの読み込み              //
     //////////////////////////////////////////////
 
-    /*
+    
     let apple;
     const gltfloader = new THREE.GLTFLoader();
     gltfloader.load( './data/apple.glb',function( gltf ){
@@ -72,7 +72,7 @@ function init() {
         apple.scale.set( 0.5, 0.5, 0.5 );
         marker1.add( apple );
     });
-    */
+    
 
     const armMat = new THREE.MeshNormalMaterial({
         side:THREE.DoubleSide,
@@ -102,7 +102,7 @@ function init() {
       new THREE.MeshNormalMaterial(),
     );
     mesh.position.y = 1.0;
-    marker1.add(mesh);
+    //marker1.add(mesh);
     
     
 
