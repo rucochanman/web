@@ -264,7 +264,7 @@ function init() {
         }
 
         //animation update
-        console.log(clock.getDelta());
+        //console.log(clock.getDelta());
         //mixer.update(clock.getDelta());
         //let angle1 = upperArmMove.position.x;
         //let angle2 = upperArmMove.position.y;
