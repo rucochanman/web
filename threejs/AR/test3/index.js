@@ -248,7 +248,7 @@ function init() {
 
 
 
-
+    const clock = new THREE.Clock();
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
@@ -264,11 +264,11 @@ function init() {
         }
 
         //animation update
-        const clock = new THREE.Clock();
-        mixer.update(clock.getDelta());
-        let angle1 = upperArmMove.position.x;
-        let angle2 = upperArmMove.position.y;
-        armUpdate( angle1, angle2, 0, 0 );
+        console.log(clock.getDelta());
+        //mixer.update(clock.getDelta());
+        //let angle1 = upperArmMove.position.x;
+        //let angle2 = upperArmMove.position.y;
+        //armUpdate( angle1, angle2, 0, 0 );
 
         renderer.render( scene, camera );
     });
