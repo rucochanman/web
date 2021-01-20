@@ -225,6 +225,7 @@ function init() {
     //    　　　　  　animation設定               //
     //////////////////////////////////////////////
 
+    /*
     // POSITION
     const upperArmMove = new THREE.Object3D();
     const dur = [ 0, 2, 4 ];
@@ -244,6 +245,7 @@ function init() {
     const mixer = new THREE.AnimationMixer( upperArmMove );
     const clipAction = mixer.clipAction( clip );
     clipAction.play();
+    */
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
