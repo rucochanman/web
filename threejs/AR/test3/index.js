@@ -249,6 +249,7 @@ function init() {
 
 
     const clock = new THREE.Clock();
+    console.log("ver");
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
