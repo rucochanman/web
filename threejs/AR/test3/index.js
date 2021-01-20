@@ -254,7 +254,7 @@ function init() {
     //    　　　　  　レンダリング開始             //
     //////////////////////////////////////////////
     
-    const clock = new THREE.Clock();
+
 
     requestAnimationFrame( function animate(){
         requestAnimationFrame( animate );
@@ -264,6 +264,7 @@ function init() {
         }
 
         //animation update
+        const clock = new THREE.Clock();
         mixer.update(clock.getDelta());
         let angle1 = upperArmMove.position.x;
         let angle2 = upperArmMove.position.y;
