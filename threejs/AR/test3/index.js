@@ -172,8 +172,8 @@ function init() {
         armG.add( upperArmMesh );
         armG.add( lowerArmG );
         //add mesh to scene
-        armG.position.y = 1;
-        armG.scale.set( 0.1, 0.1, 0.1 );
+        armG.position.y = 0.1;
+        armG.scale.set( 0.05, 0.05, 0.05 );
         marker1.add( armG );
     }
 
@@ -221,15 +221,29 @@ function init() {
     armInit();
     armUpdate( 0.5, 0.5, -PI/4, -PI/8 );
 
-    const mesh = new THREE.Mesh(
-      new THREE.CubeGeometry(1, 1, 1),
-      new THREE.MeshNormalMaterial(),
-    );
-    mesh.position.y = 1.0;
-    console.log("new");
-    //marker1.add(mesh);
+    ///////////////////////////////////////////////
+    //    　　　　  　animation設定               //
+    //////////////////////////////////////////////
 
+    // POSITION
+    const upperArmMove = new THREE.Object3D();
+    const dur = [ 0, 2, 4 ];
+    const val1 = [ 2, -1, 2 ];
+    const val2 = [ 0, 1.5, 0 ];
 
+    const upperArmPos = [];
+    for( let i=0; i<dur.length; i++ ){
+        upperArmPos.push( val1[i] );
+        upperArmPos.push( val2[i] );
+        upperArmPos.push( 0 );
+    }
+
+    //const move = [];
+    const uppperArmKF = new THREE.NumberKeyframeTrack( '.position', dur, upperArmPos );
+    const clip = new THREE.AnimationClip( 'Action', 4, [ uppperArmKF ] );
+    const mixer = new THREE.AnimationMixer( upperArmMove );
+    const clipAction = mixer.clipAction( clip );
+    clipAction.play();
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
@@ -241,7 +255,11 @@ function init() {
             arToolkitContext.update( arToolkitSource.domElement );
             scene.visible = camera.visible;
         }
-        //apple.rotation.z += 0.01;
+        //animation update
+        mixer.update(clock.getDelta());
+        let angle1 = upperArmMove.position.x;
+        let angle2 = upperArmMove.position.y;
+        armUpdate( angle1, angle2, -PI/4, -PI/8 );
         renderer.render( scene, camera );
     });
 }
