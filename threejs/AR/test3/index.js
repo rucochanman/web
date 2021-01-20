@@ -245,7 +245,7 @@ function init() {
     const mixer = new THREE.AnimationMixer( upperArmMove );
     const clipAction = mixer.clipAction( clip );
     clipAction.play();
-    const clock = new THREE.Clock();
+
 
 
 
@@ -253,6 +253,8 @@ function init() {
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
     //////////////////////////////////////////////
+    
+    const clock = new THREE.Clock();
 
     requestAnimationFrame( function animate(){
         requestAnimationFrame( animate );
