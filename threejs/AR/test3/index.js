@@ -173,8 +173,8 @@ function init() {
         armG.add( lowerArmG );
         //add mesh to scene
         armG.position.y = 1;
-        armG.position.z = 1;
-        armG.scale.set( 0.1, 0.1, 0.1 );
+        armG.position.z = -1;
+        armG.scale.set( 0.05, 0.05, 0.05 );
         marker1.add( armG );
     }
 
@@ -261,10 +261,10 @@ function init() {
         }
 
         //animation update
-        //mixer.update(clock.getDelta());
-        //let angle1 = upperArmMove.position.x;
-        //let angle2 = upperArmMove.position.y;
-        //armUpdate( angle1, angle2 );
+        mixer.update(clock.getDelta());
+        let angle1 = upperArmMove.position.x;
+        let angle2 = upperArmMove.position.y;
+        armUpdate( angle1, angle2, 0, 0 );
 
         renderer.render( scene, camera );
     });
