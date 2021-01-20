@@ -249,7 +249,7 @@ function init() {
 
 
     const clock = new THREE.Clock();
-    console.log("ver");
+    console.log("ver2");
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
@@ -266,10 +266,10 @@ function init() {
 
         //animation update
         //console.log(clock.getDelta());
-        //mixer.update(clock.getDelta());
-        //let angle1 = upperArmMove.position.x;
-        //let angle2 = upperArmMove.position.y;
-        //armUpdate( angle1, angle2, 0, 0 );
+        mixer.update(clock.getDelta());
+        let angle1 = upperArmMove.position.x;
+        let angle2 = upperArmMove.position.y;
+        armUpdate( angle1, angle2, 0, 0 );
 
         renderer.render( scene, camera );
     });
