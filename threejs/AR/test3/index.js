@@ -173,8 +173,8 @@ function init() {
         armG.add( lowerArmG );
         //add mesh to scene
         armG.position.y = 1;
-        armG.position.z = -1;
-        armG.scale.set( 0.05, 0.05, 0.05 );
+        armG.position.z = 1;
+        armG.scale.set( 0.1, 0.1, 0.1 );
         marker1.add( armG );
     }
 
@@ -245,6 +245,7 @@ function init() {
     const mixer = new THREE.AnimationMixer( upperArmMove );
     const clipAction = mixer.clipAction( clip );
     clipAction.play();
+    const clock = new THREE.Clock();
 
 
 
