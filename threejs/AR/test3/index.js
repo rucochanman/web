@@ -172,8 +172,8 @@ function init() {
         armG.add( upperArmMesh );
         armG.add( lowerArmG );
         //add mesh to scene
-        armG.position.y = 1;
-        armG.scale.set( 0.1, 0.1, 0.1 );
+        armG.position.y = 0.5;
+        armG.scale.set( 0.05, 0.05, 0.05 );
         marker1.add( armG );
     }
 
