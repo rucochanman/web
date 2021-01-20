@@ -97,10 +97,13 @@ function init() {
     const lowerArmG = new THREE.Group();
     const handG = new THREE.Group();
 
-    const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-    const cube = new THREE.Mesh( geometry, armMat );
-    marker1.add( apple );
-
+    const mesh = new THREE.Mesh(
+      new THREE.CubeGeometry(1, 1, 1),
+      new THREE.MeshNormalMaterial(),
+    );
+    mesh.position.y = 1.0;
+    marker1.add(mesh);
+    
     
 
     ///////////////////////////////////////////////
