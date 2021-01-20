@@ -64,7 +64,7 @@ function init() {
     //    　　      モデルの読み込み              //
     //////////////////////////////////////////////
 
-    
+    /*
     let apple;
     const gltfloader = new THREE.GLTFLoader();
     gltfloader.load( './data/apple.glb',function( gltf ){
@@ -72,39 +72,16 @@ function init() {
         apple.scale.set( 0.5, 0.5, 0.5 );
         marker1.add( apple );
     });
-    
-
-    const armMat = new THREE.MeshNormalMaterial({
-        side:THREE.DoubleSide,
-    });
-
-    const upperArmLength = 20;
-    const lowerArmLength = 20;
-    const upperArmThick = 5;
-    const fingerLength = 2;
-    const fingerThick = 1;
-
-    const upperArmObj = new Limbs();
-    const jointArmObj = new Limbs();
-    const lowerArmObj = new Limbs();
-    const fingerObj = new Limbs();
-
-    let upperArmGeo;
-    let jointArmGeo;
-    let lowerArmGeo;
-
-    const armG = new THREE.Group();
-    const lowerArmG = new THREE.Group();
-    const handG = new THREE.Group();
+    */
 
     const mesh = new THREE.Mesh(
       new THREE.CubeGeometry(1, 1, 1),
       new THREE.MeshNormalMaterial(),
     );
     mesh.position.y = 1.0;
-    //marker1.add(mesh);
-    
-    
+    marker1.add(mesh);
+
+
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
