@@ -256,10 +256,10 @@ function init() {
             scene.visible = camera.visible;
         }
         //animation update
-        mixer.update(clock.getDelta());
-        let angle1 = upperArmMove.position.x;
-        let angle2 = upperArmMove.position.y;
-        armUpdate( angle1, angle2, -PI/4, -PI/8 );
+        //mixer.update(clock.getDelta());
+        //let angle1 = upperArmMove.position.x;
+        //let angle2 = upperArmMove.position.y;
+        //armUpdate( angle1, angle2, -PI/4, -PI/8 );
         renderer.render( scene, camera );
     });
 }
