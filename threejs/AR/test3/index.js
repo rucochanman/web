@@ -220,7 +220,7 @@ function init() {
     }
 
     armInit();
-    armUpdate( 0.5, 0.5, -PI/4, -PI/8 );
+    armUpdate( 0, 0, 0, 0 );
 
     ///////////////////////////////////////////////
     //    　　　　  　animation設定               //
