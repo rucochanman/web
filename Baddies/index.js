@@ -53,26 +53,38 @@ function init() {
     //    　　       マーカーの設定               //
     //////////////////////////////////////////////
 
-    const marker1 = new THREE.Group();
-    scene.add( marker1 );
-    const arMarkerControls = new THREEx.ArMarkerControls( arToolkitContext, marker1, {
-        type: 'pattern',
-        patternUrl: 'data/pattern-sneak.patt',
-    });
+    const markerNames = ["pattern-sneak", "pattern-box"];
+    const markerArray = [];
+
+    for ( let i=0; i<markerNames.length ; i++ ){
+
+        const marker = new THREE.Group();
+        scene.add( marker );
+        markerArray.push( marker );
+
+        const arMarkerControls = new THREEx.ArMarkerControls( arToolkitContext, marker, {
+            type: 'pattern',
+            patternUrl: "data/" + markerNames[i] + ".patt",
+        });
+
+        const markerGroup = new THREE.Group();
+        marker.add(markerGroup);
+    }
+
 
     ///////////////////////////////////////////////
     //    　　      モデルの読み込み              //
     //////////////////////////////////////////////
 
-    /*
+
     let apple;
     const gltfloader = new THREE.GLTFLoader();
     gltfloader.load( './data/apple.glb',function( gltf ){
         apple = gltf.scene;
         apple.scale.set( 0.5, 0.5, 0.5 );
-        marker1.add( apple );
+        markerArray[0].children[0].add( apple );
     });
-    */
+
 
     const armMat = new THREE.MeshNormalMaterial({
         side:THREE.DoubleSide,
@@ -175,7 +187,7 @@ function init() {
         armG.position.y = 1;
         armG.position.z = -1;
         armG.scale.set( 0.05, 0.05, 0.05 );
-        marker1.add( armG );
+        markerArray[1].children[0].add( armG );
     }
 
     function upperArmUpdate( angle ){
@@ -249,7 +261,7 @@ function init() {
 
 
     const clock = new THREE.Clock();
-    console.log("ver2");
+    console.log("ver3");
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
