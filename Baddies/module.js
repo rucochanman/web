@@ -11,31 +11,13 @@ let lastAngle = 0;
 let lastPos = new THREE.Vector2();
 
 ////////////////////////////////////////////////
-//    　　　　　　　 Math関数                  //
-///////////////////////////////////////////////
-
-function cos( r ){
-    return Math.cos( r );
-};
-function sin( r ){
-    return Math.sin( r );
-};
-function pow( base,exp ){
-    return Math.pow( base,exp );
-};
-function abs( r ){
-    return Math.abs( r );
-};
-
-
-////////////////////////////////////////////////
 //    　　　 　ベジエポイント取得               //
 ///////////////////////////////////////////////
 
 function getBezierPt( len, bend ){
-    const ep_x = len * cos( bend );
-    const ep_y = len * sin( bend );
-    const cp_x = abs( ep_y / 2 );
+    const ep_x = len * Math.cos( bend );
+    const ep_y = len * Math.sin( bend );
+    const cp_x = Math.abs( ep_y / 2 );
     const cp_y = Math.max( ep_y / 2, 0 );
     const ep = new THREE.Vector2( ep_x, ep_y );
     const cp = new THREE.Vector2( cp_x, cp_y );
@@ -43,7 +25,7 @@ function getBezierPt( len, bend ){
 }
 
 function getBezierPt2( bend, len, thick ){
-    const joint_len = thick * abs( bend );
+    const joint_len = thick * Math.abs( bend );
     const v = new THREE.Vector2( len - joint_len, 0 );
     const ep = v.rotateAround( center2D, lastAngle );
     const cp = ep.clone();
@@ -69,8 +51,8 @@ function makePipePt( obj ){
         pt[i] = [];
         for( let j=0; j<obj.edge; j++ ){
             const theta = j * 2 * PI / obj.edge;
-            const w = obj.thick[i] * cos( theta );
-            const h = obj.width[i] * sin( theta );
+            const w = obj.thick[i] * Math.cos( theta );
+            const h = obj.width[i] * Math.sin( theta );
             const v = new THREE.Vector2( 0, h );
             v.add( bone[i] );
             v.rotateAround( bone[i], angle );
@@ -83,7 +65,6 @@ function makePipePt( obj ){
     lastPos = bone[obj.seg].add( lastPos );
     return pt;
 }
-
 
 function makeJointPt( obj, bend ){
     //make bone center
@@ -98,9 +79,9 @@ function makeJointPt( obj, bend ){
         let angle = i==0 ? 0 : bend / ( obj.seg-1 );
         bone.rotateAround( origin, angle );
         for( let j=0; j<obj.edge; j++ ){
-            const theta = j * 2 * PI / obj.edge;
-            const w = radius * cos( theta );
-            const h = radius * sin( theta );
+            const theta = j * 2 * Math.PI / obj.edge;
+            const w = radius * Math.cos( theta );
+            const h = radius * Math.sin( theta );
             const v = new THREE.Vector2( 0, h );
             v.add( bone );
             v.rotateAround( bone, i * angle + lastAngle );
@@ -112,7 +93,6 @@ function makeJointPt( obj, bend ){
     lastPos = bone;
     return pt;
 }
-
 
 ////////////////////////////////////////////////
 //    　　　　　  vertexの作成                 //
