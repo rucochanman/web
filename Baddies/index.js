@@ -61,12 +61,10 @@ function init() {
         const marker = new THREE.Group();
         scene.add( marker );
         markerArray.push( marker );
-z
         const arMarkerControls = new THREEx.ArMarkerControls( arToolkitContext, marker, {
             type: 'pattern',
             patternUrl: "data/" + markerNames[i] + ".patt",
         });
-
         const markerGroup = new THREE.Group();
         marker.add(markerGroup);
     }
