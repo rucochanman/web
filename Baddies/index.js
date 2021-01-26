@@ -85,15 +85,15 @@ function init() {
     //    　　      モデルの読み込み              //
     //////////////////////////////////////////////
 
-    /*
+    
     let apple;
     const gltfloader = new THREE.GLTFLoader();
     gltfloader.load( './data/apple.glb',function( gltf ){
         apple = gltf.scene;
         apple.scale.set( 0.5, 0.5, 0.5 );
-        markerArray[0].children[0].add( apple );
+        markerArray[1].children[0].add( apple );
     });
-    */
+    
 
     const armMat = new THREE.MeshNormalMaterial({
         side:THREE.DoubleSide,
@@ -271,7 +271,7 @@ function init() {
 
 
     const clock = new THREE.Clock();
-    console.log("ver5");
+    console.log("ver6");
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
