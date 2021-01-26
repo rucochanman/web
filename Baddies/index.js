@@ -91,7 +91,7 @@ function init() {
     gltfloader.load( './data/apple.glb',function( gltf ){
         apple = gltf.scene;
         apple.scale.set( 0.5, 0.5, 0.5 );
-        markerArray[1].children[0].add( apple );
+        markerArray[0].children[0].add( apple );
     });
     
 
@@ -196,7 +196,7 @@ function init() {
         armG.position.y = 0.5;
         armG.position.z = -1;
         armG.scale.set( 0.05, 0.05, 0.05 );
-        markerArray[0].children[0].add( armG );
+        //markerArray[0].children[0].add( armG );
         //marker1.add( armG );
     }
 
