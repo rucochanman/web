@@ -196,8 +196,7 @@ function init() {
         armG.position.y = 0.5;
         armG.position.z = -1;
         armG.scale.set( 0.05, 0.05, 0.05 );
-        //markerArray[0].children[0].add( armG );
-        //marker1.add( armG );
+        markerArray[0].children[0].add( armG );
     }
 
     function upperArmUpdate( angle ){
