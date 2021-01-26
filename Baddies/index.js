@@ -271,7 +271,7 @@ function init() {
 
 
     const clock = new THREE.Clock();
-    console.log("ver3");
+    console.log("ver4");
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
