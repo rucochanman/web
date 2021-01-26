@@ -53,6 +53,8 @@ function init() {
     //    　　       マーカーの設定               //
     //////////////////////////////////////////////
 
+
+    /*
     const markerNames = [ "pattern-sneak", "pattern-box" ];
     const markerArray = [];
 
@@ -68,6 +70,15 @@ function init() {
         const markerGroup = new THREE.Group();
         marker.add(markerGroup);
     }
+    */
+
+    const marker1 = new THREE.Group();
+    scene.add( marker1 );
+    const arMarkerControls = new THREEx.ArMarkerControls( arToolkitContext, marker1, {
+        type: 'pattern',
+        patternUrl: "data/pattern-sneak.patt",
+    });
+
 
 
     ///////////////////////////////////////////////
@@ -185,7 +196,8 @@ function init() {
         armG.position.y = 1;
         armG.position.z = -1;
         armG.scale.set( 0.05, 0.05, 0.05 );
-        markerArray[0].children[0].add( armG );
+        //markerArray[0].children[0].add( armG );
+        marker1.add( armG );
     }
 
     function upperArmUpdate( angle ){
