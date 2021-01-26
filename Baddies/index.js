@@ -55,7 +55,7 @@ function init() {
 
 
 
-    const markerNames = [ "pattern-sneak", "pattern-box", "pattern-wing" ];
+    const markerNames = [ "pattern-sneak", "pattern-box", "pattern-wing", "pattern-stop" ];
     const markerArray = [];
 
     for ( let i=0; i<markerNames.length ; i++ ){
@@ -91,7 +91,7 @@ function init() {
     gltfloader.load( './data/apple.glb',function( gltf ){
         apple = gltf.scene;
         apple.scale.set( 0.5, 0.5, 0.5 );
-        markerArray[2].children[0].add( apple );
+        markerArray[3].children[0].add( apple );
     });
 
 
@@ -271,7 +271,7 @@ function init() {
 
 
     const clock = new THREE.Clock();
-    console.log("ver");
+    console.log("ver6");
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
