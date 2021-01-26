@@ -91,7 +91,7 @@ function init() {
     gltfloader.load( './data/apple.glb',function( gltf ){
         apple = gltf.scene;
         apple.scale.set( 0.5, 0.5, 0.5 );
-        markerArray[0].children[0].add( apple );
+        markerArray[1].children[0].add( apple );
     });
     
 
