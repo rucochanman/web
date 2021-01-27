@@ -95,14 +95,13 @@ function init() {
     });
 
     let bentley;
-    const gltfloader = new THREE.GLTFLoader();
     gltfloader.load( './data/bentley.glb',function( gltf ){
         bentley = gltf.scene;
         bentley.scale.set( 0.5, 0.5, 0.5 );
         markerArray[3].children[0].add( bentley );
     });
-    
-    
+
+
     const armMat = new THREE.MeshNormalMaterial({
         side:THREE.DoubleSide,
     });
