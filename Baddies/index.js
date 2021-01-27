@@ -91,10 +91,18 @@ function init() {
     gltfloader.load( './data/apple.glb',function( gltf ){
         apple = gltf.scene;
         apple.scale.set( 0.5, 0.5, 0.5 );
-        markerArray[3].children[0].add( apple );
+        markerArray[0].children[0].add( apple );
     });
 
-
+    let bentley;
+    const gltfloader = new THREE.GLTFLoader();
+    gltfloader.load( './data/bentley.glb',function( gltf ){
+        bentley = gltf.scene;
+        bentley.scale.set( 0.5, 0.5, 0.5 );
+        markerArray[3].children[0].add( bentley );
+    });
+    
+    
     const armMat = new THREE.MeshNormalMaterial({
         side:THREE.DoubleSide,
     });
