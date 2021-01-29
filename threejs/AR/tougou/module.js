@@ -84,7 +84,7 @@ function makeJointPt( obj, bend ){
     //set points
     const bone = new THREE.Vector2();
     const pt = [];
-    for( let i=0; i<( obj.seg ); i++ ){
+    for( let i=0; i<obj.seg; i++ ){
         pt[i] = [];
         let angle = i==0 ? 0 : bend / ( obj.seg-1 );
         bone.rotateAround( origin, angle );
@@ -134,8 +134,8 @@ function setVertices( seg, edge, pt ){
         for( let j=0; j<edge; j++ ){
             vert[i][j] = [];
             vert[i][j][0] = pt[i][j];
-            vert[i][j][1] = pt[i][( j+1 ) % edge];
-            vert[i][j][2] = pt[i+1][( j+1 ) % edge];
+            vert[i][j][1] = pt[i][(j+1) % edge];
+            vert[i][j][2] = pt[i+1][(j+1) % edge];
             vert[i][j][3] = pt[i+1][j];
         }
     }
@@ -167,6 +167,20 @@ function makeGeometry( obj, pt ){
     const indices = setIndices( obj.seg, obj.edge );
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute( vertices, 3 ));
+    geometry.setIndex(new THREE.BufferAttribute( indices, 1 ));
+    const merg = new THREE.Geometry().fromBufferGeometry( geometry );
+    merg.mergeVertices();
+    merg.computeVertexNormals();
+    return merg;
+}
+
+function makeGeometry2( obj, pt, uv ){
+    const vertices = setVertices( obj.seg, obj.edge, pt );
+    const uvs = setVertices( obj.seg, obj.edge, uv );
+    const indices = setIndices( obj.seg, obj.edge );
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute( vertices, 3 ));
+    geometry.setAttribute('uv', new THREE.BufferAttribute( uvs, 2 ));
     geometry.setIndex(new THREE.BufferAttribute( indices, 1 ));
     const merg = new THREE.Geometry().fromBufferGeometry( geometry );
     merg.mergeVertices();
