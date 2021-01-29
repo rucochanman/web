@@ -289,20 +289,24 @@ function init() {
     //    　　　　  　レンダリング開始             //
     //////////////////////////////////////////////
 
-
+    function update(){
+	      if ( markerArray[1].children[0].visible ){
+            mixer.update(clock.getDelta());
+            let angle1 = upperArmMove.position.x;
+            let angle2 = upperArmMove.position.y;
+            armUpdate( angle1, angle2, 0, 0 );
+        }
+    }
 
     requestAnimationFrame( function animate(){
+
+        update();
+        
         requestAnimationFrame( animate );
         if ( arToolkitSource.ready ) {
             arToolkitContext.update( arToolkitSource.domElement );
             scene.visible = camera.visible;
         }
-
-        //animation update
-        mixer.update(clock.getDelta());
-        let angle1 = upperArmMove.position.x;
-        let angle2 = upperArmMove.position.y;
-        armUpdate( angle1, angle2, 0, 0 );
 
         renderer.render( scene, camera );
     });
