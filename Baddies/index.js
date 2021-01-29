@@ -96,6 +96,7 @@ function init() {
 
 
     const modelLight = new THREE.DirectionalLight( 0xFFFFFF, 1 );
+    modelLight.position.set( 0, 0.5, 1 );
     let bentley;
     gltfloader.load( './data/model/bentley.glb',function( gltf ){
         bentley = gltf.scene;
