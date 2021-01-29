@@ -55,7 +55,7 @@ function init() {
 
 
 
-    const markerNames = [ "pattern-sneak", "pattern-box", "pattern-wing", "pattern-stop" ];
+    const markerNames = [ "sneak", "box", "stop", "wing" ];
     const markerArray = [];
 
     for ( let i=0; i<markerNames.length ; i++ ){
@@ -65,7 +65,7 @@ function init() {
         markerArray.push( marker );
         const arMarkerControls = new THREEx.ArMarkerControls( arToolkitContext, marker, {
             type: 'pattern',
-            patternUrl: "data/" + markerNames[i] + ".patt",
+            patternUrl: "data/pattern/pattern-" + markerNames[i] + ".patt",
         });
         const markerGroup = new THREE.Group();
         marker.add( markerGroup );
@@ -88,17 +88,25 @@ function init() {
 
     let apple;
     const gltfloader = new THREE.GLTFLoader();
-    gltfloader.load( './data/apple.glb',function( gltf ){
+    gltfloader.load( './data/model/apple.glb',function( gltf ){
         apple = gltf.scene;
         apple.scale.set( 0.5, 0.5, 0.5 );
         markerArray[0].children[0].add( apple );
     });
 
     let bentley;
-    gltfloader.load( './data/bentley.glb',function( gltf ){
+    gltfloader.load( './data/model/bentley.glb',function( gltf ){
         bentley = gltf.scene;
         bentley.scale.set( 0.5, 0.5, 0.5 );
-        markerArray[3].children[0].add( bentley );
+        markerArray[2].children[0].add( bentley );
+    });
+
+
+    let bench;
+    gltfloader.load( './data/model/bench.glb',function( gltf ){
+        bench = gltf.scene;
+        bench.scale.set( 0.5, 0.5, 0.5 );
+        markerArray[3].children[0].add( bench );
     });
 
 
@@ -275,10 +283,7 @@ function init() {
     const clipAction = mixer.clipAction( clip );
     clipAction.play();
 
-
-
     const clock = new THREE.Clock();
-    console.log("ver6");
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
@@ -294,7 +299,6 @@ function init() {
         }
 
         //animation update
-        //console.log(clock.getDelta());
         mixer.update(clock.getDelta());
         let angle1 = upperArmMove.position.x;
         let angle2 = upperArmMove.position.y;
