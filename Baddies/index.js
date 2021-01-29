@@ -215,7 +215,7 @@ function init() {
         //add mesh to scene
         armG.position.y = 0.5;
         armG.position.z = -1;
-        armG.scale.set( 0.05, 0.05, 0.05 );
+        armG.scale.set( 0.01, 0.01, 0.01 );
         markerArray[1].children[0].add( armG );
         //marker1.add( armG );
     }
