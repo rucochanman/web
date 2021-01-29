@@ -95,12 +95,13 @@ function init() {
     });
 
 
-    const modelLight = new THREE.DirectionalLight( 0xFFFFFF, 1 );
+    const modelLight = new THREE.DirectionalLight( 0xFFFFFF, 10 );
     modelLight.position.set( 0, 0.5, 1 );
     let bentley;
     gltfloader.load( './data/model/bentley.glb',function( gltf ){
         bentley = gltf.scene;
         bentley.scale.set( 0.5, 0.5, 0.5 );
+	bentley.rotation.y = PI/2;
         markerArray[2].children[0].add( bentley );
         markerArray[2].children[0].add( modelLight );
     });
