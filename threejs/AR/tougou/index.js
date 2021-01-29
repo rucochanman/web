@@ -75,6 +75,11 @@ function init() {
     //    　　　　 マテリアル配置                  //
     //////////////////////////////////////////////
 
+    const armMat = new THREE.MeshNormalMaterial({
+        side:THREE.DoubleSide,
+        //wireframe: true
+    });
+
     const texLoader = new THREE.TextureLoader();
     const textTex = texLoader.load( './data/tex/tex.png' );
 
@@ -103,19 +108,53 @@ function init() {
 
     const uvMat = material.clone();
     uvMat.fragmentShader = frag;
-    uvMat.uniforms.uTexture = textTex;
+    uvMat.uniforms.uTexture.value = textTex;
 
+
+    function test(){
+
+        const testObj = new Limbs();
+        const testThicks = new Array( limbSeg );
+        for( let i=0; i<( limbSeg+1 ); i++ ){
+            const t = i / limbSeg;
+            testThicks[i] = 5;
+        }
+
+        testObj.thick = testThicks;
+        testObj.width = testThicks;
+        testObj.ep = new THREE.Vector2( 10,0 );
+        testObj.cp = new THREE.Vector2( 10,0 );
+
+        //uvmap
+        let uvmap = [];
+        for( let i=0; i<testObj.seg+1; i++ ){
+            uvmap[i] = [];
+            let y = i/(testObj.seg-1);
+            for(let j=0; j<testObj.edge; j++){
+                let x = j/testObj.edge;
+                uvmap[i][j] = [x, y];
+            }
+        }
+
+
+        const testObjPt = makePipePt( testObj );
+        const testObjGeo = makeGeometry2( testObj, testObjPt, uvmap );
+
+        const testObjMesh = new THREE.Mesh( testObjGeo, uvMat );
+        scene.add(testObjMesh);
+        //model.bodyGeo = mergeGeometry(model.bodyGeo);
+        console.log("test");
+    }
+
+    test();
     const cubegeometry = new THREE.BoxGeometry( 20, 20, 20 );
     const cubematerial = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
     const cube = new THREE.Mesh( cubegeometry, uvMat );
-    scene.add( cube );
+    //scene.add( cube );
 
 
 
-    const armMat = new THREE.MeshNormalMaterial({
-        side:THREE.DoubleSide,
-        //wireframe: true
-    });
+
 
 
 
