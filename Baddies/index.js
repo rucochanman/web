@@ -94,11 +94,14 @@ function init() {
         markerArray[0].children[0].add( apple );
     });
 
+
+    const modelLight = new THREE.DirectionalLight( 0xFFFFFF, 1 );
     let bentley;
     gltfloader.load( './data/model/bentley.glb',function( gltf ){
         bentley = gltf.scene;
         bentley.scale.set( 0.5, 0.5, 0.5 );
         markerArray[2].children[0].add( bentley );
+        markerArray[2].children[0].add( modelLight );
     });
 
 
@@ -107,6 +110,7 @@ function init() {
         bench = gltf.scene;
         bench.scale.set( 0.5, 0.5, 0.5 );
         markerArray[3].children[0].add( bench );
+        markerArray[3].children[0].add( modelLight );
     });
 
 
