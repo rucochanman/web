@@ -156,6 +156,20 @@ function init() {
         side:THREE.DoubleSide,
         lights: true
     });
+    
+    //(1)Planeジオメトリ(座標)を作成
+    const planeGeo = new THREE.PlaneGeometry( 1, 1, 1 );
+    //(2)マテリアル(材質)にShaderMaterialを指定する
+    //htmlからvertとfragのソースを読み込んで指定
+    const testMat = new THREE.ShaderMaterial({
+        vertexShader: document.getElementById('vert').textContent,
+        fragmentShader: document.getElementById('frag').textContent
+    });
+    //(3)ジオメトリとマテリアルからメッシュを作成
+    const plane = new THREE.Mesh( planeGeo, testMat );
+    plane.position.y = 1;
+    //(4)メッシュをシーンに追加
+    markerArray[1].children[0].add( plane );
 
     ///////////////////////////////////////////////
     //    　　　　      arm関連                   //
@@ -210,7 +224,7 @@ function init() {
         const jointArmUv = makeUvmap( jointArmObj );
         const lowerArmMesh = new THREE.Mesh(
             makeGeometry( jointArmObj, lowerArmPts, jointArmUv ),
-            blackMat
+            armMat
         );
 
         //hand
@@ -232,7 +246,7 @@ function init() {
         lowerArmG.add( handG );
         armG.add( upperArmMesh );
         armG.add( lowerArmG );
-        
+
         //add mesh to scene
         armG.position.y = 0.5;
         armG.position.z = -1;
