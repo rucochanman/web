@@ -53,8 +53,6 @@ function init() {
     //    　　       マーカーの設定               //
     //////////////////////////////////////////////
 
-
-
     const markerNames = [ "sneak", "box", "stop", "wing" ];
     const markerArray = [];
 
@@ -71,20 +69,9 @@ function init() {
         marker.add( markerGroup );
     }
 
-
-    //const marker1 = new THREE.Group();
-    //scene.add( marker1 );
-    //const arMarkerControls = new THREEx.ArMarkerControls( arToolkitContext, marker1, {
-    //    type: 'pattern',
-    //    patternUrl: "data/pattern-sneak.patt",
-    //});
-
-
-
     ///////////////////////////////////////////////
     //    　　      モデルの読み込み              //
     //////////////////////////////////////////////
-
 
     let apple;
     const gltfloader = new THREE.GLTFLoader();
@@ -94,18 +81,16 @@ function init() {
         markerArray[0].children[0].add( apple );
     });
 
-
     const modelLight = new THREE.DirectionalLight( 0xFFFFFF, 10 );
     modelLight.position.set( 0, 0.5, 1 );
     let bentley;
     gltfloader.load( './data/model/bentley.glb',function( gltf ){
         bentley = gltf.scene;
         bentley.scale.set( 0.5, 0.5, 0.5 );
-	bentley.rotation.y = PI/2;
+      	bentley.rotation.y = PI/2;
         markerArray[2].children[0].add( bentley );
         markerArray[2].children[0].add( modelLight );
     });
-
 
     let bench;
     gltfloader.load( './data/model/bench.glb',function( gltf ){
@@ -115,36 +100,23 @@ function init() {
         markerArray[3].children[0].add( modelLight );
     });
 
+    ///////////////////////////////////////////////
+    //    　　       　　 defs                   //
+    //////////////////////////////////////////////
 
-    const armMat = new THREE.MeshNormalMaterial({
-        side:THREE.DoubleSide,
-    });
-
-    const upperArmLength = 20;
-    const lowerArmLength = 20;
+    const upperArmLength = 13;
+    const lowerArmLength = 18;
     const upperArmThick = 5;
-    const fingerLength = 2;
-    const fingerThick = 1;
-
+    
     const upperArmObj = new Limbs();
     const jointArmObj = new Limbs();
     const lowerArmObj = new Limbs();
     const fingerObj = new Limbs();
-
-    let upperArmGeo;
-    let jointArmGeo;
-    let lowerArmGeo;
-
+    
     const armG = new THREE.Group();
     const lowerArmG = new THREE.Group();
     const handG = new THREE.Group();
-
-
-
-    ///////////////////////////////////////////////
-    //    　　　　 マテリアル配置                  //
-    //////////////////////////////////////////////
-
+    
     //limbsクラス
     function Limbs(){
         this.seg = limbSeg;
@@ -153,24 +125,58 @@ function init() {
         this.cp = new THREE.Vector2( 1,0 );
         this.thick = 0;
         this.width = 0;
-    }
+    }    
+
+    ///////////////////////////////////////////////
+    //    　　       マテリアル設定               //
+    //////////////////////////////////////////////
+
+    const texLoader = new THREE.TextureLoader();
+    const armTex = texLoader.load( './data/tex/arm.png' );
+    const bleckTex = texLoader.load( './data/tex/black.png' );
+    const skinTex = texLoader.load( './data/tex/skin.png' );
+    const roadTex = texLoader.load( './data/tex/road.png' );
+
+    const uniform = THREE.UniformsUtils.merge([
+        THREE.UniformsLib['lights'],{
+            'uTexture': { value: null },
+            //'uTone': { value: null },
+            //'uColor1': { value: null },
+            //'uColor2': { value: null }
+        }
+    ]);
+
+    const material = new THREE.ShaderMaterial({
+        vertexShader: document.getElementById('vert').textContent,
+        fragmentShader: document.getElementById('frag').textContent,
+        uniforms: uniform,
+        side:THREE.DoubleSide,
+        lights: true
+    });
+
+    ///////////////////////////////////////////////
+    //    　　　　 　　 arm作成                   //
+    //////////////////////////////////////////////
 
     function armInit(){
-        //thicks
+        //set thickss
         const upperArmThicks = new Array( limbSeg );
         const lowerArmThicks = new Array( limbSeg );
         const lowerArmWidths = new Array( limbSeg );
         const fingerThicks = new Array( limbSeg );
-
+        const armLength = upperArmLength + lowerArmLength;
+        const fingerLength = armLength / 12;
+        const fingerThick = upperArmThick / 5;
+    
         for( let i=0; i<( limbSeg+1 ); i++ ){
             const t = i / limbSeg;
             upperArmThicks[i] = upperArmThick;
-            lowerArmWidths[i] = upperArmThick - Math.pow( t, 3 ) * upperArmThick;
-            lowerArmThicks[i] = upperArmThick - Math.pow( t, 5 ) * upperArmThick;
+            lowerArmWidths[i] = upperArmThick - Math.pow( t, 2.5 ) * upperArmThick;
+            lowerArmThicks[i] = upperArmThick - Math.pow( t, 4 ) * upperArmThick;
             fingerThicks[i] = fingerThick - Math.pow( t, 3 ) * fingerThick;
         }
-
-        //set parameter
+    
+        //set parameters
         upperArmObj.thick = upperArmThicks;
         upperArmObj.width = upperArmThicks;
         jointArmObj.seg *= 2;
@@ -180,45 +186,54 @@ function init() {
         fingerObj.cp = new THREE.Vector2( fingerLength,0 );
         fingerObj.thick = fingerThicks;
         fingerObj.width = fingerThicks;
-
-        //make pt
-        const fingerPt = makePipePt( fingerObj );
+    
+        //material
+        const armMat = material.clone();
+        armMat.uniforms.uTexture.value = armTex;
+        const blackMat = material.clone();
+        blackMat.uniforms.uTexture.value = bleckTex;
+        const skinMat = material.clone();
+        skinMat.uniforms.uTexture.value = skinTex;
+    
+        //upper arm
+        const upperArmUv = makeUvmap( upperArmObj );
         const upperArmpt = makePipePt( upperArmObj );
+        const upperArmMesh = new THREE.Mesh(
+            makeGeometry( upperArmObj, upperArmpt, upperArmUv ),
+            blackMat
+        );
+    
+        //lower arm
         const jointArmPt = makeJointPt( upperArmObj, -1 );
         const lowerArmPt = makePipePt( lowerArmObj );
         const lowerArmPts = jointArmPt.concat( lowerArmPt );
-
-        //makeGeo
-        upperArmGeo = makeGeometry( upperArmObj, upperArmpt );
-        lowerArmGeo = makeGeometry( jointArmObj, lowerArmPts );
-        const fingerGeo = makeGeometry( fingerObj, fingerPt );
-
-        //makeMesh
-        const upperArmMesh = new THREE.Mesh( upperArmGeo, armMat );
-        const lowerArmMesh = new THREE.Mesh( lowerArmGeo, armMat );
-
-        const fingerAngles = [ -PI/4, -PI/8, 0, PI/4 ];
-        const handLength = ( upperArmLength + lowerArmLength ) * 0.11;
+        const jointArmUv = makeUvmap( jointArmObj );
+        const lowerArmMesh = new THREE.Mesh(
+            makeGeometry( jointArmObj, lowerArmPts, jointArmUv ),
+            armMat
+        );
+    
+        //hand
+        lastValClear();
+        const fingerPt = makePipePt( fingerObj );
+        const fingerGeo = makeGeometry( fingerObj, fingerPt, upperArmUv );
+        const fingerAngles = [ -PI/5, -PI/12, PI/32, PI/4 ];
         for( let i=0; i<4; i++ ){
-            const fingerMesh = new THREE.Mesh( fingerGeo, armMat );
+            const fingerMesh = new THREE.Mesh( fingerGeo, skinMat );
             const z = ( upperArmThick*0.8 ) * Math.sin( fingerAngles[i] );
             const x = ( upperArmThick*0.8 ) * Math.cos( fingerAngles[i] );
             fingerMesh.rotation.y = -fingerAngles[i];
-            fingerMesh.position.set( x - ( handLength ), 0, z );
+            fingerMesh.position.set( x - fingerLength*2, 0, z );
             handG.add( fingerMesh );
         }
-
+    
         //grouping
         lowerArmG.add( lowerArmMesh );
         lowerArmG.add( handG );
         armG.add( upperArmMesh );
         armG.add( lowerArmG );
-        //add mesh to scene
-        armG.position.y = 0.5;
-        armG.position.z = -1;
-        armG.scale.set( 0.01, 0.01, 0.01 );
+    
         markerArray[1].children[0].add( armG );
-        //marker1.add( armG );
     }
 
     function upperArmUpdate( angle ){
@@ -227,25 +242,24 @@ function init() {
         upperArmObj.ep = ep;
         upperArmObj.cp = cp;
         const pt = makePipePt( upperArmObj );
-        updateGeometry( upperArmObj, pt, upperArmGeo );
+        updateGeometry( upperArmObj, pt, armG.children[0].geometry );
     }
 
     function lowerArmUpdate( angle ){
         const bend = mapping( angle, 0.0, 1.5, -0.05, -3*PI/4 );
         const jointArmPt = makeJointPt( upperArmObj, bend );
-        const { ep, cp } = getBezierPt2( bend, upperArmLength, upperArmThick );
+        const { ep, cp } = getBezierPt2( bend, lowerArmLength, upperArmThick );
         lowerArmObj.ep = ep;
         lowerArmObj.cp = cp;
         const lowerArmPt = makePipePt( lowerArmObj );
         const lowerArmPts = jointArmPt.concat( lowerArmPt );
-        updateGeometry( jointArmObj, lowerArmPts, lowerArmGeo );
+        updateGeometry( jointArmObj, lowerArmPts, lowerArmG.children[0].geometry );
         lowerArmG.position.set( upperArmObj.ep.x, upperArmObj.ep.y, 0 );
     }
 
-    function armUpdate( angle1, angle2, rot1, rot2 ){
-        //reset
-        lastAngle = 0;
-        lastPos = new THREE.Vector2();
+    function armUpdate( angle1, angle2, rotate1, rotate2 ){
+        //upperArm
+        lastValClear();
         upperArmUpdate( angle1 );
         //lowerArm
         const r = lastAngle;
@@ -254,53 +268,61 @@ function init() {
         handG.rotation.z = lastAngle;
         handG.position.set( lastPos.x, lastPos.y, 0 );
         //rotation
+        armG.quaternion.set( 0,0,0,1 );
+        lowerArmG.quaternion.set( 0,0,0,1 );
         const axis1 = new THREE.Vector3( 1,0,0 );
         const axis2 = new THREE.Vector3( Math.cos(r),Math.sin(r),0 ).normalize();
-        const q1 = new THREE.Quaternion().setFromAxisAngle( axis1, rot1 );
-        const q2 = new THREE.Quaternion().setFromAxisAngle( axis2, rot2 );
+        const q1 = new THREE.Quaternion().setFromAxisAngle( axis1, rotate1 );
+        const q2 = new THREE.Quaternion().setFromAxisAngle( axis2, rotate2 );
         armG.applyQuaternion( q1 );
         lowerArmG.applyQuaternion( q2 );
     }
 
     armInit();
-    armUpdate( 0, 0, 0, 0 );
-
+    
     ///////////////////////////////////////////////
     //    　　　　  　animation設定               //
     //////////////////////////////////////////////
-
     // POSITION
     const upperArmMove = new THREE.Object3D();
     const dur = [ 0, 2, 4 ];
-    const val1 = [ 2, -1, 2 ];
-    const val2 = [ 0, 1.5, 0 ];
+    const posVal1 = [ -0.2, 1, -0.2 ];
+    const posVal2 = [ 0, 1.5, 0 ];
+    const rotVal1 = [ 0, 0, 0 ];
+    const rotVal2 = [ 0, -PI/2, 0 ];
 
     const upperArmPos = [];
+    const upperArmRot = [];
     for( let i=0; i<dur.length; i++ ){
-        upperArmPos.push( val1[i] );
-        upperArmPos.push( val2[i] );
+        upperArmPos.push( posVal1[i] );
+        upperArmPos.push( posVal2[i] );
         upperArmPos.push( 0 );
+        upperArmRot.push( rotVal1[i] );
+        upperArmRot.push( rotVal2[i] );
+        upperArmRot.push( 0 );
     }
 
     //const move = [];
-    const uppperArmKF = new THREE.NumberKeyframeTrack( '.position', dur, upperArmPos );
-    const clip = new THREE.AnimationClip( 'Action', 4, [ uppperArmKF ] );
+    const uppperArmKF1 = new THREE.NumberKeyframeTrack( '.position', dur, upperArmPos );
+    const uppperArmKF2 = new THREE.NumberKeyframeTrack( '.scale', dur, upperArmRot );
+    const clip = new THREE.AnimationClip( 'Action', 4, [ uppperArmKF1, uppperArmKF2 ] );
     const mixer = new THREE.AnimationMixer( upperArmMove );
     const clipAction = mixer.clipAction( clip );
     clipAction.play();
-
-    const clock = new THREE.Clock();
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
     //////////////////////////////////////////////
 
+    const clock = new THREE.Clock();
     function update(){
 	      if ( markerArray[1].children[0].visible ){
             mixer.update(clock.getDelta());
             let angle1 = upperArmMove.position.x;
             let angle2 = upperArmMove.position.y;
-            armUpdate( angle1, angle2, 0, 0 );
+            let rot1 = upperArmMove.scale.x;
+            let rot2 = upperArmMove.scale.y;
+            armUpdate( angle1, angle2, rot1, rot2 );
         }
     }
 
