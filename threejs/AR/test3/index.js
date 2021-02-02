@@ -57,7 +57,7 @@ function init() {
     scene.add( marker );
     const arMarkerControls = new THREEx.ArMarkerControls( arToolkitContext, marker, {
         type: 'pattern',
-        patternUrl: "data/pattern/pattern-sneak.patt",
+        patternUrl: "data/pattern-sneak.patt",
     });
 
     ///////////////////////////////////////////////
