@@ -53,13 +53,10 @@ function init() {
     //    　　       マーカーの設定               //
     //////////////////////////////////////////////
 
-
-
     const markerNames = [ "sneak", "box", "stop", "wing" ];
     const markerArray = [];
 
     for ( let i=0; i<markerNames.length ; i++ ){
-
         const marker = new THREE.Group();
         scene.add( marker );
         markerArray.push( marker );
@@ -71,20 +68,9 @@ function init() {
         marker.add( markerGroup );
     }
 
-
-    //const marker1 = new THREE.Group();
-    //scene.add( marker1 );
-    //const arMarkerControls = new THREEx.ArMarkerControls( arToolkitContext, marker1, {
-    //    type: 'pattern',
-    //    patternUrl: "data/pattern-sneak.patt",
-    //});
-
-
-
     ///////////////////////////////////////////////
     //    　　      モデルの読み込み              //
     //////////////////////////////////////////////
-
 
     let apple;
     const gltfloader = new THREE.GLTFLoader();
@@ -93,7 +79,6 @@ function init() {
         apple.scale.set( 0.5, 0.5, 0.5 );
         markerArray[0].children[0].add( apple );
     });
-
 
     const modelLight = new THREE.DirectionalLight( 0xFFFFFF, 1 );
     modelLight.position.set( 0, 0.5, 1 );
@@ -105,7 +90,6 @@ function init() {
         markerArray[2].children[0].add( modelLight );
     });
 
-
     let bench;
     gltfloader.load( './data/model/bench.glb',function( gltf ){
         bench = gltf.scene;
@@ -114,6 +98,9 @@ function init() {
         markerArray[3].children[0].add( modelLight );
     });
 
+    ///////////////////////////////////////////////
+    //    　　       　　 defs                   //
+    //////////////////////////////////////////////
 
     const armMat = new THREE.MeshNormalMaterial({
         side:THREE.DoubleSide,
@@ -138,13 +125,6 @@ function init() {
     const lowerArmG = new THREE.Group();
     const handG = new THREE.Group();
 
-
-
-    ///////////////////////////////////////////////
-    //    　　　　 マテリアル配置                  //
-    //////////////////////////////////////////////
-
-    //limbsクラス
     function Limbs(){
         this.seg = limbSeg;
         this.edge = limbEdge;
@@ -153,6 +133,16 @@ function init() {
         this.thick = 0;
         this.width = 0;
     }
+
+    ///////////////////////////////////////////////
+    //    　　　　 マテリアル配置                  //
+    //////////////////////////////////////////////
+
+    const texLoader = new THREE.TextureLoader();
+    const armTex = texLoader.load( './data/tex/arm.png' );
+    const bleckTex = texLoader.load( './data/tex/black.png' );
+    const skinTex = texLoader.load( './data/tex/skin.png' );
+    const roadTex = texLoader.load( './data/tex/road.png' );
 
     function armInit(){
         //thicks
