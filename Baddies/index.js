@@ -214,7 +214,7 @@ function init() {
         const jointArmUv = makeUvmap( jointArmObj );
         const lowerArmMesh = new THREE.Mesh(
             makeGeometry( jointArmObj, lowerArmPts, jointArmUv ),
-            armMat
+            armuvMat
         );
 
         //hand
