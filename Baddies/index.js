@@ -204,7 +204,7 @@ function init() {
         const upperArmpt = makePipePt( upperArmObj );
         const upperArmMesh = new THREE.Mesh(
             makeGeometry( upperArmObj, upperArmpt, upperArmUv ),
-            blackMat
+            armMat
         );
 
         //lower arm
@@ -214,7 +214,7 @@ function init() {
         const jointArmUv = makeUvmap( jointArmObj );
         const lowerArmMesh = new THREE.Mesh(
             makeGeometry( jointArmObj, lowerArmPts, jointArmUv ),
-            armuvMat
+            armMat
         );
 
         //hand
@@ -223,7 +223,7 @@ function init() {
         const fingerGeo = makeGeometry( fingerObj, fingerPt, upperArmUv );
         const fingerAngles = [ -PI/5, -PI/12, PI/32, PI/4 ];
         for( let i=0; i<4; i++ ){
-            const fingerMesh = new THREE.Mesh( fingerGeo, skinMat );
+            const fingerMesh = new THREE.Mesh( fingerGeo, armMat );
             const z = ( upperArmThick*0.8 ) * Math.sin( fingerAngles[i] );
             const x = ( upperArmThick*0.8 ) * Math.cos( fingerAngles[i] );
             fingerMesh.rotation.y = -fingerAngles[i];
