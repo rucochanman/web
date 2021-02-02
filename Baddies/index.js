@@ -113,10 +113,6 @@ function init() {
     const lowerArmObj = new Limbs();
     const fingerObj = new Limbs();
 
-    let upperArmGeo;
-    let jointArmGeo;
-    let lowerArmGeo;
-
     const armG = new THREE.Group();
     const lowerArmG = new THREE.Group();
     const handG = new THREE.Group();
