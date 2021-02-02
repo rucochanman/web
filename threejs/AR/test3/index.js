@@ -77,7 +77,7 @@ function init() {
     const plane = new THREE.Mesh( planeGeo, testMat );
     plane.position.y = 1;
     //(4)メッシュをシーンに追加
-    marker].add( plane );
+    marker.add( plane );
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
