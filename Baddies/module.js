@@ -95,6 +95,42 @@ function makeJointPt( obj, bend ){
 }
 
 ////////////////////////////////////////////////
+//    　　　 　　  uvmapの作成                 //
+///////////////////////////////////////////////
+
+function makeUvmap( obj ){
+    const uvmap = [];
+    for( let i=0; i<( obj.seg+1 ); i++ ){
+        uvmap[i] = [];
+        const y = i / obj.seg;
+        for( let j=0; j<( obj.edge+1 ); j++ ){
+              const x = j / obj.edge;
+              uvmap[i][j] = [x, y];
+        }
+    }
+    return uvmap;
+}
+
+////////////////////////////////////////////////
+//    　　　　　     uvの作成                  //
+///////////////////////////////////////////////
+
+function setUvs( seg, edge, pt ){
+    const vert = [];
+    for( let i=0; i<seg; i++ ){
+        vert[i] = [];
+        for( let j=0; j<edge; j++ ){
+            vert[i][j] = [];
+            vert[i][j][0] = pt[i][j];
+            vert[i][j][1] = pt[i][j+1];
+            vert[i][j][2] = pt[i+1][j+1];
+            vert[i][j][3] = pt[i+1][j];
+        }
+    }
+    return new Float32Array( vert.flat(3) );
+}
+
+////////////////////////////////////////////////
 //    　　　　　  vertexの作成                 //
 ///////////////////////////////////////////////
 
