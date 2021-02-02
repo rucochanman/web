@@ -102,10 +102,6 @@ function init() {
     //    　　       　　 defs                   //
     //////////////////////////////////////////////
 
-    const armMat = new THREE.MeshNormalMaterial({
-        side:THREE.DoubleSide,
-    });
-
     const upperArmLength = 20;
     const lowerArmLength = 20;
     const upperArmThick = 5;
@@ -138,6 +134,10 @@ function init() {
     //    　　　　 マテリアル配置                  //
     //////////////////////////////////////////////
 
+    const armMat = new THREE.MeshNormalMaterial({
+        side:THREE.DoubleSide,
+    });
+
     const texLoader = new THREE.TextureLoader();
     const armTex = texLoader.load( './data/tex/arm.png' );
     const bleckTex = texLoader.load( './data/tex/black.png' );
@@ -152,7 +152,7 @@ function init() {
                 //'uColor2': { value: null }
         }
     ]);
-    
+
     const material = new THREE.ShaderMaterial({
         vertexShader: document.getElementById('vert').textContent,
         fragmentShader: document.getElementById('frag').textContent,
@@ -190,6 +190,14 @@ function init() {
         fingerObj.cp = new THREE.Vector2( fingerLength,0 );
         fingerObj.thick = fingerThicks;
         fingerObj.width = fingerThicks;
+
+        //material
+        const armuvMat = material.clone();
+        armuvMat.uniforms.uTexture.value = armTex;
+        const blackMat = material.clone();
+        blackMat.uniforms.uTexture.value = bleckTex;
+        const skinMat = material.clone();
+        skinMat.uniforms.uTexture.value = skinTex;
 
         //make pt
         const fingerPt = makePipePt( fingerObj );
