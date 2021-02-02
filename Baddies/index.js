@@ -199,30 +199,35 @@ function init() {
         const skinMat = material.clone();
         skinMat.uniforms.uTexture.value = skinTex;
 
-        //make pt
-        const fingerPt = makePipePt( fingerObj );
+        //upper arm
+        const upperArmUv = makeUvmap( upperArmObj );
         const upperArmpt = makePipePt( upperArmObj );
+        const upperArmMesh = new THREE.Mesh(
+            makeGeometry( upperArmObj, upperArmpt, upperArmUv ),
+            blackMat
+        );
+
+        //lower arm
         const jointArmPt = makeJointPt( upperArmObj, -1 );
         const lowerArmPt = makePipePt( lowerArmObj );
         const lowerArmPts = jointArmPt.concat( lowerArmPt );
+        const jointArmUv = makeUvmap( jointArmObj );
+        const lowerArmMesh = new THREE.Mesh(
+            makeGeometry( jointArmObj, lowerArmPts, jointArmUv ),
+            armMat
+        );
 
-        //makeGeo
-        upperArmGeo = makeGeometry( upperArmObj, upperArmpt );
-        lowerArmGeo = makeGeometry( jointArmObj, lowerArmPts );
-        const fingerGeo = makeGeometry( fingerObj, fingerPt );
-
-        //makeMesh
-        const upperArmMesh = new THREE.Mesh( upperArmGeo, armMat );
-        const lowerArmMesh = new THREE.Mesh( lowerArmGeo, armMat );
-
-        const fingerAngles = [ -PI/4, -PI/8, 0, PI/4 ];
-        const handLength = ( upperArmLength + lowerArmLength ) * 0.11;
+        //hand
+        lastValClear();
+        const fingerPt = makePipePt( fingerObj );
+        const fingerGeo = makeGeometry( fingerObj, fingerPt, upperArmUv );
+        const fingerAngles = [ -PI/5, -PI/12, PI/32, PI/4 ];
         for( let i=0; i<4; i++ ){
-            const fingerMesh = new THREE.Mesh( fingerGeo, armMat );
+            const fingerMesh = new THREE.Mesh( fingerGeo, skinMat );
             const z = ( upperArmThick*0.8 ) * Math.sin( fingerAngles[i] );
             const x = ( upperArmThick*0.8 ) * Math.cos( fingerAngles[i] );
             fingerMesh.rotation.y = -fingerAngles[i];
-            fingerMesh.position.set( x - ( handLength ), 0, z );
+            fingerMesh.position.set( x - fingerLength*2, 0, z );
             handG.add( fingerMesh );
         }
 
@@ -231,6 +236,7 @@ function init() {
         lowerArmG.add( handG );
         armG.add( upperArmMesh );
         armG.add( lowerArmG );
+        
         //add mesh to scene
         armG.position.y = 0.5;
         armG.position.z = -1;
