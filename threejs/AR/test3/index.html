@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Marker Based AR with AR.js and Three.js</title>
-    <meta name="viewport" content="width=device-width, user-scalable=no"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r124/three.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/3.1.0/three.js/build/ar.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r92/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="module.js"></script>
-    <script src="index.js"></script>
-  </head>
-  <body style='margin : 0px; overflow: hidden;'></body>
+    <head>
+        <title>Baddies AR</title>
+        <meta name="viewport" content="width=device-width, user-scalable=no"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r124/three.min.js"></script>
+        <script src="https://raw.githack.com/AR-js-org/AR.js/3.1.0/three.js/build/ar.js"></script>
+        <script src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/loaders/GLTFLoader.js"></script>
+        <script src="module.js"></script>
+        <script src="index.js"></script>
+    </head>
+    <body style='margin : 0px; overflow: hidden;'>
+      <div id="webgl"></div>
+      <!-- 頂点シェーダー -->
+      <script id="vert" type="x-shader/x-vertex">
+          void main() {
+              //カメラ座標に変換
+              gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+          }
+      </script>
+
+      <!-- フラグメントシェーダー -->
+      <script id="frag" type="x-shader/x-fragment">
+          precision mediump float;
+          void main() {
+              gl_FragColor = vec4( 1.0, 0.0, 0.0, 0.0 );
+          }
+      </script>
+    </body>
 </html>
