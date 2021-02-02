@@ -144,6 +144,27 @@ function init() {
     const skinTex = texLoader.load( './data/tex/skin.png' );
     const roadTex = texLoader.load( './data/tex/road.png' );
 
+    const uniform = THREE.UniformsUtils.merge([
+        THREE.UniformsLib['lights'],{
+            'uTexture': { value: null },
+                //'uTone': { value: null },
+                //'uColor1': { value: null },
+                //'uColor2': { value: null }
+        }
+    ]);
+    
+    const material = new THREE.ShaderMaterial({
+        vertexShader: document.getElementById('vert').textContent,
+        fragmentShader: document.getElementById('frag').textContent,
+        uniforms: uniform,
+        side:THREE.DoubleSide,
+        lights: true
+    });
+
+    ///////////////////////////////////////////////
+    //    　　　　      arm関連                   //
+    //////////////////////////////////////////////
+
     function armInit(){
         //thicks
         const upperArmThicks = new Array( limbSeg );
