@@ -166,7 +166,7 @@ function init() {
         fragmentShader: document.getElementById('frag').textContent
     });
     //(3)ジオメトリとマテリアルからメッシュを作成
-    const plane = new THREE.Mesh( planeGeo, testMat );
+    const plane = new THREE.Mesh( planeGeo, armMat );
     plane.position.y = 1;
     //(4)メッシュをシーンに追加
     markerArray[1].children[0].add( plane );
