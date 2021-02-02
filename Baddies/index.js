@@ -247,18 +247,18 @@ function init() {
         upperArmObj.ep = ep;
         upperArmObj.cp = cp;
         const pt = makePipePt( upperArmObj );
-        updateGeometry( upperArmObj, pt, upperArmGeo );
+        updateGeometry( upperArmObj, pt, armG.children[0].geometry );
     }
 
     function lowerArmUpdate( angle ){
         const bend = mapping( angle, 0.0, 1.5, -0.05, -3*PI/4 );
         const jointArmPt = makeJointPt( upperArmObj, bend );
-        const { ep, cp } = getBezierPt2( bend, upperArmLength, upperArmThick );
+        const { ep, cp } = getBezierPt2( bend, lowerArmLength, upperArmThick );
         lowerArmObj.ep = ep;
         lowerArmObj.cp = cp;
         const lowerArmPt = makePipePt( lowerArmObj );
         const lowerArmPts = jointArmPt.concat( lowerArmPt );
-        updateGeometry( jointArmObj, lowerArmPts, lowerArmGeo );
+        updateGeometry( jointArmObj, lowerArmPts, lowerArmG.children[0].geometry );
         lowerArmG.position.set( upperArmObj.ep.x, upperArmObj.ep.y, 0 );
     }
 
