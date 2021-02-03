@@ -124,7 +124,6 @@ function init() {
     //    　　          arm作成                  //
     //////////////////////////////////////////////
 
-    
     function armInit(){
         //set thickss
         const upperArmThicks = new Array( limbSeg );
@@ -250,22 +249,53 @@ function init() {
     armInit();
     armUpdate( 0, 0, 0, 0 );    
     
+    ///////////////////////////////////////////////
+    //    　　　　  　animation設定               //
+    //////////////////////////////////////////////
 
+    // POSITION
+    const upperArmMove = new THREE.Object3D();
+    const dur = [ 0, 2, 4 ];
+    const posVal1 = [ -0.2, 1, -0.2 ];
+    const posVal2 = [ 0, 1.5, 0 ];
+    const rotVal1 = [ 0, 0, 0 ];
+    const rotVal2 = [ 0, -PI/2, 0 ];
 
+    const upperArmPos = [];
+    const upperArmRot = [];
+    for( let i=0; i<dur.length; i++ ){
+        upperArmPos.push( posVal1[i] );
+        upperArmPos.push( posVal2[i] );
+        upperArmPos.push( 0 );
+        upperArmRot.push( rotVal1[i] );
+        upperArmRot.push( rotVal2[i] );
+        upperArmRot.push( 0 );
+    }
 
-
-
+    //const move = [];
+    const uppperArmKF1 = new THREE.NumberKeyframeTrack( '.position', dur, upperArmPos );
+    const uppperArmKF2 = new THREE.NumberKeyframeTrack( '.scale', dur, upperArmRot );
+    const clip = new THREE.AnimationClip( 'Action', 4, [ uppperArmKF1, uppperArmKF2 ] );
+    const mixer = new THREE.AnimationMixer( upperArmMove );
+    const clipAction = mixer.clipAction( clip );
+    clipAction.play();
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
     //////////////////////////////////////////////
 
     function update(){
+        mixer.update(clock.getDelta());
+        let angle1 = upperArmMove.position.x;
+        let angle2 = upperArmMove.position.y;
+        let rot1 = upperArmMove.scale.x;
+        let rot2 = upperArmMove.scale.y;
+        armUpdate( angle1, angle2, rot1, rot2 );
     }
 
     requestAnimationFrame( function animate(){
 
-        //update();
+        update();
 
         requestAnimationFrame( animate );
         if ( arToolkitSource.ready ) {
