@@ -23,6 +23,9 @@ function init() {
     scene.add( camera );
     const envlight = new THREE.AmbientLight( 0xFFFFFF, 0.5 );
     scene.add( envlight );
+    const light = new THREE.DirectionalLight( 0xffffff, 0.7 );
+    light.position.set(0, 1, 1);
+    scene.add( light );
     //画面リサイズの設定
     window.addEventListener('resize', () => { onResize() });
     function onResize() {
@@ -78,9 +81,7 @@ function init() {
     plane.position.y = 1;
     //(4)メッシュをシーンに追加
     marker.add( plane );
-    const light = new THREE.DirectionalLight( 0xffffff, 0.7 );
-    light.position.set(0, 1, 1);
-    scene.add( light );
+
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
