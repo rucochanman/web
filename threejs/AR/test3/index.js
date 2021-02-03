@@ -74,7 +74,7 @@ function init() {
         vertexShader: document.getElementById('vert').textContent,
         fragmentShader: document.getElementById('frag').textContent,
         side:THREE.DoubleSide,
-        //lights: true
+        lights: true
     });
     //(3)ジオメトリとマテリアルからメッシュを作成
     const plane = new THREE.Mesh( planeGeo, testMat );
