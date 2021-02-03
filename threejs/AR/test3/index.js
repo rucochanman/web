@@ -64,7 +64,7 @@ function init() {
     });
 
     ///////////////////////////////////////////////
-    //    　　      モデルの読み込み              //
+    //    　　      test読み込み              //
     //////////////////////////////////////////////
 
     //(1)Planeジオメトリ(座標)を作成
@@ -91,6 +91,45 @@ function init() {
     plane.position.y = 1;
     //(4)メッシュをシーンに追加
     marker.add( plane );
+
+    ///////////////////////////////////////////////
+    //    　　       　　 defs                   //
+    //////////////////////////////////////////////
+
+    const upperArmLength = 13;
+    const lowerArmLength = 18;
+    const upperArmThick = 5;
+
+    const upperArmObj = new Limbs();
+    const jointArmObj = new Limbs();
+    const lowerArmObj = new Limbs();
+    const fingerObj = new Limbs();
+
+    const armG = new THREE.Group();
+    const lowerArmG = new THREE.Group();
+    const handG = new THREE.Group();
+
+    //limbsクラス
+    function Limbs(){
+        this.seg = limbSeg;
+        this.edge = limbEdge;
+        this.ep = new THREE.Vector2( 1,0 );
+        this.cp = new THREE.Vector2( 1,0 );
+        this.thick = 0;
+        this.width = 0;
+    }
+
+    ///////////////////////////////////////////////
+    //    　　          arm作成                  //
+    //////////////////////////////////////////////
+
+    
+
+    
+
+
+
+
 
 
     ///////////////////////////////////////////////
