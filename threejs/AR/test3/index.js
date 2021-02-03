@@ -80,7 +80,7 @@ function init() {
     marker.add( plane );
     const light = new THREE.DirectionalLight( 0xffffff, 0.7 );
     light.position.set(0, 1, 1);
-    marker.add( light );
+    scene.add( light );
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
