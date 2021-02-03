@@ -69,10 +69,20 @@ function init() {
 
     //(1)Planeジオメトリ(座標)を作成
     const planeGeo = new THREE.BoxGeometry( 1, 1, 1 );
-    //(2)マテリアル(材質)にShaderMaterialを指定する
+
+    const uniform = THREE.UniformsUtils.merge([
+        THREE.UniformsLib['lights'],{
+            //'uTexture': { value: null },
+            //'uTone': { value: null },
+            //'uColor1': { value: null },
+            //'uColor2': { value: null }
+        }
+    ]);
+
     const testMat = new THREE.ShaderMaterial({
         vertexShader: document.getElementById('vert').textContent,
         fragmentShader: document.getElementById('frag').textContent,
+        uniforms: uniform,
         side:THREE.DoubleSide,
         lights: true
     });
