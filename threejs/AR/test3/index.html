@@ -36,6 +36,7 @@
           precision mediump float;
           varying vec2 vUv;
           varying vec4 fragColor;
+          uniform sampler2D uTexture;
           void main() {
               vec3 texCol = texture2D( uTexture, vUv ).rgb;
               vec4 color = vec4( texCol, 1.0 );
