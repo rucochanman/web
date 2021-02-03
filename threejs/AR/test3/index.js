@@ -284,6 +284,8 @@ function init() {
     //    　　　　  　レンダリング開始             //
     //////////////////////////////////////////////
 
+
+    const clock = new THREE.Clock();
     function update(){
         mixer.update(clock.getDelta());
         let angle1 = upperArmMove.position.x;
