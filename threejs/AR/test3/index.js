@@ -20,9 +20,9 @@ function init() {
     const scene = new THREE.Scene();
     scene.visible = false;
     const camera = new THREE.Camera();
-    scene.add(camera);
-    const light = new THREE.AmbientLight( 0xFFFFFF, 1.0 );
-    scene.add(light);
+    scene.add( camera );
+    const envlight = new THREE.AmbientLight( 0xFFFFFF, 0.5 );
+    scene.add( envlight );
     //画面リサイズの設定
     window.addEventListener('resize', () => { onResize() });
     function onResize() {
@@ -64,11 +64,9 @@ function init() {
     //    　　      モデルの読み込み              //
     //////////////////////////////////////////////
 
-    
     //(1)Planeジオメトリ(座標)を作成
     const planeGeo = new THREE.PlaneGeometry( 1, 1, 1 );
     //(2)マテリアル(材質)にShaderMaterialを指定する
-    //htmlからvertとfragのソースを読み込んで指定
     const testMat = new THREE.ShaderMaterial({
         vertexShader: document.getElementById('vert').textContent,
         fragmentShader: document.getElementById('frag').textContent
@@ -78,6 +76,9 @@ function init() {
     plane.position.y = 1;
     //(4)メッシュをシーンに追加
     marker.add( plane );
+    const light = new THREE.DirectionalLight( 0xffffff, 0.7 );
+    light.position.set(0, 0, 10);
+    marker.add( light );
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
