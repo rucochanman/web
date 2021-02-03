@@ -16,7 +16,16 @@
           #include <common>
           //#include <bsdfs>
           #include <lights_pars_begin>
+          varying vec2 vUv;
+          varying vec4 fragColor;
           void main() {
+              vec3 color = vec3( 0.0, 0.0, 0.0 );
+              vec3 norm = normalMatrix * normal;
+              vec3 vertexToLight = normalize( directionalLights[0].direction );
+              vec3 lightCol = vec3( directionalLights[0].color );
+              color = lightCol * max( dot( vertexToLight.xyz, norm ), 0.0 );
+              fragColor = vec4( color, 1.0 );
+              vUv = uv;
               //カメラ座標に変換
               gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
           }
@@ -25,6 +34,8 @@
       <!-- フラグメントシェーダー -->
       <script id="frag" type="x-shader/x-fragment">
           precision mediump float;
+          varying vec2 vUv;
+          varying vec4 fragColor;
           void main() {
               gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0 );
           }
