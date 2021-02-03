@@ -23,8 +23,8 @@ function init() {
     scene.add( camera );
     const envlight = new THREE.AmbientLight( 0xFFFFFF, 0.5 );
     scene.add( envlight );
-    const light = new THREE.DirectionalLight( 0xffffff, 0.7 );
-    light.position.set(0, 1, 1);
+    const light = new THREE.DirectionalLight( 0xffffff, 1 );
+    light.position.set(1, 0, 1);
     scene.add( light );
     //画面リサイズの設定
     window.addEventListener('resize', () => { onResize() });
