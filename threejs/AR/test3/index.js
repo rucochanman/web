@@ -124,7 +124,25 @@ function init() {
     //////////////////////////////////////////////
 
     
+    const upperArmThicks = new Array( limbSeg );
+    for( let i=0; i<( limbSeg+1 ); i++ ){
+        upperArmThicks[i] = 1;
+    }
 
+    upperArmObj.thick = upperArmThicks;
+    upperArmObj.width = upperArmThicks;
+    upperArmObj.ep = new THREE.Vector2( 2,0 );
+    upperArmObj.cp = new THREE.Vector2( 2,0 );
+    
+    //upper arm
+    const upperArmUv = makeUvmap( upperArmObj );
+    const upperArmpt = makePipePt( upperArmObj );
+    const upperArmMesh = new THREE.Mesh(
+        makeGeometry( upperArmObj, upperArmpt, upperArmUv ),
+        testMat
+    );
+
+    scene.add( upperArmMesh );
     
 
 
