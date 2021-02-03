@@ -73,9 +73,9 @@ function init() {
     //    　　       　　 defs                   //
     //////////////////////////////////////////////
 
-    const upperArmLength = 13;
-    const lowerArmLength = 18;
-    const upperArmThick = 5;
+    const upperArmLength = 6;
+    const lowerArmLength = 9;
+    const upperArmThick = 2.5;
 
     const upperArmObj = new Limbs();
     const jointArmObj = new Limbs();
@@ -132,14 +132,14 @@ function init() {
         const fingerThicks = new Array( limbSeg );
         const armLength = upperArmLength + lowerArmLength;
         const fingerLength = armLength / 12;
-        const fingerThick = upperArmThick / 5;
+        const fingerThick = upperArmThick / 4;
 
         for( let i=0; i<( limbSeg+1 ); i++ ){
             const t = i / limbSeg;
             upperArmThicks[i] = upperArmThick;
-            lowerArmWidths[i] = upperArmThick - Math.pow( t, 2.5 ) * upperArmThick;
+            lowerArmWidths[i] = upperArmThick - Math.pow( t, 2 ) * upperArmThick;
             lowerArmThicks[i] = upperArmThick - Math.pow( t, 4 ) * upperArmThick;
-            fingerThicks[i] = fingerThick - Math.pow( t, 3 ) * fingerThick;
+            fingerThicks[i] = fingerThick - Math.pow( t, 2 ) * fingerThick;
         }
 
         //set parameters
@@ -200,7 +200,7 @@ function init() {
         armG.add( lowerArmG );
 
         //add mesh to scene
-        armG.scale.set( 0.05, 0.05, 0.05 );
+        //armG.scale.set( 0.05, 0.05, 0.05 );
         markerArray[0].add( armG );
     }
 
@@ -272,7 +272,6 @@ function init() {
         upperArmRot.push( 0 );
     }
 
-    //const move = [];
     const uppperArmKF1 = new THREE.NumberKeyframeTrack( '.position', dur, upperArmPos );
     const uppperArmKF2 = new THREE.NumberKeyframeTrack( '.scale', dur, upperArmRot );
     const clip = new THREE.AnimationClip( 'Action', 4, [ uppperArmKF1, uppperArmKF2 ] );
@@ -284,8 +283,8 @@ function init() {
     //    　　　　  　レンダリング開始             //
     //////////////////////////////////////////////
 
-
     const clock = new THREE.Clock();
+
     function update(){
         mixer.update(clock.getDelta());
         let angle1 = upperArmMove.position.x;
@@ -296,15 +295,12 @@ function init() {
     }
 
     requestAnimationFrame( function animate(){
-
         update();
-
         requestAnimationFrame( animate );
         if ( arToolkitSource.ready ) {
             arToolkitContext.update( arToolkitSource.domElement );
             scene.visible = camera.visible;
         }
-
         renderer.render( scene, camera );
     });
 }
