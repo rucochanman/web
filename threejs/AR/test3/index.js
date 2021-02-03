@@ -64,33 +64,31 @@ function init() {
     });
 
     ///////////////////////////////////////////////
-    //    　　      test読み込み              //
+    //    　　      material設定              //
     //////////////////////////////////////////////
 
-    //(1)Planeジオメトリ(座標)を作成
-    const planeGeo = new THREE.BoxGeometry( 1, 1, 1 );
+    const texLoader = new THREE.TextureLoader();
+    const armTex = texLoader.load( './data/tex/arm.png' );
+    const bleckTex = texLoader.load( './data/tex/black.png' );
+    const skinTex = texLoader.load( './data/tex/skin.png' );
+    const roadTex = texLoader.load( './data/tex/road.png' );
 
     const uniform = THREE.UniformsUtils.merge([
         THREE.UniformsLib['lights'],{
-            //'uTexture': { value: null },
+            'uTexture': { value: null },
             //'uTone': { value: null },
             //'uColor1': { value: null },
             //'uColor2': { value: null }
         }
     ]);
 
-    const testMat = new THREE.ShaderMaterial({
+    const material = new THREE.ShaderMaterial({
         vertexShader: document.getElementById('vert').textContent,
         fragmentShader: document.getElementById('frag').textContent,
         uniforms: uniform,
         side:THREE.DoubleSide,
         lights: true
     });
-    //(3)ジオメトリとマテリアルからメッシュを作成
-    const plane = new THREE.Mesh( planeGeo, testMat );
-    plane.position.y = 1;
-    //(4)メッシュをシーンに追加
-    //marker.add( plane );
 
     ///////////////////////////////////////////////
     //    　　       　　 defs                   //
@@ -133,13 +131,17 @@ function init() {
     upperArmObj.width = upperArmThicks;
     upperArmObj.ep = new THREE.Vector2( 2,0 );
     upperArmObj.cp = new THREE.Vector2( 2,0 );
+
+    //material
+    const armMat = material.clone();
+    armMat.uniforms.uTexture.value = armTex;
     
     //upper arm
     const upperArmUv = makeUvmap( upperArmObj );
     const upperArmpt = makePipePt( upperArmObj );
     const upperArmMesh = new THREE.Mesh(
         makeGeometry( upperArmObj, upperArmpt, upperArmUv ),
-        testMat
+        armMat
     );
 
     marker.add( upperArmMesh );
