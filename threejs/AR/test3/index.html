@@ -13,6 +13,9 @@
       <div id="webgl"></div>
       <!-- 頂点シェーダー -->
       <script id="vert" type="x-shader/x-vertex">
+          #include <common>
+          //#include <bsdfs>
+          #include <lights_pars_begin>
           void main() {
               //カメラ座標に変換
               gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
