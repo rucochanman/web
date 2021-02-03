@@ -56,12 +56,25 @@ function init() {
     //    　　       マーカーの設定               //
     //////////////////////////////////////////////
 
-    const marker = new THREE.Group();
-    scene.add( marker );
-    const arMarkerControls = new THREEx.ArMarkerControls( arToolkitContext, marker, {
-        type: 'pattern',
-        patternUrl: "data/pattern-sneak.patt",
-    });
+    const markerNames = [ "sneak", "box", "stop", "wing" ];
+    const markerArray = [];
+
+    for ( let i=0; i<markerNames.length ; i++ ){
+        const marker = new THREE.Group();
+        scene.add( marker );
+        markerArray.push( marker );
+        const arMarkerControls = new THREEx.ArMarkerControls( arToolkitContext, marker, {
+            type: 'pattern',
+            patternUrl: "data/pattern/pattern-" + markerNames[i] + ".patt",
+        });
+    }
+
+    //const marker = new THREE.Group();
+    //scene.add( marker );
+    //const arMarkerControls = new THREEx.ArMarkerControls( arToolkitContext, marker, {
+    //    type: 'pattern',
+    //    patternUrl: "data/pattern-sneak.patt",
+    //});
 
     ///////////////////////////////////////////////
     //    　　      material設定              //
@@ -76,9 +89,6 @@ function init() {
     const uniform = THREE.UniformsUtils.merge([
         THREE.UniformsLib['lights'],{
             'uTexture': { value: null },
-            //'uTone': { value: null },
-            //'uColor1': { value: null },
-            //'uColor2': { value: null }
         }
     ]);
 
@@ -144,7 +154,7 @@ function init() {
         armMat
     );
 
-    marker.add( upperArmMesh );
+    markerArray[0].add( upperArmMesh );
     
 
 
