@@ -20,9 +20,12 @@ function init() {
     const scene = new THREE.Scene();
     scene.visible = false;
     const camera = new THREE.Camera();
-    scene.add(camera);
-    const light = new THREE.AmbientLight( 0xFFFFFF, 1.0 );
-    scene.add(light);
+    scene.add( camera );
+    const envlight = new THREE.AmbientLight( 0xFFFFFF, 0.5 );
+    scene.add( envlight );
+    const light = new THREE.DirectionalLight( 0xffffff, 1 );
+    light.position.set(1, 0, 1);
+    scene.add( light );
     //画面リサイズの設定
     window.addEventListener('resize', () => { onResize() });
     function onResize() {
@@ -64,240 +67,9 @@ function init() {
             type: 'pattern',
             patternUrl: "data/pattern/pattern-" + markerNames[i] + ".patt",
         });
-        const markerGroup = new THREE.Group();
-        marker.add( markerGroup );
     }
 
-    ///////////////////////////////////////////////
-    //    　　      モデルの読み込み              //
-    //////////////////////////////////////////////
-
-    let apple;
-    const gltfloader = new THREE.GLTFLoader();
-    gltfloader.load( './data/model/apple.glb',function( gltf ){
-        apple = gltf.scene;
-        apple.scale.set( 0.5, 0.5, 0.5 );
-        markerArray[0].children[0].add( apple );
-    });
-
-    const modelLight = new THREE.DirectionalLight( 0xFFFFFF, 1 );
-    modelLight.position.set( 0, 0.5, 1 );
-    let bentley;
-    gltfloader.load( './data/model/bentley.glb',function( gltf ){
-        bentley = gltf.scene;
-        bentley.scale.set( 0.5, 0.5, 0.5 );
-        markerArray[2].children[0].add( bentley );
-        markerArray[2].children[0].add( modelLight );
-    });
-
-    let bench;
-    gltfloader.load( './data/model/bench.glb',function( gltf ){
-        bench = gltf.scene;
-        bench.scale.set( 0.5, 0.5, 0.5 );
-        markerArray[3].children[0].add( bench );
-        markerArray[3].children[0].add( modelLight );
-    });
-
-    ///////////////////////////////////////////////
-    //    　　       　　 defs                   //
-    //////////////////////////////////////////////
-
-    const upperArmLength = 20;
-    const lowerArmLength = 20;
-    const upperArmThick = 5;
-    const fingerLength = 2;
-    const fingerThick = 1;
-
-    const upperArmObj = new Limbs();
-    const jointArmObj = new Limbs();
-    const lowerArmObj = new Limbs();
-    const fingerObj = new Limbs();
-
-    const armG = new THREE.Group();
-    const lowerArmG = new THREE.Group();
-    const handG = new THREE.Group();
-
-    function Limbs(){
-        this.seg = limbSeg;
-        this.edge = limbEdge;
-        this.ep = new THREE.Vector2( 1,0 );
-        this.cp = new THREE.Vector2( 1,0 );
-        this.thick = 0;
-        this.width = 0;
-    }
-
-    ///////////////////////////////////////////////
-    //    　　　　 マテリアル配置                  //
-    //////////////////////////////////////////////
-
-    const armMat = new THREE.MeshNormalMaterial({
-        side:THREE.DoubleSide,
-    });
-
-    const texLoader = new THREE.TextureLoader();
-    const armTex = texLoader.load( './data/tex/arm.png' );
-    const bleckTex = texLoader.load( './data/tex/black.png' );
-    const skinTex = texLoader.load( './data/tex/skin.png' );
-    const roadTex = texLoader.load( './data/tex/road.png' );
-
-    const uniform = THREE.UniformsUtils.merge([
-        THREE.UniformsLib['lights'],{
-            'uTexture': { value: null },
-                //'uTone': { value: null },
-                //'uColor1': { value: null },
-                //'uColor2': { value: null }
-        }
-    ]);
-
-    const material = new THREE.ShaderMaterial({
-        vertexShader: document.getElementById('vert').textContent,
-        fragmentShader: document.getElementById('frag').textContent,
-        uniforms: uniform,
-        side:THREE.DoubleSide,
-        lights: true
-    });
-    
-    //(1)Planeジオメトリ(座標)を作成
-    const planeGeo = new THREE.PlaneGeometry( 1, 1, 1 );
-    //(2)マテリアル(材質)にShaderMaterialを指定する
-    //htmlからvertとfragのソースを読み込んで指定
-    const testMat = new THREE.ShaderMaterial({
-        vertexShader: document.getElementById('vert').textContent,
-        fragmentShader: document.getElementById('frag').textContent
-    });
-    //(3)ジオメトリとマテリアルからメッシュを作成
-    const plane = new THREE.Mesh( planeGeo, armMat );
-    plane.position.y = 1;
-    //(4)メッシュをシーンに追加
-    markerArray[1].children[0].add( plane );
-
-    ///////////////////////////////////////////////
-    //    　　　　      arm関連                   //
-    //////////////////////////////////////////////
-
-    function armInit(){
-        //thicks
-        const upperArmThicks = new Array( limbSeg );
-        const lowerArmThicks = new Array( limbSeg );
-        const lowerArmWidths = new Array( limbSeg );
-        const fingerThicks = new Array( limbSeg );
-
-        for( let i=0; i<( limbSeg+1 ); i++ ){
-            const t = i / limbSeg;
-            upperArmThicks[i] = upperArmThick;
-            lowerArmWidths[i] = upperArmThick - Math.pow( t, 3 ) * upperArmThick;
-            lowerArmThicks[i] = upperArmThick - Math.pow( t, 5 ) * upperArmThick;
-            fingerThicks[i] = fingerThick - Math.pow( t, 3 ) * fingerThick;
-        }
-
-        //set parameter
-        upperArmObj.thick = upperArmThicks;
-        upperArmObj.width = upperArmThicks;
-        jointArmObj.seg *= 2;
-        lowerArmObj.thick = lowerArmThicks;
-        lowerArmObj.width = lowerArmWidths;
-        fingerObj.ep = new THREE.Vector2( fingerLength,0 );
-        fingerObj.cp = new THREE.Vector2( fingerLength,0 );
-        fingerObj.thick = fingerThicks;
-        fingerObj.width = fingerThicks;
-
-        //material
-        const armuvMat = material.clone();
-        armuvMat.uniforms.uTexture.value = armTex;
-        const blackMat = material.clone();
-        blackMat.uniforms.uTexture.value = bleckTex;
-        const skinMat = material.clone();
-        skinMat.uniforms.uTexture.value = skinTex;
-
-        //upper arm
-        const upperArmUv = makeUvmap( upperArmObj );
-        const upperArmpt = makePipePt( upperArmObj );
-        const upperArmMesh = new THREE.Mesh(
-            makeGeometry( upperArmObj, upperArmpt, upperArmUv ),
-            armMat
-        );
-
-        //lower arm
-        const jointArmPt = makeJointPt( upperArmObj, -1 );
-        const lowerArmPt = makePipePt( lowerArmObj );
-        const lowerArmPts = jointArmPt.concat( lowerArmPt );
-        const jointArmUv = makeUvmap( jointArmObj );
-        const lowerArmMesh = new THREE.Mesh(
-            makeGeometry( jointArmObj, lowerArmPts, jointArmUv ),
-            armMat
-        );
-
-        //hand
-        lastValClear();
-        const fingerPt = makePipePt( fingerObj );
-        const fingerGeo = makeGeometry( fingerObj, fingerPt, upperArmUv );
-        const fingerAngles = [ -PI/5, -PI/12, PI/32, PI/4 ];
-        for( let i=0; i<4; i++ ){
-            const fingerMesh = new THREE.Mesh( fingerGeo, armMat );
-            const z = ( upperArmThick*0.8 ) * Math.sin( fingerAngles[i] );
-            const x = ( upperArmThick*0.8 ) * Math.cos( fingerAngles[i] );
-            fingerMesh.rotation.y = -fingerAngles[i];
-            fingerMesh.position.set( x - fingerLength*2, 0, z );
-            handG.add( fingerMesh );
-        }
-
-        //grouping
-        lowerArmG.add( lowerArmMesh );
-        lowerArmG.add( handG );
-        armG.add( upperArmMesh );
-        armG.add( lowerArmG );
-
-        //add mesh to scene
-        armG.position.y = 0.5;
-        armG.position.z = -1;
-        armG.scale.set( 0.05, 0.05, 0.05 );
-        markerArray[1].children[0].add( armG );
-        //marker1.add( armG );
-    }
-
-    function upperArmUpdate( angle ){
-        const bend = mapping( angle, -1.0, 2.0, PI/4, -PI/2 );
-        const { ep, cp } = getBezierPt( upperArmLength, bend );
-        upperArmObj.ep = ep;
-        upperArmObj.cp = cp;
-        const pt = makePipePt( upperArmObj );
-        updateGeometry( upperArmObj, pt, armG.children[0].geometry );
-    }
-
-    function lowerArmUpdate( angle ){
-        const bend = mapping( angle, 0.0, 1.5, -0.05, -3*PI/4 );
-        const jointArmPt = makeJointPt( upperArmObj, bend );
-        const { ep, cp } = getBezierPt2( bend, lowerArmLength, upperArmThick );
-        lowerArmObj.ep = ep;
-        lowerArmObj.cp = cp;
-        const lowerArmPt = makePipePt( lowerArmObj );
-        const lowerArmPts = jointArmPt.concat( lowerArmPt );
-        updateGeometry( jointArmObj, lowerArmPts, lowerArmG.children[0].geometry );
-        lowerArmG.position.set( upperArmObj.ep.x, upperArmObj.ep.y, 0 );
-    }
-
-    function armUpdate( angle1, angle2, rot1, rot2 ){
-        //reset
-        lastAngle = 0;
-        lastPos = new THREE.Vector2();
-        upperArmUpdate( angle1 );
-        //lowerArm
-        const r = lastAngle;
-        lowerArmUpdate( angle2 );
-        //hand
-        handG.rotation.z = lastAngle;
-        handG.position.set( lastPos.x, lastPos.y, 0 );
-        //rotation
-        const axis1 = new THREE.Vector3( 1,0,0 );
-        const axis2 = new THREE.Vector3( Math.cos(r),Math.sin(r),0 ).normalize();
-        const q1 = new THREE.Quaternion().setFromAxisAngle( axis1, rot1 );
-        const q2 = new THREE.Quaternion().setFromAxisAngle( axis2, rot2 );
-        armG.applyQuaternion( q1 );
-        lowerArmG.applyQuaternion( q2 );
-    }
-
-    armInit();
-    armUpdate( 0, 0, 0, 0 );
+    makeModel( markerArray );
 
     ///////////////////////////////////////////////
     //    　　　　  　animation設定               //
@@ -306,48 +78,51 @@ function init() {
     // POSITION
     const upperArmMove = new THREE.Object3D();
     const dur = [ 0, 2, 4 ];
-    const val1 = [ 2, -1, 2 ];
-    const val2 = [ 0, 1.5, 0 ];
+    const posVal1 = [ -0.2, 1, -0.2 ];
+    const posVal2 = [ 0, 1.5, 0 ];
+    const rotVal1 = [ 0, 0, 0 ];
+    const rotVal2 = [ 0, -PI/2, 0 ];
 
     const upperArmPos = [];
+    const upperArmRot = [];
     for( let i=0; i<dur.length; i++ ){
-        upperArmPos.push( val1[i] );
-        upperArmPos.push( val2[i] );
+        upperArmPos.push( posVal1[i] );
+        upperArmPos.push( posVal2[i] );
         upperArmPos.push( 0 );
+        upperArmRot.push( rotVal1[i] );
+        upperArmRot.push( rotVal2[i] );
+        upperArmRot.push( 0 );
     }
 
-    //const move = [];
-    const uppperArmKF = new THREE.NumberKeyframeTrack( '.position', dur, upperArmPos );
-    const clip = new THREE.AnimationClip( 'Action', 4, [ uppperArmKF ] );
+    const uppperArmKF1 = new THREE.NumberKeyframeTrack( '.position', dur, upperArmPos );
+    const uppperArmKF2 = new THREE.NumberKeyframeTrack( '.scale', dur, upperArmRot );
+    const clip = new THREE.AnimationClip( 'Action', 4, [ uppperArmKF1, uppperArmKF2 ] );
     const mixer = new THREE.AnimationMixer( upperArmMove );
     const clipAction = mixer.clipAction( clip );
     clipAction.play();
-
-    const clock = new THREE.Clock();
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
     //////////////////////////////////////////////
 
+    const clock = new THREE.Clock();
+
     function update(){
-	      if ( markerArray[1].children[0].visible ){
-            mixer.update(clock.getDelta());
-            let angle1 = upperArmMove.position.x;
-            let angle2 = upperArmMove.position.y;
-            armUpdate( angle1, angle2, 0, 0 );
-        }
+        mixer.update(clock.getDelta());
+        let angle1 = upperArmMove.position.x;
+        let angle2 = upperArmMove.position.y;
+        let rot1 = upperArmMove.scale.x;
+        let rot2 = upperArmMove.scale.y;
+        armUpdate( angle1, angle2, rot1, rot2 );
     }
 
     requestAnimationFrame( function animate(){
-
         update();
-
         requestAnimationFrame( animate );
         if ( arToolkitSource.ready ) {
             arToolkitContext.update( arToolkitSource.domElement );
             scene.visible = camera.visible;
         }
-
         renderer.render( scene, camera );
     });
 }
