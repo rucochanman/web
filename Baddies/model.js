@@ -8,7 +8,6 @@ function makeModel( markerArray ){
     const armTex = texLoader.load( './data/tex/arm.png' );
     const bleckTex = texLoader.load( './data/tex/black.png' );
     const skinTex = texLoader.load( './data/tex/skin.png' );
-    const roadTex = texLoader.load( './data/tex/road.png' );
 
     const uniform = THREE.UniformsUtils.merge([
         THREE.UniformsLib['lights'],{
@@ -23,32 +22,6 @@ function makeModel( markerArray ){
         side:THREE.DoubleSide,
         lights: true
     });
-
-    ///////////////////////////////////////////////
-    //    　　　    　 road作成                   //
-    //////////////////////////////////////////////
-
-    const road = new THREE.Mesh(
-        new THREE.PlaneGeometry( 20, 10 ),
-        new THREE.MeshLambertMaterial({map:roadTex})
-    );
-
-    let uv1 = [
-        new THREE.Vector2(0.3, 1.0),
-        new THREE.Vector2(0.3, 0),
-        new THREE.Vector2(1.0, 1.0)
-    ]
-
-    let uv2 = [
-        new THREE.Vector2(0.3, 0),
-        new THREE.Vector2(1.0, 0),
-        new THREE.Vector2(1.0, 1.0)
-    ]
-
-    road.geometry.faceVertexUvs[0][0] = uv1
-    road.geometry.faceVertexUvs[0][1] = uv2
-    //scene.add( road );
-
 
     ///////////////////////////////////////////////
     //    　　　　      arm関連                   //
