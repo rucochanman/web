@@ -87,7 +87,7 @@ function init() {
     gltfloader.load( './data/model/bentley.glb',function( gltf ){
         bentley = gltf.scene;
         bentley.scale.set( 0.5, 0.5, 0.5 );
-        bentley.position.y = 0.1;
+        bentley.position.y = 0.2;
         bentley.position.z = -0.25;
         bentley.rotation.y = -PI/2;
         markerArray[2].add( bentley );
@@ -102,7 +102,7 @@ function init() {
 
     const roadTex = texLoader.load( './data/tex/road.png' );
     const road = new THREE.Mesh(
-        new THREE.PlaneGeometry( 1.5, 1.5 ),
+        new THREE.PlaneGeometry( 1, 1 ),
         new THREE.MeshBasicMaterial( {map:roadTex} )
     );
     const uv1 = [
@@ -171,7 +171,7 @@ function init() {
     const clock = new THREE.Clock();
 
     function update(){
-        if ( markerArray[0].visible ){
+        if ( markerArray[1].visible ){
             mixer.update(clock.getDelta());
             let angle1 = upperArmMove.position.x;
             let angle2 = upperArmMove.position.y;
@@ -181,6 +181,9 @@ function init() {
         }
         if ( markerArray[2].visible ){
             roadUpdate();
+        }
+        if ( markerArray[0].visible ){
+            apple.rotation.y += 0.01;
         }
     }
 
