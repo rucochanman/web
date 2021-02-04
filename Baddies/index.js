@@ -86,7 +86,7 @@ function init() {
     let bentley;
     gltfloader.load( './data/model/bentley.glb',function( gltf ){
         bentley = gltf.scene;
-        bentley.scale.set( 0.5, 0.5, 0.5 );
+        bentley.scale.set( 0.65, 0.65, 0.65 );
         bentley.position.y = 0.3;
         bentley.position.z = -0.25;
         bentley.rotation.y = -PI/2;
@@ -96,7 +96,7 @@ function init() {
     let bench;
     gltfloader.load( './data/model/bench.glb',function( gltf ){
         bench = gltf.scene;
-        bench.scale.set( 0.5, 0.5, 0.5 );
+        bench.scale.set( 0.7, 0.7, 0.7 );
         markerArray[3].add( bench );
     });
 
@@ -110,7 +110,7 @@ function init() {
 
     const roadTex = texLoader.load( './data/tex/road.png' );
     const road = new THREE.Mesh(
-        new THREE.PlaneGeometry( 1.2, 1.2 ),
+        new THREE.PlaneGeometry( 1.5, 1.5 ),
         new THREE.MeshBasicMaterial( {map:roadTex} )
     );
     const uv1 = [
