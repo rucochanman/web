@@ -87,9 +87,9 @@ function init() {
     gltfloader.load( './data/model/bentley.glb',function( gltf ){
         bentley = gltf.scene;
         bentley.scale.set( 0.5, 0.5, 0.5 );
-        bentley.position.y = 1;
-        bentley.position.z = -0.5;
-        bentley.rotation.y = -PI;
+        bentley.position.y = 0.1;
+        bentley.position.z = -0.25;
+        bentley.rotation.y = -PI/2;
         markerArray[2].add( bentley );
     });
 
@@ -152,7 +152,7 @@ function init() {
 
     // road
     function roadUpdate(){
-        const zpos = road.geometry.faceVertexUvs[0][0][2].x - 0.01;
+        const zpos = road.geometry.faceVertexUvs[0][0][2].x - 0.03;
         const pos1 = zpos < 0.2 ? 1.0 : zpos;
         const pos0 = pos1 - 0.2;
         road.geometry.faceVertexUvs[0][0][0].x = pos0;
