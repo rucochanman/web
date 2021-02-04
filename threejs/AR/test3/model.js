@@ -130,7 +130,8 @@ function makeModel( scene ){
         armG.add( lowerArmG );
 
         //add mesh to scene
-        scene.add( armG );
+        armG.scale.set( 0.1, 0.1, 0.1 );
+        markerArray[0].add( armG );
     }
     armInit();
 }
