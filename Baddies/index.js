@@ -87,6 +87,7 @@ function init() {
     gltfloader.load( './data/model/bentley.glb',function( gltf ){
         bentley = gltf.scene;
         bentley.scale.set( 0.5, 0.5, 0.5 );
+        bentley.position.y = 1;
         markerArray[2].add( bentley );
     });
 
@@ -99,7 +100,7 @@ function init() {
 
     const roadTex = texLoader.load( './data/tex/road.png' );
     const road = new THREE.Mesh(
-        new THREE.PlaneGeometry( 1, 1 ),
+        new THREE.PlaneGeometry( 1.5, 1.5 ),
         new THREE.MeshBasicMaterial( {map:roadTex} )
     );
     const uv1 = [
@@ -116,7 +117,7 @@ function init() {
     road.geometry.faceVertexUvs[0][1] = uv2;
     road.rotation.x = -PI/2;
     markerArray[2].add( road );
-    
+
     ///////////////////////////////////////////////
     //    　　　　  　animation設定               //
     //////////////////////////////////////////////
@@ -146,7 +147,7 @@ function init() {
     const mixer = new THREE.AnimationMixer( upperArmMove );
     const clipAction = mixer.clipAction( clip );
     clipAction.play();
-    
+
     // road
     function roadUpdate(){
         const zpos = ( road.geometry.faceVertexUvs[0][0][2].x + 0.01 ) % 1.0;
