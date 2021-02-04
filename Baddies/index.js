@@ -97,12 +97,30 @@ function init() {
         markerArray[3].add( bench );
     });
 
-
+    const roadTex = texLoader.load( './data/tex/road.png' );
+    const road = new THREE.Mesh(
+        new THREE.PlaneGeometry( 10, 10 ),
+        new THREE.MeshLambertMaterial( {map:roadTex} )
+    );
+    const uv1 = [
+        new THREE.Vector2(0, 1),
+        new THREE.Vector2(0, 0),
+        new THREE.Vector2(0.2, 1)
+    ];
+    const uv2 = [
+        new THREE.Vector2(0, 0),
+        new THREE.Vector2(0.2, 0),
+        new THREE.Vector2(0.2, 1.0)
+    ];
+    road.geometry.faceVertexUvs[0][0] = uv1;
+    road.geometry.faceVertexUvs[0][1] = uv2;
+    markerArray[2].add( road );
+    
     ///////////////////////////////////////////////
     //    　　　　  　animation設定               //
     //////////////////////////////////////////////
 
-    // POSITION
+    // arm
     const upperArmMove = new THREE.Object3D();
     const dur = [ 0, 2, 4 ];
     const posVal1 = [ -0.2, 1, -0.2 ];
@@ -127,6 +145,20 @@ function init() {
     const mixer = new THREE.AnimationMixer( upperArmMove );
     const clipAction = mixer.clipAction( clip );
     clipAction.play();
+    
+    // road
+    function roadUpdate(){
+        const zpos = ( road.geometry.faceVertexUvs[0][0][2].x + 0.01 ) % 1.0;
+        const pos1 = zpos < 0.2 ? zpos + 0.2 : zpos;
+        const pos0 = pos1 - 0.2;
+        road.geometry.faceVertexUvs[0][0][0].x = pos0;
+        road.geometry.faceVertexUvs[0][0][1].x = pos0;
+        road.geometry.faceVertexUvs[0][0][2].x = pos1;
+        road.geometry.faceVertexUvs[0][1][0].x = pos0;
+        road.geometry.faceVertexUvs[0][1][1].x = pos1;
+        road.geometry.faceVertexUvs[0][1][2].x = pos1;
+        road.geometry.uvsNeedUpdate = true;
+    }
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
@@ -135,12 +167,17 @@ function init() {
     const clock = new THREE.Clock();
 
     function update(){
-        mixer.update(clock.getDelta());
-        let angle1 = upperArmMove.position.x;
-        let angle2 = upperArmMove.position.y;
-        let rot1 = upperArmMove.scale.x;
-        let rot2 = upperArmMove.scale.y;
-        armUpdate( angle1, angle2, rot1, rot2 );
+        if ( markerArray[0].visible ){
+            mixer.update(clock.getDelta());
+            let angle1 = upperArmMove.position.x;
+            let angle2 = upperArmMove.position.y;
+            let rot1 = upperArmMove.scale.x;
+            let rot2 = upperArmMove.scale.y;
+            armUpdate( angle1, angle2, rot1, rot2 );
+        }
+        if ( markerArray[2].visible ){
+            roadUpdate();
+        }
     }
 
     requestAnimationFrame( function animate(){
