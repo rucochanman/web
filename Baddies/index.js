@@ -100,6 +100,14 @@ function init() {
         markerArray[3].add( bench );
     });
 
+    const grassTex = texLoader.load( './data/tex/grass.png' );
+    const grass = new THREE.Mesh(
+        new THREE.PlaneGeometry( 1.2, 1.2 ),
+        new THREE.MeshBasicMaterial( {map:grassTex} )
+    );
+    grass.rotation.x = -PI/2;
+    markerArray[3].add( grass );
+
     const roadTex = texLoader.load( './data/tex/road.png' );
     const road = new THREE.Mesh(
         new THREE.PlaneGeometry( 1.2, 1.2 ),
