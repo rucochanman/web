@@ -99,8 +99,8 @@ function init() {
 
     const roadTex = texLoader.load( './data/tex/road.png' );
     const road = new THREE.Mesh(
-        new THREE.PlaneGeometry( 10, 10 ),
-        new THREE.MeshLambertMaterial( {map:roadTex} )
+        new THREE.PlaneGeometry( 1, 1 ),
+        new THREE.MeshBasicMaterial( {map:roadTex} )
     );
     const uv1 = [
         new THREE.Vector2(0, 1),
@@ -114,6 +114,7 @@ function init() {
     ];
     road.geometry.faceVertexUvs[0][0] = uv1;
     road.geometry.faceVertexUvs[0][1] = uv2;
+    road.rotation.x = -PI/2;
     markerArray[2].add( road );
     
     ///////////////////////////////////////////////
