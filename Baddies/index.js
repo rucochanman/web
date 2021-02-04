@@ -87,7 +87,7 @@ function init() {
     gltfloader.load( './data/model/bentley.glb',function( gltf ){
         bentley = gltf.scene;
         bentley.scale.set( 0.5, 0.5, 0.5 );
-        bentley.position.y = 0.2;
+        bentley.position.y = 0.3;
         bentley.position.z = -0.25;
         bentley.rotation.y = -PI/2;
         markerArray[2].add( bentley );
@@ -102,7 +102,7 @@ function init() {
 
     const roadTex = texLoader.load( './data/tex/road.png' );
     const road = new THREE.Mesh(
-        new THREE.PlaneGeometry( 1, 1 ),
+        new THREE.PlaneGeometry( 1.2, 1.2 ),
         new THREE.MeshBasicMaterial( {map:roadTex} )
     );
     const uv1 = [
