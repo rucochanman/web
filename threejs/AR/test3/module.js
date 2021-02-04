@@ -10,6 +10,28 @@ const center2D = new THREE.Vector2();
 let lastAngle = 0;
 let lastPos = new THREE.Vector2();
 
+const upperArmLength = 6;
+const lowerArmLength = 9;
+const upperArmThick = 2.5;
+
+const upperArmObj = new Limbs();
+const jointArmObj = new Limbs();
+const lowerArmObj = new Limbs();
+const fingerObj = new Limbs();
+
+const armG = new THREE.Group();
+const lowerArmG = new THREE.Group();
+const handG = new THREE.Group();
+
+//limbsクラス
+function Limbs(){
+    this.seg = limbSeg;
+    this.edge = limbEdge;
+    this.ep = new THREE.Vector2( 1,0 );
+    this.cp = new THREE.Vector2( 1,0 );
+    this.thick = 0;
+    this.width = 0;
+}
 
 ////////////////////////////////////////////////
 //    　　　       　 reset                   //
@@ -103,7 +125,6 @@ function makeJointPt( obj, bend ){
     lastPos = bone;
     return pt;
 }
-
 
 ////////////////////////////////////////////////
 //    　　　 　　  uvmapの作成                 //
