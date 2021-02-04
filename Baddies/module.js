@@ -11,9 +11,9 @@ let lastAngle = 0;
 let lastPos = new THREE.Vector2();
 const texLoader = new THREE.TextureLoader();
 
-const upperArmLength = 6;
-const lowerArmLength = 9;
-const upperArmThick = 2.5;
+const upperArmLength = 12;
+const lowerArmLength = 18;
+const upperArmThick = 5;
 
 const upperArmObj = new Limbs();
 const jointArmObj = new Limbs();
