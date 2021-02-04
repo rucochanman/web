@@ -183,7 +183,7 @@ function init() {
             roadUpdate();
         }
         if ( markerArray[0].visible ){
-            apple.rotation.y += 0.01;
+            apple.rotation.y += 0.03;
         }
     }
 
