@@ -69,7 +69,34 @@ function init() {
         });
     }
 
+    ///////////////////////////////////////////////
+    //    　　       モデルの設定                 //
+    //////////////////////////////////////////////
+
     makeModel( markerArray );
+
+    let apple;
+    const gltfloader = new THREE.GLTFLoader();
+    gltfloader.load( './data/model/apple.glb',function( gltf ){
+        apple = gltf.scene;
+        apple.scale.set( 0.5, 0.5, 0.5 );
+        markerArray[0].add( apple );
+    });
+
+    let bentley;
+    gltfloader.load( './data/model/bentley.glb',function( gltf ){
+        bentley = gltf.scene;
+        bentley.scale.set( 0.5, 0.5, 0.5 );
+        markerArray[2].add( bentley );
+    });
+
+    let bench;
+    gltfloader.load( './data/model/bench.glb',function( gltf ){
+        bench = gltf.scene;
+        bench.scale.set( 0.5, 0.5, 0.5 );
+        markerArray[3].add( bench );
+    });
+
 
     ///////////////////////////////////////////////
     //    　　　　  　animation設定               //
