@@ -1,4 +1,4 @@
-function makeModel( scene ){
+function makeModel( markerArray ){
 
     ///////////////////////////////////////////////
     //    　　　　 マテリアル配置                  //
