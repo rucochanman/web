@@ -87,7 +87,7 @@ function init() {
     gltfloader.load( './data/model/bentley.glb',function( gltf ){
         bentley = gltf.scene;
         bentley.scale.set( 0.65, 0.65, 0.65 );
-        bentley.position.y = 0.3;
+        bentley.position.y = 0.5;
         bentley.position.z = -0.25;
         bentley.rotation.y = -PI/2;
         markerArray[2].add( bentley );
