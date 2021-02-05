@@ -109,7 +109,7 @@ function makeModel( markerArray ){
         armG.add( lowerArmG );
 
         //add mesh to scene
-        armG.scale.set( 0.05, 0.05, 0.05 );
+        armG.scale.set( 0.02, 0.02, 0.02 );
         markerArray[1].add( armG );
     }
     armInit();
