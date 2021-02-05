@@ -32,6 +32,7 @@ function makeModel( markerArray ){
     function armInit(){
 
         //set thickss
+        lastValClear();
         const upperArmThicks = new Array( limbSeg );
         const lowerArmThicks = new Array( limbSeg );
         const lowerArmWidths = new Array( limbSeg );
@@ -99,36 +100,36 @@ function makeModel( markerArray ){
             const x = ( upperArmThick*0.8 ) * Math.cos( fingerAngles[i] );
             fingerMesh.rotation.y = -fingerAngles[i];
             fingerMesh.position.set( x - fingerLength*2, 0, z );
-            handG.add( fingerMesh );
+            model.handG.add( fingerMesh );
         }
 
         //grouping
-        lowerArmG.add( lowerArmMesh );
-        lowerArmG.add( handG );
-        armG.add( upperArmMesh );
-        armG.add( lowerArmG );
+        model.lowerArmG.add( lowerArmMesh );
+        model.lowerArmG.add( model.handG );
+        model.armG.add( upperArmMesh );
+        model.armG.add( model.lowerArmG );
 
         //add mesh to scene
-        armG.scale.set( 0.02, 0.02, 0.02 );
-        markerArray[1].add( armG );
+        model.armG.scale.set( 0.02, 0.02, 0.02 );
+        markerArray[1].add( model.armG );
     }
-    armInit();
+    armInit( crowley );
 }
 
 ///////////////////////////////////////////////
 //    　　　　 update用関数                   //
 //////////////////////////////////////////////
 
-function upperArmUpdate( angle ){
+function upperArmUpdate( model, angle ){
     const bend = mapping( angle, -1.0, 2.0, PI/4, -PI/2 );
     const { ep, cp } = getBezierPt( upperArmLength, bend );
     upperArmObj.ep = ep;
     upperArmObj.cp = cp;
     const pt = makePipePt( upperArmObj );
-    updateGeometry( upperArmObj, pt, armG.children[0].geometry );
+    updateGeometry( upperArmObj, pt, model.armG.children[0].geometry );
 }
 
-function lowerArmUpdate( angle ){
+function lowerArmUpdate( model, angle ){
     const bend = mapping( angle, 0.0, 1.5, -0.05, -3*PI/4 );
     const jointArmPt = makeJointPt( upperArmObj, bend );
     const { ep, cp } = getBezierPt2( bend, lowerArmLength, upperArmThick );
@@ -136,27 +137,27 @@ function lowerArmUpdate( angle ){
     lowerArmObj.cp = cp;
     const lowerArmPt = makePipePt( lowerArmObj );
     const lowerArmPts = jointArmPt.concat( lowerArmPt );
-    updateGeometry( jointArmObj, lowerArmPts, lowerArmG.children[0].geometry );
-    lowerArmG.position.set( upperArmObj.ep.x, upperArmObj.ep.y, 0 );
+    updateGeometry( jointArmObj, lowerArmPts, model.lowerArmG.children[0].geometry );
+    model.lowerArmG.position.set( upperArmObj.ep.x, upperArmObj.ep.y, 0 );
 }
 
-function armUpdate( angle1, angle2, rotate1, rotate2 ){
+function armUpdate( model, angle1, angle2, rotate1, rotate2 ){
     //upperArm
     lastValClear();
-    upperArmUpdate( angle1 );
+    upperArmUpdate( model, angle1 );
     //lowerArm
     const r = lastAngle;
-    lowerArmUpdate( angle2 );
+    lowerArmUpdate( model, angle2 );
     //hand
-    handG.rotation.z = lastAngle;
-    handG.position.set( lastPos.x, lastPos.y, 0 );
+    model.handG.rotation.z = lastAngle;
+    model.handG.position.set( lastPos.x, lastPos.y, 0 );
     //rotation
-    armG.quaternion.set( 0,0,0,1 );
-    lowerArmG.quaternion.set( 0,0,0,1 );
+    model.armG.quaternion.set( 0,0,0,1 );
+    model.lowerArmG.quaternion.set( 0,0,0,1 );
     const axis1 = new THREE.Vector3( 1,0,0 );
     const axis2 = new THREE.Vector3( Math.cos(r),Math.sin(r),0 ).normalize();
     const q1 = new THREE.Quaternion().setFromAxisAngle( axis1, rotate1 );
     const q2 = new THREE.Quaternion().setFromAxisAngle( axis2, rotate2 );
-    armG.applyQuaternion( q1 );
-    lowerArmG.applyQuaternion( q2 );
+    model.armG.applyQuaternion( q1 );
+    model.lowerArmG.applyQuaternion( q2 );
 }
