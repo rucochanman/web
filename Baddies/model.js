@@ -1,23 +1,25 @@
-function makeModel( markerArray ){
+function makeModel( scene ){
 
     ///////////////////////////////////////////////
     //    　　　　 マテリアル配置                  //
     //////////////////////////////////////////////
 
-    const texLoader = new THREE.TextureLoader();
     const armTex = texLoader.load( './data/tex/arm.png' );
-    const bleckTex = texLoader.load( './data/tex/black.png' );
-    const skinTex = texLoader.load( './data/tex/skin.png' );
+    const monoTex = texLoader.load( './data/tex/mono.png' );
 
     const uniform = THREE.UniformsUtils.merge([
         THREE.UniformsLib['lights'],{
             'uTexture': { value: null },
+            'uColor1': { value: new THREE.Color( 'grey' ) },
+            'uColor2': { value: new THREE.Color( 'white' ) },
         }
     ]);
 
+    const frag2 = document.getElementById( 'frag2' ).textContent;
+
     const material = new THREE.ShaderMaterial({
-        vertexShader: document.getElementById('vert').textContent,
-        fragmentShader: document.getElementById('frag').textContent,
+        vertexShader: document.getElementById( 'vert' ).textContent,
+        fragmentShader: document.getElementById( 'frag' ).textContent,
         uniforms: uniform,
         side:THREE.DoubleSide,
         lights: true
@@ -59,10 +61,14 @@ function makeModel( markerArray ){
         //material
         const armMat = material.clone();
         armMat.uniforms.uTexture.value = armTex;
+        armMat.uniforms.uColor1.value = new THREE.Color('red');
+        armMat.uniforms.uColor2.value = new THREE.Color('white');
         const blackMat = material.clone();
-        blackMat.uniforms.uTexture.value = bleckTex;
+        blackMat.uniforms.uTexture.value = monoTex;
+        blackMat.uniforms.uColor1.value = new THREE.Color('red');
         const skinMat = material.clone();
-        skinMat.uniforms.uTexture.value = skinTex;
+        skinMat.uniforms.uTexture.value = monoTex;
+        skinMat.uniforms.uColor1.value = new THREE.Color('white');
 
         //upper arm
         const upperArmUv = makeUvmap( upperArmObj );
