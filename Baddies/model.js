@@ -29,7 +29,7 @@ function makeModel( markerArray ){
     //    　　　　      arm関連                   //
     //////////////////////////////////////////////
 
-    function armInit(){
+    function armInit( model ){
 
         //set thickss
         lastValClear();
