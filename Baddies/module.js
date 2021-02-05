@@ -20,9 +20,20 @@ const jointArmObj = new Limbs();
 const lowerArmObj = new Limbs();
 const fingerObj = new Limbs();
 
-const armG = new THREE.Group();
-const lowerArmG = new THREE.Group();
-const handG = new THREE.Group();
+function model(){
+    this.armCol = new THREE.Color( 'gray' );
+    this.skinCol = new THREE.Color( 'wheat' );
+    //this.legCol = new THREE.Color( 'gray' );
+    //this.shoeCol = new THREE.Color( 'black' );
+    //this.bodyTex = ;
+    //this.width = 0;
+
+    this.armG = new THREE.Group();
+    this.lowerArmG = new THREE.Group();
+    this.handG = new THREE.Group();
+}
+
+const crowley = new model();
 
 //limbsクラス
 function Limbs(){
