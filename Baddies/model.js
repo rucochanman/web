@@ -16,7 +16,6 @@ function makeModel( markerArray ){
     ]);
 
     const frag2 = document.getElementById( 'frag2' ).textContent;
-
     const material = new THREE.ShaderMaterial({
         vertexShader: document.getElementById( 'vert' ).textContent,
         fragmentShader: document.getElementById( 'frag' ).textContent,
@@ -24,12 +23,9 @@ function makeModel( markerArray ){
         side:THREE.DoubleSide,
         lights: true
     });
-    
-    
-
 
     ///////////////////////////////////////////////
-    //    　　　　      arm関連                   //
+    //    　　　　     limb関連                   //
     //////////////////////////////////////////////
 
     function armInit( model ){
@@ -154,7 +150,7 @@ function makeModel( markerArray ){
         markerArray[1].add( model.legG );
     }
     
-    console.log("ver1");
+    console.log("ver2");
     armInit( crowley );
     legUpdate( crowley, 0, 0, 0, 0 ); 
 }
