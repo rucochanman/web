@@ -89,6 +89,7 @@ function makeModel( markerArray ){
         skinMat.uniforms.uColor1.value = model.skinCol;
 
         //upper limb
+        lastValClear();
         const upperArmUv = makeUvmap( upperArmObj );
         const upperArmpt = makePipePt( upperArmObj );
         const upperArmMesh = new THREE.Mesh(
@@ -98,21 +99,21 @@ function makeModel( markerArray ){
         const upperLegMesh = new THREE.Mesh(
             makeGeometry( upperLegObj, upperArmpt, upperArmUv ),
             blackMat
-        );        
+        );
 
         //lower limb
         const jointArmPt = makeJointPt( upperArmObj, -1 );
         const lowerArmPt = makePipePt( lowerArmObj );
         const lowerArmPts = jointArmPt.concat( lowerArmPt );
-        const jointArmUv = makeUvmap( jointArmObj );
+        const jointArmUv = makeUvmap( jointObj );
         const lowerArmMesh = new THREE.Mesh(
-            makeGeometry( jointArmObj, lowerArmPts, jointArmUv ),
+            makeGeometry( jointObj, lowerArmPts, jointArmUv ),
             armMat
-          );
+        );
         const lowerLegMesh = new THREE.Mesh(
             makeGeometry( jointObj, lowerArmPts, jointArmUv ),
             blackMat
-        );        
+        );
 
         //hand
         lastValClear();
