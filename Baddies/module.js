@@ -3,7 +3,7 @@
 //////////////////////////////////////////////
 
 const limbSeg = 8;
-const limbEdge = 15;
+const limbEdge = 12;
 const initLength = 10;
 const PI = Math.PI;
 const center2D = new THREE.Vector2();
@@ -14,26 +14,32 @@ const texLoader = new THREE.TextureLoader();
 const upperArmLength = 12;
 const lowerArmLength = 18;
 const upperArmThick = 5;
+const upperLegLength = 12;
+const lowerLegLength = 18;
+const upperLegThick = 4;
+const toeLength = 4;
 
 const upperArmObj = new Limbs();
-const jointArmObj = new Limbs();
+const jointObj = new Limbs();
 const lowerArmObj = new Limbs();
 const fingerObj = new Limbs();
 
-function model(){
-    this.armCol = new THREE.Color( 'gray' );
-    this.skinCol = new THREE.Color( 'wheat' );
-    //this.legCol = new THREE.Color( 'gray' );
-    //this.shoeCol = new THREE.Color( 'black' );
-    //this.bodyTex = ;
-    //this.width = 0;
+const upperLegObj = new Limbs();
+const lowerLegObj = new Limbs();
 
+function model( armCol, skinCol ){
+    //color
+    this.armCol = armCol;
+    this.skinCol = skinCol;
+    //group
     this.armG = new THREE.Group();
     this.lowerArmG = new THREE.Group();
     this.handG = new THREE.Group();
-}
 
-const crowley = new model();
+    this.legG = new THREE.Group();
+    this.lowerLegG = new THREE.Group();
+    this.toeG = new THREE.Group();
+}
 
 //limbsクラス
 function Limbs(){
@@ -43,7 +49,19 @@ function Limbs(){
     this.cp = new THREE.Vector2( 1,0 );
     this.thick = 0;
     this.width = 0;
+    this.length = 0;
 }
+
+
+const crowley = new model(
+    new THREE.Color( 'gray' ),
+    new THREE.Color( 'peachpuff' )
+);
+
+const aziraphale = new model(
+    new THREE.Color( 'azure' ),
+    new THREE.Color( 'peachpuff' )
+);
 
 ////////////////////////////////////////////////
 //    　　　       　 reset                   //
@@ -137,6 +155,39 @@ function makeJointPt( obj, bend ){
     lastPos = bone;
     return pt;
 }
+
+function makeToePt(){
+    //set thicks
+    const toeFront = new Array( limbSeg );
+    const toeBack = new Array( limbSeg );
+    const toeWidth = new Array( limbSeg );
+    for( let i=0; i<( limbSeg+1 ); i++ ){
+        const t = i / limbSeg;
+        toeFront[i] = toeLength * Math.pow( t, 0.8 ) + toeLength;
+        toeBack[i] = toeFront[i] / 2;
+        toeWidth[i] = toeBack[i];
+    }
+
+    //make points
+    const pt = [];
+    for( let i=0; i<limbSeg+1; i++ ){
+        pt[i] = [];
+        const x = i / limbSeg * ( toeLength / 1.5 );
+        for( let j=0; j<limbEdge; j++ ){
+            if( i == limbSeg ){
+                pt[i][j] = [x, 0, 0];
+            }else{
+                const theta = j * 2 * PI / limbEdge;
+                const r = theta < PI ? toeFront[i] : toeBack[i];
+                const y = r * Math.sin( theta );
+                const z = toeWidth[i] * Math.cos( theta );
+                pt[i][j] = [x, y, z];
+            }
+        }
+    }
+    return pt;
+}
+
 
 ////////////////////////////////////////////////
 //    　　　 　　  uvmapの作成                 //
