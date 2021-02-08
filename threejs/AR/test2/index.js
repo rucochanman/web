@@ -36,7 +36,6 @@ function init() {
     //    　　　　  　 model作成                 //
     //////////////////////////////////////////////
 
-
     makeModel( scene );
 
     ///////////////////////////////////////////////
@@ -69,20 +68,6 @@ function init() {
     const clipAction = mixer.clipAction( clip );
     clipAction.play();
 
-
-    function roadUpdate(){
-        const zpos = road.geometry.faceVertexUvs[0][0][2].x - 0.01;
-        const pos1 = zpos < 0.5 ? 1.0 : zpos;
-        const pos0 = pos1 - 0.5;
-        road.geometry.faceVertexUvs[0][0][0].x = pos0;
-        road.geometry.faceVertexUvs[0][0][1].x = pos0;
-        road.geometry.faceVertexUvs[0][0][2].x = pos1;
-        road.geometry.faceVertexUvs[0][1][0].x = pos0;
-        road.geometry.faceVertexUvs[0][1][1].x = pos1;
-        road.geometry.faceVertexUvs[0][1][2].x = pos1;
-        road.geometry.uvsNeedUpdate = true;
-    }
-
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
     //////////////////////////////////////////////
@@ -98,10 +83,12 @@ function init() {
         let rot2 = upperArmMove.scale.y;
         armUpdate( crowley, angle1, angle2, rot1, rot2 );
 
+        //legUpdate( crowley );
+
     }
 
     function render(){
-        update();
+        //update();
         requestAnimationFrame(render);
         renderer.render(scene, camera);
     }
