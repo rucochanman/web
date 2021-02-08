@@ -26,8 +26,7 @@ function makeModel( markerArray ){
     });
     
     
-    armInit( crowley );
-    legUpdate( crowley, 0, 0, 0, 0 ); 
+
 
     ///////////////////////////////////////////////
     //    　　　　      arm関連                   //
@@ -153,6 +152,9 @@ function makeModel( markerArray ){
         markerArray[1].add( model.armG );
         markerArray[1].add( model.legG );
     }
+    
+    armInit( crowley );
+    legUpdate( crowley, 0, 0, 0, 0 ); 
 }
 
 ///////////////////////////////////////////////
