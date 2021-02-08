@@ -199,7 +199,7 @@ function legUpdate( model, angle1, angle2, rotate1, rotate2 ){
     const q2 = new THREE.Quaternion().setFromAxisAngle( axis2, rotate2-PI );
     model.legG.applyQuaternion( q1 );
     model.lowerLegG.applyQuaternion( q2 );
-    model.legG.position.y = -10;
+    //model.legG.position.y = -10;
     model.legG.rotation.y = PI/2;
 }
 
