@@ -153,6 +153,7 @@ function makeModel( markerArray ){
         markerArray[1].add( model.legG );
     }
     
+    console.log("ver1");
     armInit( crowley );
     legUpdate( crowley, 0, 0, 0, 0 ); 
 }
