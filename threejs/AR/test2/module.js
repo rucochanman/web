@@ -3,7 +3,7 @@
 //////////////////////////////////////////////
 
 const limbSeg = 8;
-const limbEdge = 15;
+const limbEdge = 12;
 const initLength = 10;
 const PI = Math.PI;
 const center2D = new THREE.Vector2();
@@ -20,18 +20,23 @@ const jointArmObj = new Limbs();
 const lowerArmObj = new Limbs();
 const fingerObj = new Limbs();
 
-function model(){
-    this.armCol = new THREE.Color( 'gray' );
-    this.skinCol = new THREE.Color( 'peachpuff' );
+const upperLegObj = new Limbs();
+const jointLegObj = new Limbs();
+const lowerLegObj = new Limbs();
+
+function model( armCol, skinCol ){
+    //color
+    this.armCol = armCol;
+    this.skinCol = skinCol;
+    //group
     this.armG = new THREE.Group();
     this.lowerArmG = new THREE.Group();
     this.handG = new THREE.Group();
+
+    this.legG = new THREE.Group();
+    this.lowerLegG = new THREE.Group();
+    this.toeG = new THREE.Group();
 }
-
-const crowley = new model();
-const aziraphale = new model();
-
-
 
 //limbsクラス
 function Limbs(){
@@ -41,7 +46,20 @@ function Limbs(){
     this.cp = new THREE.Vector2( 1,0 );
     this.thick = 0;
     this.width = 0;
+    this.length = 0;
 }
+
+
+const crowley = new model(
+    new THREE.Color( 'gray' ),
+    new THREE.Color( 'peachpuff' )
+);
+
+const aziraphale = new model(
+    new THREE.Color( 'azure' ),
+    new THREE.Color( 'peachpuff' )
+);
+
 
 ////////////////////////////////////////////////
 //    　　　       　 reset                   //
