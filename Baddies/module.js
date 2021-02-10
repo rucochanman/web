@@ -27,18 +27,19 @@ const fingerObj = new Limbs();
 const upperLegObj = new Limbs();
 const lowerLegObj = new Limbs();
 
-function model( armCol, skinCol ){
+function model( color ){
     //color
-    this.armCol = armCol;
-    this.skinCol = skinCol;
+    this.armCol = color.armCol;
+    this.skinCol = color.skinCol;
+    this.legCol = color.legCol;
+    this.shoeCol = color.shoeCol;
     //group
+    this.bodyG = new THREE.Group();
     this.armG = new THREE.Group();
     this.lowerArmG = new THREE.Group();
     this.handG = new THREE.Group();
-
     this.legG = new THREE.Group();
     this.lowerLegG = new THREE.Group();
-    this.toeG = new THREE.Group();
 }
 
 //limbsクラス
@@ -52,15 +53,27 @@ function Limbs(){
     this.length = 0;
 }
 
+const crowleyCol = {
+    armCol: new THREE.Color( 'gray' ),
+    skinCol: new THREE.Color( 'peachpuff' ),
+    legCol: new THREE.Color( 'gray' ),
+    shoeCol: new THREE.Color( 'gray' )
+};
+
+const aziraphaleCol = {
+    armCol: new THREE.Color( 'azure' ),
+    skinCol: new THREE.Color( 'peachpuff' ),
+    legCol: new THREE.Color( 'tan' ),
+    shoeCol: new THREE.Color( 'gray' )
+};
+
 
 const crowley = new model(
-    new THREE.Color( 'gray' ),
-    new THREE.Color( 'peachpuff' )
+    crowleyCol
 );
 
 const aziraphale = new model(
-    new THREE.Color( 'azure' ),
-    new THREE.Color( 'peachpuff' )
+    aziraphaleCol
 );
 
 ////////////////////////////////////////////////
