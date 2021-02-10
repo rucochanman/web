@@ -10,7 +10,9 @@ const center2D = new THREE.Vector2();
 let lastAngle = 0;
 let lastPos = new THREE.Vector2();
 const texLoader = new THREE.TextureLoader();
+const gltfloader = new THREE.GLTFLoader();
 
+//size
 const upperArmLength = 12;
 const lowerArmLength = 18;
 const upperArmThick = 5;
@@ -19,13 +21,14 @@ const lowerLegLength = 18;
 const upperLegThick = 4;
 const toeLength = 4;
 
+//object
 const upperArmObj = new Limbs();
 const jointObj = new Limbs();
 const lowerArmObj = new Limbs();
 const fingerObj = new Limbs();
-
 const upperLegObj = new Limbs();
 const lowerLegObj = new Limbs();
+const bodyObj = new Limbs();
 
 function model( color ){
     //color
@@ -68,13 +71,9 @@ const aziraphaleCol = {
 };
 
 
-const crowley = new model(
-    crowleyCol
-);
+const crowley = new model( crowleyCol );
+const aziraphale = new model( aziraphaleCol );
 
-const aziraphale = new model(
-    aziraphaleCol
-);
 
 ////////////////////////////////////////////////
 //    　　　       　 reset                   //
@@ -200,7 +199,6 @@ function makeToePt(){
     }
     return pt;
 }
-
 
 ////////////////////////////////////////////////
 //    　　　 　　  uvmapの作成                 //
