@@ -73,10 +73,16 @@ function init() {
     //    　　       モデルの設定                 //
     //////////////////////////////////////////////
 
-    makeModel( markerArray );
+    const gltfloader = new THREE.GLTFLoader();
+    
+    let body;
+    gltfloader.load( './data/model/body.glb',function( gltf ){
+        body = gltf.scene;
+        body.scale.set( 0.5, 0.5, 0.5 );
+        //markerArray[0].add( body );
+    });
 
     let apple;
-    const gltfloader = new THREE.GLTFLoader();
     gltfloader.load( './data/model/apple.glb',function( gltf ){
         apple = gltf.scene;
         apple.scale.set( 0.5, 0.5, 0.5 );
@@ -113,20 +119,22 @@ function init() {
         new THREE.PlaneGeometry( 1.5, 1.5 ),
         new THREE.MeshBasicMaterial( {map:roadTex} )
     );
-    const uv1 = [
+    const roadUv1 = [
         new THREE.Vector2(0, 1),
         new THREE.Vector2(0, 0),
         new THREE.Vector2(0.2, 1)
     ];
-    const uv2 = [
+    const roadUv2 = [
         new THREE.Vector2(0, 0),
         new THREE.Vector2(0.2, 0),
         new THREE.Vector2(0.2, 1.0)
     ];
-    road.geometry.faceVertexUvs[0][0] = uv1;
-    road.geometry.faceVertexUvs[0][1] = uv2;
+    road.geometry.faceVertexUvs[0][0] = roadUv1;
+    road.geometry.faceVertexUvs[0][1] = roadUv2;
     road.rotation.x = -PI/2;
     markerArray[2].add( road );
+    
+    makeModel( markerArray );
 
     ///////////////////////////////////////////////
     //    　　　　  　animation設定               //
