@@ -24,11 +24,19 @@ function makeModel( markerArray ){
         lights: true
     });
 
+
+    ///////////////////////////////////////////////
+    //    　　　　    モデル作成                   //
+    //////////////////////////////////////////////
+
+    limbInit( crowley );
+    legUpdate( crowley, 0, 0, 0, 0 );
+
     ///////////////////////////////////////////////
     //    　　　　     limb関連                   //
     //////////////////////////////////////////////
 
-    function armInit( model ){
+    function limbInit( model ){
 
         const upperArmThicks = new Array( limbSeg );
         const lowerArmThicks = new Array( limbSeg );
@@ -124,20 +132,20 @@ function makeModel( markerArray ){
             fingerMesh.position.set( x - fingerLength*2, 0, z );
             model.handG.add( fingerMesh );
         }
-        
+
         //toe
         const toePt = makeToePt();
         const toeMesh = new THREE.Mesh(
             makeGeometry( upperArmObj, toePt, upperArmUv ),
             blackMat
-        );        
+        );
 
         //grouping
         model.lowerArmG.add( lowerArmMesh );
         model.lowerArmG.add( model.handG );
         model.armG.add( upperArmMesh );
         model.armG.add( model.lowerArmG );
-        
+
         model.lowerLegG.add( lowerLegMesh );
         model.lowerLegG.add( toeMesh );
         model.legG.add( upperLegMesh );
@@ -149,10 +157,6 @@ function makeModel( markerArray ){
         markerArray[1].add( model.armG );
         markerArray[1].add( model.legG );
     }
-    
-    console.log("ver2");
-    armInit( crowley );
-    legUpdate( crowley, 0, 0, 0, 0 ); 
 }
 
 ///////////////////////////////////////////////
