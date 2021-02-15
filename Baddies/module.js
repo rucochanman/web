@@ -2,15 +2,18 @@
 //    　　　     　   defs                   //
 //////////////////////////////////////////////
 
+const PI = Math.PI;
+const LEFT = 0;
+const RIGHT = 1;
 const limbSeg = 8;
 const limbEdge = 12;
 const initLength = 10;
-const PI = Math.PI;
 const center2D = new THREE.Vector2();
-let lastAngle = 0;
-let lastPos = new THREE.Vector2();
 const texLoader = new THREE.TextureLoader();
 const gltfloader = new THREE.GLTFLoader();
+
+let lastAngle = 0;
+let lastPos = new THREE.Vector2();
 
 //size
 const upperArmLength = 12;
