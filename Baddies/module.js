@@ -39,10 +39,15 @@ function model( color ){
     //group
     this.bodyG = new THREE.Group();
     this.armGL = new THREE.Group();
-    this.lowerArmGL = new THREE.Group();
+    this.armGR = new THREE.Group();
+    this.lowerarmGL = new THREE.Group();
+    this.lowerarmGR = new THREE.Group();
     this.handGL = new THREE.Group();
+    this.handGR = new THREE.Group();
     this.legGL = new THREE.Group();
-    this.lowerLegGL = new THREE.Group();
+    this.legGR = new THREE.Group();
+    this.lowerlegGL = new THREE.Group();
+    this.lowerlegGR = new THREE.Group();
 }
 
 //limbsクラス
