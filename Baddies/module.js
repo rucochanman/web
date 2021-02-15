@@ -11,7 +11,6 @@ const initLength = 10;
 const center2D = new THREE.Vector2();
 const texLoader = new THREE.TextureLoader();
 const gltfloader = new THREE.GLTFLoader();
-
 let lastAngle = 0;
 let lastPos = new THREE.Vector2();
 
@@ -23,6 +22,8 @@ const upperLegLength = 12;
 const lowerLegLength = 18;
 const upperLegThick = 4;
 const toeLength = 4;
+const bodyLength = 12;
+const bodyWidth = 10;
 
 //object
 const upperArmObj = new Limbs();
