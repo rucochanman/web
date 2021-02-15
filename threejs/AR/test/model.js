@@ -43,23 +43,31 @@ function makeModel( scene ){
     function makebody( model ){
 
         //set thickss
-        const h = -bodyLength / 1.8;
-        const seg = limbEdge / 4;
-
+        //const seg = limbEdge / 4;
+        //const bodyThicks = new Array( limbSeg );
+        //const bodyWidths = new Array( limbSeg );
         const pt = [];
+        
         for( let i=0; i<( limbSeg+1 ); i++ ){
             pt[i] = [];
             const t = i / limbSeg;
             const width = bodyWidth - Math.pow( t, 2 ) * bodyWidth;
             const thick = width * 0.7;
-            const z = new THREE.Vector3( 0, h*t, 0 );
-            for( let j=0; j<seg; j++ ){
-
-
+            //bodyObj.whidth = 
+            const x = t * ( -bodyLength / 2 );
+            for( let j=0; j<limbEdge; j++ ){
+                const theta = j * 2 * PI / limbEdge;
+                const x1 = Math.pow( width * Math.cos( theta ), 2 );
+                const z1 = Math.pow( thick * Math.sin( theta ), 2 );
+                const r = ( width * thick ) / Math.sqrt( x1 + z1 );
+                const v = new THREE.Vector2( r,0 ).rotateAround( center2D, theta );
+                pt[i][j] = [x, v.x, v.y];
+            }
         }
-      }
 
+        
 
+        
 
 
         model.bodyG.add( model.armG );
