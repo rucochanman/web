@@ -180,6 +180,7 @@ function makeModel( markerArray ){
         model.armGL.scale.set( 0.02, 0.02, 0.02 );
         model.legGL.scale.set( 0.02, 0.02, 0.02 );
         markerArray[1].add( model.armGL );
+        markerArray[1].add( model.armGR );
         markerArray[1].add( model.legGL );
     }
 }
