@@ -140,21 +140,21 @@ function makeModel( markerArray ){
         );
 
         //grouping
-        model.lowerArmG.add( lowerArmMesh );
-        model.lowerArmG.add( model.handG );
-        model.armG.add( upperArmMesh );
-        model.armG.add( model.lowerArmG );
+        model.lowerarmGL.add( lowerArmMesh );
+        model.lowerarmGL.add( model.handG );
+        model.armGL.add( upperArmMesh );
+        model.armGL.add( model.lowerarmGL );
 
-        model.lowerLegG.add( lowerLegMesh );
-        model.lowerLegG.add( toeMesh );
-        model.legG.add( upperLegMesh );
-        model.legG.add( model.lowerLegG );
+        model.lowerlegGL.add( lowerLegMesh );
+        model.lowerlegGL.add( toeMesh );
+        model.legGL.add( upperLegMesh );
+        model.legGL.add( model.lowerlegGL );
 
         //add mesh to scene
-        model.armG.scale.set( 0.02, 0.02, 0.02 );
-        model.legG.scale.set( 0.02, 0.02, 0.02 );
-        markerArray[1].add( model.armG );
-        markerArray[1].add( model.legG );
+        model.armGL.scale.set( 0.02, 0.02, 0.02 );
+        model.legGL.scale.set( 0.02, 0.02, 0.02 );
+        markerArray[1].add( model.armGL );
+        markerArray[1].add( model.legGL );
     }
 }
 
@@ -186,44 +186,43 @@ function lowerLimbUpdate( group, upperObj, lowerObj, angle ){
 function legUpdate( model, angle1, angle2, rotate1, rotate2 ){
     //upperArm
     lastValClear();
-    upperLimbUpdate( model.legG, upperLegObj, angle1 );
+    upperLimbUpdate( model.legGL, upperLegObj, angle1 );
     //lowerArm
     const r = lastAngle;
-    lowerLimbUpdate( model.lowerLegG, upperLegObj, lowerLegObj, angle2 );
+    lowerLimbUpdate( model.lowerlegGL, upperLegObj, lowerLegObj, angle2 );
     //toe
-    model.lowerLegG.children[1].rotation.z = lastAngle;
-    model.lowerLegG.children[1].position.set( lastPos.x*0.9, lastPos.y*0.9, 0 );
+    model.lowerlegGL.children[1].rotation.z = lastAngle;
+    model.lowerlegGL.children[1].position.set( lastPos.x*0.9, lastPos.y*0.9, 0 );
     //rotation
-    model.legG.quaternion.set( 0,0,0,1 );
-    model.lowerLegG.quaternion.set( 0,0,0,1 );
+    model.legGL.quaternion.set( 0,0,0,1 );
+    model.lowerlegGL.quaternion.set( 0,0,0,1 );
     const axis1 = new THREE.Vector3( 1,0,0 );
     const axis2 = new THREE.Vector3( Math.cos(r),Math.sin(r),0 ).normalize();
     const q1 = new THREE.Quaternion().setFromAxisAngle( axis1, rotate1-PI/2 );
     const q2 = new THREE.Quaternion().setFromAxisAngle( axis2, rotate2-PI );
-    model.legG.applyQuaternion( q1 );
-    model.lowerLegG.applyQuaternion( q2 );
-    //model.legG.position.y = -10;
-    model.legG.rotation.y = PI/2;
+    model.legGL.applyQuaternion( q1 );
+    model.lowerlegGL.applyQuaternion( q2 );
+    //model.legGL.position.y = -10;
+    model.legGL.rotation.y = PI/2;
 }
-
 
 function armUpdate( model, angle1, angle2, rotate1, rotate2 ){
     //upperArm
     lastValClear();
-    upperLimbUpdate( model.armG, upperArmObj, angle1 );
+    upperLimbUpdate( model.armGL, upperArmObj, angle1 );
     //lowerArm
     const r = lastAngle;
-    lowerLimbUpdate( model.lowerArmG, upperArmObj, lowerArmObj, angle2 );
+    lowerLimbUpdate( model.lowerarmGL, upperArmObj, lowerArmObj, angle2 );
     //hand
     model.handG.rotation.z = lastAngle;
     model.handG.position.set( lastPos.x, lastPos.y, 0 );
     //rotation
-    model.armG.quaternion.set( 0,0,0,1 );
-    model.lowerArmG.quaternion.set( 0,0,0,1 );
+    model.armGL.quaternion.set( 0,0,0,1 );
+    model.lowerarmGL.quaternion.set( 0,0,0,1 );
     const axis1 = new THREE.Vector3( 1,0,0 );
     const axis2 = new THREE.Vector3( Math.cos(r),Math.sin(r),0 ).normalize();
     const q1 = new THREE.Quaternion().setFromAxisAngle( axis1, rotate1 );
     const q2 = new THREE.Quaternion().setFromAxisAngle( axis2, rotate2 );
-    model.armG.applyQuaternion( q1 );
-    model.lowerArmG.applyQuaternion( q2 );
+    model.armGL.applyQuaternion( q1 );
+    model.lowerarmGL.applyQuaternion( q2 );
 }
