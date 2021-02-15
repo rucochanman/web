@@ -193,8 +193,8 @@ function init() {
             let angle2 = upperArmMove.position.y;
             let rot1 = upperArmMove.scale.x;
             let rot2 = upperArmMove.scale.y;
-            armUpdate( crowley, angle1, angle2, rot1, rot2 );
-            legUpdate( crowley, 0, 0, 0, 0 );
+            armUpdate( LEFT, crowley, angle1, angle2, rot1, rot2 );
+            legUpdate( RIGHT, crowley, 0, 0, 0, 0 );
         }
         if ( markerArray[2].visible ){
             roadUpdate();
