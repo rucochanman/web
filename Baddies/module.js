@@ -38,11 +38,11 @@ function model( color ){
     this.shoeCol = color.shoeCol;
     //group
     this.bodyG = new THREE.Group();
-    this.armG = new THREE.Group();
-    this.lowerArmG = new THREE.Group();
-    this.handG = new THREE.Group();
-    this.legG = new THREE.Group();
-    this.lowerLegG = new THREE.Group();
+    this.armGL = new THREE.Group();
+    this.lowerArmGL = new THREE.Group();
+    this.handGL = new THREE.Group();
+    this.legGL = new THREE.Group();
+    this.lowerLegGL = new THREE.Group();
 }
 
 //limbsクラス
@@ -70,10 +70,8 @@ const aziraphaleCol = {
     shoeCol: new THREE.Color( 'gray' )
 };
 
-
 const crowley = new model( crowleyCol );
 const aziraphale = new model( aziraphaleCol );
-
 
 ////////////////////////////////////////////////
 //    　　　       　 reset                   //
