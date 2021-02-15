@@ -129,7 +129,7 @@ function makeModel( markerArray ){
             const x = ( upperArmThick*0.8 ) * Math.cos( fingerAngles[i] );
             fingerMesh.rotation.y = -fingerAngles[i];
             fingerMesh.position.set( x - fingerLength*2, 0, z );
-            model.handG.add( fingerMesh );
+            model.handGL.add( fingerMesh );
         }
 
         //toe
@@ -141,7 +141,7 @@ function makeModel( markerArray ){
 
         //grouping
         model.lowerarmGL.add( lowerArmMesh );
-        model.lowerarmGL.add( model.handG );
+        model.lowerarmGL.add( model.handGL );
         model.armGL.add( upperArmMesh );
         model.armGL.add( model.lowerarmGL );
 
@@ -214,8 +214,8 @@ function armUpdate( model, angle1, angle2, rotate1, rotate2 ){
     const r = lastAngle;
     lowerLimbUpdate( model.lowerarmGL, upperArmObj, lowerArmObj, angle2 );
     //hand
-    model.handG.rotation.z = lastAngle;
-    model.handG.position.set( lastPos.x, lastPos.y, 0 );
+    model.handGL.rotation.z = lastAngle;
+    model.handGL.position.set( lastPos.x, lastPos.y, 0 );
     //rotation
     model.armGL.quaternion.set( 0,0,0,1 );
     model.lowerarmGL.quaternion.set( 0,0,0,1 );
