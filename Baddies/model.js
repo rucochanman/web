@@ -178,6 +178,7 @@ function makeModel( markerArray ){
 
         //add mesh to scene
         model.armGL.scale.set( 0.02, 0.02, 0.02 );
+        model.armGR.scale.set( 0.02, 0.02, 0.02 );
         model.legGL.scale.set( 0.02, 0.02, 0.02 );
         markerArray[1].add( model.armGL );
         markerArray[1].add( model.armGR );
