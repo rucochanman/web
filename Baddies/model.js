@@ -80,75 +80,101 @@ function makeModel( markerArray ){
         lowerLegObj.length = lowerLegLength;
 
         //material
-        const armMat = material.clone();
-        armMat.uniforms.uTexture.value = armTex;
-        armMat.uniforms.uColor1.value = model.armCol;
-        armMat.uniforms.uColor2.value = model.skinCol;
-        const blackMat = material.clone();
-        blackMat.uniforms.uTexture.value = monoTex;
-        blackMat.uniforms.uColor1.value = model.armCol;
+        const biArmMat = material.clone();
+        biArmMat.uniforms.uTexture.value = armTex;
+        biArmMat.uniforms.uColor1.value = model.armCol;
+        biArmMat.uniforms.uColor2.value = model.skinCol;
+        const monoArmMat = material.clone();
+        monoArmMat.uniforms.uTexture.value = monoTex;
+        monoArmMat.uniforms.uColor1.value = model.armCol;
         const skinMat = material.clone();
         skinMat.uniforms.uTexture.value = monoTex;
         skinMat.uniforms.uColor1.value = model.skinCol;
+        const legMat = material.clone();
+        legMat.uniforms.uTexture.value = monoTex;
+        legMat.uniforms.uColor1.value = model.legCol;
+        const shoeMat = material.clone();
+        shoeMat.uniforms.uTexture.value = monoTex;
+        shoeMat.uniforms.uColor1.value = model.shoeCol;
 
-        //upper limb
+        //upper arm
         lastValClear();
         const upperArmUv = makeUvmap( upperArmObj );
         const upperArmpt = makePipePt( upperArmObj );
-        const upperArmMesh = new THREE.Mesh(
+        const upperArmMeshL = new THREE.Mesh(
             makeGeometry( upperArmObj, upperArmpt, upperArmUv ),
-            blackMat
+            monoArmMat
+        );
+        const upperArmMeshR = new THREE.Mesh(
+            makeGeometry( upperArmObj, upperArmpt, upperArmUv ),
+            monoArmMat
         );
         const upperLegMesh = new THREE.Mesh(
             makeGeometry( upperLegObj, upperArmpt, upperArmUv ),
-            blackMat
+            legMat
         );
 
-        //lower limb
+        //lower arm
         const jointArmPt = makeJointPt( upperArmObj, -1 );
         const lowerArmPt = makePipePt( lowerArmObj );
         const lowerArmPts = jointArmPt.concat( lowerArmPt );
         const jointArmUv = makeUvmap( jointObj );
-        const lowerArmMesh = new THREE.Mesh(
+        const lowerArmMeshL = new THREE.Mesh(
             makeGeometry( jointObj, lowerArmPts, jointArmUv ),
-            armMat
+            biArmMat
+        );
+        const lowerArmMeshR = new THREE.Mesh(
+            makeGeometry( jointObj, lowerArmPts, jointArmUv ),
+            biArmMat
         );
         const lowerLegMesh = new THREE.Mesh(
             makeGeometry( jointObj, lowerArmPts, jointArmUv ),
-            blackMat
+            legMat
         );
 
         //hand
         lastValClear();
         const fingerPt = makePipePt( fingerObj );
         const fingerGeo = makeGeometry( fingerObj, fingerPt, upperArmUv );
-        const fingerAngles = [ -PI/5, -PI/12, PI/32, PI/4 ];
+        const fingerAnglesL = [ -PI/5, -PI/12, PI/32, PI/4 ];
+        const fingerAnglesR = [ -PI/4, -PI/32, PI/12, PI/5 ];
         for( let i=0; i<4; i++ ){
-            const fingerMesh = new THREE.Mesh( fingerGeo, skinMat );
-            const z = ( upperArmThick*0.8 ) * Math.sin( fingerAngles[i] );
-            const x = ( upperArmThick*0.8 ) * Math.cos( fingerAngles[i] );
-            fingerMesh.rotation.y = -fingerAngles[i];
-            fingerMesh.position.set( x - fingerLength*2, 0, z );
-            model.handGL.add( fingerMesh );
+            const fingerMeshL = new THREE.Mesh( fingerGeo, skinMat );
+            const fingerMeshR = fingerMeshL.clone();
+            const zl = ( upperArmThick*0.8 ) * Math.sin( fingerAnglesL[i] );
+            const xl = ( upperArmThick*0.8 ) * Math.cos( fingerAnglesL[i] );
+            fingerMeshL.rotation.y = -fingerAnglesL[i];
+            fingerMeshL.position.set( xl - fingerLength*2, 0, zl );
+            model.handGL.add( fingerMeshL );
+            const zr = ( upperArmThick*0.8 ) * Math.sin( fingerAnglesR[i] );
+            const xr = ( upperArmThick*0.8 ) * Math.cos( fingerAnglesR[i] );
+            fingerMeshR.rotation.y = -fingerAnglesR[i];
+            fingerMeshR.position.set( xr - fingerLength*2, 0, zr );
+            model.handGR.add( fingerMeshR );
         }
 
         //toe
         const toePt = makeToePt();
         const toeMesh = new THREE.Mesh(
             makeGeometry( upperArmObj, toePt, upperArmUv ),
-            blackMat
+            shoeMat
         );
 
         //grouping
-        model.lowerArmGL.add( lowerArmMesh );
-        model.lowerArmGL.add( model.handGL );
-        model.armGL.add( upperArmMesh );
-        model.armGL.add( model.lowerArmGL );
+        model.lowerarmGL.add( lowerArmMeshL );
+        model.lowerarmGL.add( model.handGL );
+        model.armGL.add( upperArmMeshL );
+        model.armGL.add( model.lowerarmGL );
 
-        model.lowerLegGL.add( lowerLegMesh );
-        model.lowerLegGL.add( toeMesh );
+        model.lowerarmGR.add( lowerArmMeshR );
+        model.lowerarmGR.add( model.handGR );
+        model.armGR.add( upperArmMeshR );
+        model.armGR.add( model.lowerarmGR );
+
+        model.lowerlegGL.add( lowerLegMesh );
+        model.lowerlegGL.add( toeMesh );
         model.legGL.add( upperLegMesh );
-        model.legGL.add( model.lowerLegGL );
+        model.legGL.add( model.lowerlegGL );
 
         //add mesh to scene
         model.armGL.scale.set( 0.02, 0.02, 0.02 );
@@ -206,23 +232,29 @@ function legUpdate( model, angle1, angle2, rotate1, rotate2 ){
     model.legGL.rotation.y = PI/2;
 }
 
-function armUpdate( model, angle1, angle2, rotate1, rotate2 ){
+function armUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
+    const armG = side == 0 ? model.armGL : model.armGR;
+    const lowerarmG = side == 0 ? model.lowerarmGL : model.lowerarmGR;
+    const handG = side == 0 ? model.handGL : model.handGR;
+    const sideRot = side * PI;
     //upperArm
     lastValClear();
-    upperLimbUpdate( model.armGL, upperArmObj, angle1 );
+    upperLimbUpdate( armG, upperArmObj, angle1 );
     //lowerArm
     const r = lastAngle;
-    lowerLimbUpdate( model.lowerArmGL, upperArmObj, lowerArmObj, angle2 );
+    lowerLimbUpdate( lowerarmG, upperArmObj, lowerArmObj, angle2 );
     //hand
-    model.handGL.rotation.z = lastAngle;
-    model.handGL.position.set( lastPos.x, lastPos.y, 0 );
+    handG.rotation.z = lastAngle;
+    handG.position.set( lastPos.x, lastPos.y, 0 );
     //rotation
-    model.armGL.quaternion.set( 0,0,0,1 );
-    model.lowerArmGL.quaternion.set( 0,0,0,1 );
+    armG.quaternion.set( 0,0,0,1 );
+    lowerarmG.quaternion.set( 0,0,0,1 );
     const axis1 = new THREE.Vector3( 1,0,0 );
     const axis2 = new THREE.Vector3( Math.cos(r),Math.sin(r),0 ).normalize();
     const q1 = new THREE.Quaternion().setFromAxisAngle( axis1, rotate1 );
     const q2 = new THREE.Quaternion().setFromAxisAngle( axis2, rotate2 );
-    model.armGL.applyQuaternion( q1 );
-    model.lowerArmGL.applyQuaternion( q2 );
+    armG.applyQuaternion( q1 );
+    lowerarmG.applyQuaternion( q2 );
+    //armG.position.x = 10;
+    armG.rotation.y = sideRot;
 }
