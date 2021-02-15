@@ -194,7 +194,8 @@ function init() {
             let rot1 = upperArmMove.scale.x;
             let rot2 = upperArmMove.scale.y;
             armUpdate( LEFT, crowley, angle1, angle2, rot1, rot2 );
-            legUpdate( RIGHT, crowley, 0, 0, 0, 0 );
+            armUpdate( RIGHT, crowley, 1, 0, 0, 0 );
+            legUpdate( crowley, 0, 0, 0, 0 );
         }
         if ( markerArray[2].visible ){
             roadUpdate();
