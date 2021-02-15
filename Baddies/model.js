@@ -14,8 +14,8 @@ function makeModel( markerArray ){
             'uColor2': { value: new THREE.Color( 'white' ) },
         }
     ]);
-
     const frag2 = document.getElementById( 'frag2' ).textContent;
+
     const material = new THREE.ShaderMaterial({
         vertexShader: document.getElementById( 'vert' ).textContent,
         fragmentShader: document.getElementById( 'frag' ).textContent,
@@ -24,15 +24,29 @@ function makeModel( markerArray ){
         lights: true
     });
 
-
     ///////////////////////////////////////////////
     //    　　　　    モデル作成                   //
     //////////////////////////////////////////////
 
     limbInit( crowley );
+    makebody( crowley );
     armUpdate( LEFT, crowley, 0, 0, 0, 0 );
     armUpdate( RIGHT, crowley, 1, 0, 0, 0 );
     legUpdate( crowley, 0, 0, 0, 0 );
+
+    function makebody( model ){
+        //add mesh to scene
+        model.armGL.scale.set( 0.02, 0.02, 0.02 );
+        model.armGR.scale.set( 0.02, 0.02, 0.02 );
+        model.legGL.scale.set( 0.02, 0.02, 0.02 );
+        model.bodyG.add( model.armGL );
+        model.bodyG.add( model.armGR );
+        model.bodyG.add( model.legGL );
+
+        //add mesh to scene
+        markerArray[1].add( model.bodyG );
+
+    }
 
     ///////////////////////////////////////////////
     //    　　　　     limb関連                   //
@@ -40,6 +54,7 @@ function makeModel( markerArray ){
 
     function limbInit( model ){
 
+        //set thickss
         const upperArmThicks = new Array( limbSeg );
         const lowerArmThicks = new Array( limbSeg );
         const lowerArmWidths = new Array( limbSeg );
@@ -179,13 +194,6 @@ function makeModel( markerArray ){
         model.legGL.add( upperLegMesh );
         model.legGL.add( model.lowerlegGL );
 
-        //add mesh to scene
-        model.armGL.scale.set( 0.02, 0.02, 0.02 );
-        model.armGR.scale.set( 0.02, 0.02, 0.02 );
-        model.legGL.scale.set( 0.02, 0.02, 0.02 );
-        markerArray[1].add( model.armGL );
-        markerArray[1].add( model.armGR );
-        markerArray[1].add( model.legGL );
     }
 }
 
@@ -220,21 +228,23 @@ function legUpdate( model, angle1, angle2, rotate1, rotate2 ){
     upperLimbUpdate( model.legGL, upperLegObj, angle1 );
     //lowerArm
     const r = lastAngle;
-    lowerLimbUpdate( model.lowerLegGL, upperLegObj, lowerLegObj, angle2 );
+    lowerLimbUpdate( model.lowerlegGL, upperLegObj, lowerLegObj, angle2 );
     //toe
-    model.lowerLegGL.children[1].rotation.z = lastAngle;
-    model.lowerLegGL.children[1].position.set( lastPos.x*0.9, lastPos.y*0.9, 0 );
+    model.lowerlegGL.children[1].rotation.z = lastAngle;
+    model.lowerlegGL.children[1].position.set( lastPos.x*0.9, lastPos.y*0.9, 0 );
     //rotation
     model.legGL.quaternion.set( 0,0,0,1 );
-    model.lowerLegGL.quaternion.set( 0,0,0,1 );
+    model.lowerlegGL.quaternion.set( 0,0,0,1 );
     const axis1 = new THREE.Vector3( 1,0,0 );
     const axis2 = new THREE.Vector3( Math.cos(r),Math.sin(r),0 ).normalize();
     const q1 = new THREE.Quaternion().setFromAxisAngle( axis1, rotate1-PI/2 );
     const q2 = new THREE.Quaternion().setFromAxisAngle( axis2, rotate2-PI );
     model.legGL.applyQuaternion( q1 );
-    model.lowerLegGL.applyQuaternion( q2 );
-    //model.legGL.position.y = -10;
+    model.lowerlegGL.applyQuaternion( q2 );
+    //position
     model.legGL.rotation.y = PI/2;
+    //model.legGL.position.y = -10;
+    //model.legGL.position.x = 7;
 }
 
 function armUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
