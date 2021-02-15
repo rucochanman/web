@@ -30,7 +30,6 @@ function makeModel( markerArray ){
     //////////////////////////////////////////////
 
     limbInit( crowley );
-    legUpdate( crowley, 0, 0, 0, 0 );
 
     ///////////////////////////////////////////////
     //    　　　　     limb関連                   //
