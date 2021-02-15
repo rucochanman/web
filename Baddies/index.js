@@ -4,7 +4,7 @@ function init() {
     ///////////////////////////////////////////////
     //    　　　　　　 画面設定                   //
     //////////////////////////////////////////////
-    console.log("ver1");
+    console.log("ver2");
 
     //レンダラーの作成
     const renderer = new THREE.WebGLRenderer({
@@ -194,9 +194,9 @@ function init() {
             let angle2 = upperArmMove.position.y;
             let rot1 = upperArmMove.scale.x;
             let rot2 = upperArmMove.scale.y;
-            armUpdate( LEFT, crowley, angle1, angle2, rot1, rot2 );
-            armUpdate( RIGHT, crowley, 1, 0, 0, 0 );
-            legUpdate( crowley, 0, 0, 0, 0 );
+            //armUpdate( LEFT, crowley, angle1, angle2, rot1, rot2 );
+            //armUpdate( RIGHT, crowley, 1, 0, 0, 0 );
+            //legUpdate( crowley, 0, 0, 0, 0 );
         }
         if ( markerArray[2].visible ){
             roadUpdate();
