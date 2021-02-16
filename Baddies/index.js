@@ -4,7 +4,7 @@ function init() {
     ///////////////////////////////////////////////
     //    　　　　　　 画面設定                   //
     //////////////////////////////////////////////
-    console.log("ver2");
+    console.log("ver3");
 
     //レンダラーの作成
     const renderer = new THREE.WebGLRenderer({
@@ -71,10 +71,18 @@ function init() {
     }
 
     ///////////////////////////////////////////////
-    //    　　       モデルの設定                 //
+    //    　　     モデルの読み込み               //
     //////////////////////////////////////////////
 
     const gltfloader = new THREE.GLTFLoader();
+    
+    let head;
+    gltfloader.load( './data/model/clowley.glb',function( gltf ){
+        head = gltf.scene;
+        head.scale.set( 0.5, 0.5, 0.5 );
+        head.position.y = 5;
+        markerArray[1].add( head );
+    });
     
     let body;
     gltfloader.load( './data/model/body.glb',function( gltf ){
