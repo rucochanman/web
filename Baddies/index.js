@@ -79,8 +79,8 @@ function init() {
     let head;
     gltfloader.load( './data/model/clowley.glb',function( gltf ){
         head = gltf.scene;
-        head.scale.set( 0.5, 0.5, 0.5 );
-        head.position.y = 5;
+        //head.scale.set( 0.5, 0.5, 0.5 );
+        //head.position.y = 5;
         markerArray[1].add( head );
     });
     
