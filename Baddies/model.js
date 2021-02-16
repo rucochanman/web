@@ -235,7 +235,7 @@ function legUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
     const legG = side == 0 ? model.legGL : model.legGR;
     const lowerlegG = side == 0 ? model.lowerlegGL : model.lowerlegGR;
     const sideRot = side * PI;
-    const pos = side == 0 ? 5 : -5;
+    const pos = side == 0 ? 1 : -1;
     //upperleg
     lastValClear();
     upperLimbUpdate( legG, upperLegObj, angle1 );
