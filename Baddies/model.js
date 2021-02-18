@@ -238,7 +238,7 @@ function legUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
     const legG = side == 0 ? model.legGL : model.legGR;
     const lowerlegG = side == 0 ? model.lowerlegGL : model.lowerlegGR;
     const sideRot = side * PI;
-    const pos = side == 0 ? 0.12 : -0.12;
+    const pos = side == 0 ? 0.1 : -0.1;
     //upperleg
     lastValClear();
     upperLimbUpdate( legG, upperLegObj, angle1 );
@@ -260,7 +260,7 @@ function legUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
     //position
     legG.rotation.y = PI/2;
     legG.position.x = pos;
-    legG.position.y = -0.03;
+    legG.position.y = -0.01;
 }
 
 function armUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
@@ -289,5 +289,5 @@ function armUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
     lowerarmG.applyQuaternion( q2 );
     armG.rotation.y = sideRot;
     armG.position.x = pos;
-    armG.position.y = 0.05;
+    armG.position.y = 0.04;
 }
