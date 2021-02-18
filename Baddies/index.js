@@ -90,7 +90,7 @@ function init() {
     gltfloader.load( './data/model/body.glb',function( gltf ){
         clowleyBody = gltf.scene;
         clowleyBody.scale.set( 0.25, 0.25, 0.25 );
-        clowleyBody.position.y = 0.7;
+        clowleyBody.position.y = 0.5;
         clowleyBody.position.z = 0.2;
         clowleyBody.position.x = 0.3;
         markerArray[3].add( clowleyBody );
@@ -108,7 +108,7 @@ function init() {
         bentley = gltf.scene;
         bentley.scale.set( 0.65, 0.65, 0.65 );
         bentley.position.y = 0.5;
-        bentley.position.z = -0.25;
+        bentley.position.z = -0.5;
         bentley.rotation.y = -PI/2;
         markerArray[2].add( bentley );
     });
