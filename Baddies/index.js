@@ -80,14 +80,14 @@ function init() {
     gltfloader.load( './data/model/clowley.glb',function( gltf ){
         head = gltf.scene;
         head.position.y = -0.2;
-        markerArray[1].add( head );
+        markerArray[3].add( head );
     });
     
     let body;
     gltfloader.load( './data/model/body.glb',function( gltf ){
         body = gltf.scene;
         body.scale.set( 0.5, 0.5, 0.5 );
-        markerArray[1].add( body );
+        markerArray[3].add( body );
     });
 
     let apple;
@@ -195,7 +195,7 @@ function init() {
     const clock = new THREE.Clock();
 
     function update(){
-        if ( markerArray[1].visible ){
+        if ( markerArray[3].visible ){
             mixer.update( clock.getDelta() );
             let angle1 = upperArmMove.position.x;
             let angle2 = upperArmMove.position.y;
