@@ -80,7 +80,7 @@ function init() {
     gltfloader.load( './data/model/clowley.glb',function( gltf ){
         clowleyHead = gltf.scene;
         clowleyHead.scale.set( 0.5, 0.5, 0.5 );
-        clowleyHead.position.y = -0.2 + 0.3;
+        clowleyHead.position.y = -0.2 + 0.5;
         clowleyHead.position.z = 0.2;
         clowleyHead.position.x = 0.2;
         markerArray[3].add( clowleyHead );
@@ -90,7 +90,7 @@ function init() {
     gltfloader.load( './data/model/body.glb',function( gltf ){
         clowleyBody = gltf.scene;
         clowleyBody.scale.set( 0.25, 0.25, 0.25 );
-        clowleyBody.position.y = 0.3;
+        clowleyBody.position.y = 0.5;
         clowleyBody.position.z = 0.2;
         clowleyBody.position.x = 0.2;
         markerArray[3].add( clowleyBody );
@@ -122,7 +122,7 @@ function init() {
 
     const grassTex = texLoader.load( './data/tex/grass.png' );
     const grass = new THREE.Mesh(
-        new THREE.PlaneGeometry( 1.6, 1.5 ),
+        new THREE.PlaneGeometry( 1.65, 1.6 ),
         new THREE.MeshBasicMaterial( {map:grassTex} )
     );
     grass.rotation.x = -PI/2;
