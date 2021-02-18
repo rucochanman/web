@@ -88,7 +88,7 @@ function init() {
     gltfloader.load( './data/model/body.glb',function( gltf ){
         body = gltf.scene;
         body.scale.set( 0.5, 0.5, 0.5 );
-        //markerArray[0].add( body );
+        markerArray[1].add( body );
     });
 
     let apple;
