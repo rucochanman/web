@@ -80,7 +80,7 @@ function init() {
     gltfloader.load( './data/model/clowley.glb',function( gltf ){
         clowleyHead = gltf.scene;
         clowleyHead.scale.set( 0.5, 0.5, 0.5 );
-        clowleyHead.position.y = -0.2 + 0.5;
+        clowleyHead.position.y = 0.3;
         clowleyHead.position.z = 0.2;
         clowleyHead.position.x = 0.3;
         markerArray[3].add( clowleyHead );
@@ -90,7 +90,7 @@ function init() {
     gltfloader.load( './data/model/body.glb',function( gltf ){
         clowleyBody = gltf.scene;
         clowleyBody.scale.set( 0.25, 0.25, 0.25 );
-        clowleyBody.position.y = 0.5;
+        clowleyBody.position.y = 0.7;
         clowleyBody.position.z = 0.2;
         clowleyBody.position.x = 0.3;
         markerArray[3].add( clowleyBody );
