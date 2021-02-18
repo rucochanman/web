@@ -4,7 +4,6 @@ function init() {
     ///////////////////////////////////////////////
     //    　　　　　　 画面設定                   //
     //////////////////////////////////////////////
-    console.log("ver3");
 
     //レンダラーの作成
     const renderer = new THREE.WebGLRenderer({
@@ -90,7 +89,7 @@ function init() {
     gltfloader.load( './data/model/body.glb',function( gltf ){
         clowleyBody = gltf.scene;
         clowleyBody.scale.set( 0.25, 0.25, 0.25 );
-        clowleyBody.position.y = 0.25;
+        clowleyBody.position.y = 0.4;
         clowleyBody.position.z = 0.2;
         clowleyBody.position.x = 0.3;
         markerArray[3].add( clowleyBody );
