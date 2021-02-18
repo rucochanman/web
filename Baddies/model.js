@@ -48,7 +48,7 @@ function makeModel( markerArray ){
         markerArray[3].add( model.bodyG );
         model.bodyG.position.y = 0.5;
         model.bodyG.position.z = 0.2;
-        model.bodyG.position.x = 0.25;
+        model.bodyG.position.x = 0.3;
     }
 
     ///////////////////////////////////////////////
