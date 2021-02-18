@@ -79,7 +79,7 @@ function init() {
     let head;
     gltfloader.load( './data/model/clowley.glb',function( gltf ){
         head = gltf.scene;
-        head.position.y = -0.2;
+        head.position.y = -0.2 + 1;
         markerArray[3].add( head );
     });
     
@@ -87,6 +87,7 @@ function init() {
     gltfloader.load( './data/model/body.glb',function( gltf ){
         body = gltf.scene;
         body.scale.set( 0.5, 0.5, 0.5 );
+        body.position.y = 1;
         markerArray[3].add( body );
     });
 
@@ -116,7 +117,7 @@ function init() {
 
     const grassTex = texLoader.load( './data/tex/grass.png' );
     const grass = new THREE.Mesh(
-        new THREE.PlaneGeometry( 1.2, 1.2 ),
+        new THREE.PlaneGeometry( 1.3, 1.3 ),
         new THREE.MeshBasicMaterial( {map:grassTex} )
     );
     grass.rotation.x = -PI/2;
@@ -195,6 +196,12 @@ function init() {
     const clock = new THREE.Clock();
 
     function update(){
+        if ( markerArray[0].visible ){
+            apple.rotation.y += 0.03;
+        }
+        if ( markerArray[2].visible ){
+            roadUpdate();
+        }
         if ( markerArray[3].visible ){
             mixer.update( clock.getDelta() );
             let angle1 = upperArmMove.position.x;
@@ -204,12 +211,6 @@ function init() {
             armUpdate( LEFT, crowley, angle1, angle2, rot1, rot2 );
             //armUpdate( RIGHT, crowley, 1, 0, 0, 0 );
             //legUpdate( crowley, 0, 0, 0, 0 );
-        }
-        if ( markerArray[2].visible ){
-            roadUpdate();
-        }
-        if ( markerArray[0].visible ){
-            apple.rotation.y += 0.03;
         }
     }
 
