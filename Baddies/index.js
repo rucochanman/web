@@ -80,6 +80,7 @@ function init() {
     gltfloader.load( './data/model/clowley.glb',function( gltf ){
         head = gltf.scene;
         head.position.y = -0.2 + 0.2;
+        head.position.z = 0.2;
         markerArray[3].add( head );
     });
     
@@ -88,6 +89,7 @@ function init() {
         body = gltf.scene;
         body.scale.set( 0.5, 0.5, 0.5 );
         body.position.y = 0.2;
+        body.position.z = 0.2;
         markerArray[3].add( body );
     });
 
