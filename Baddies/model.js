@@ -46,7 +46,7 @@ function makeModel( markerArray ){
         model.bodyG.add( model.legGR );
         //add mesh to scene
         markerArray[3].add( model.bodyG );
-        model.bodyG.position.y = 1;
+        model.bodyG.position.y = 0.2;
     }
 
     ///////////////////////////////////////////////
@@ -287,5 +287,5 @@ function armUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
     lowerarmG.applyQuaternion( q2 );
     armG.rotation.y = sideRot;
     armG.position.x = pos;
-    armG.position.y = 0.005;
+    armG.position.y = 0.05;
 }
