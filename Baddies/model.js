@@ -31,9 +31,9 @@ function makeModel( markerArray ){
     limbInit( crowley );
     makebody( crowley );
     armUpdate( LEFT, crowley, 0, 0, 0, 0 );
-    armUpdate( RIGHT, crowley, 1, 0, 0, 0 );
-    legUpdate( LEFT, crowley, 0, 0, 0, 0 );
-    legUpdate( RIGHT, crowley, 0, 0, 0, 0 );
+    armUpdate( RIGHT, crowley, 0.2, 0, 0, 0 );
+    legUpdate( LEFT, crowley, 1, 0, 0, 0 );
+    legUpdate( RIGHT, crowley, 1, 0, 0, 0 );
 
     function makebody( model ){
         model.armGL.scale.set( 0.01, 0.01, 0.01 );
@@ -46,9 +46,9 @@ function makeModel( markerArray ){
         model.bodyG.add( model.legGR );
         //add mesh to scene
         markerArray[3].add( model.bodyG );
-        model.bodyG.position.y = 0.2;
+        model.bodyG.position.y = 0.25;
         model.bodyG.position.z = 0.2;
-        model.bodyG.position.x = 0.2;
+        model.bodyG.position.x = 0.25;
     }
 
     ///////////////////////////////////////////////
