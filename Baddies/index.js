@@ -79,7 +79,7 @@ function init() {
     let head;
     gltfloader.load( './data/model/clowley.glb',function( gltf ){
         head = gltf.scene;
-        head.position.y = -0.2 + 1;
+        head.position.y = -0.2 + 0.2;
         markerArray[3].add( head );
     });
     
@@ -87,7 +87,7 @@ function init() {
     gltfloader.load( './data/model/body.glb',function( gltf ){
         body = gltf.scene;
         body.scale.set( 0.5, 0.5, 0.5 );
-        body.position.y = 1;
+        body.position.y = 0.2;
         markerArray[3].add( body );
     });
 
@@ -117,7 +117,7 @@ function init() {
 
     const grassTex = texLoader.load( './data/tex/grass.png' );
     const grass = new THREE.Mesh(
-        new THREE.PlaneGeometry( 1.3, 1.3 ),
+        new THREE.PlaneGeometry( 1.5, 1.5 ),
         new THREE.MeshBasicMaterial( {map:grassTex} )
     );
     grass.rotation.x = -PI/2;
