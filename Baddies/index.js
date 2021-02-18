@@ -76,21 +76,24 @@ function init() {
 
     const gltfloader = new THREE.GLTFLoader();
     
-    let head;
+    let clowleyHead;
     gltfloader.load( './data/model/clowley.glb',function( gltf ){
-        head = gltf.scene;
-        head.position.y = -0.2 + 0.2;
-        head.position.z = 0.2;
-        markerArray[3].add( head );
+        clowleyHead = gltf.scene;
+        clowleyHead.scale.set( 0.5, 0.5, 0.5 );
+        clowleyHead.position.y = -0.2 + 0.3;
+        clowleyHead.position.z = 0.2;
+        clowleyHead.position.x = 0.2;
+        markerArray[3].add( clowleyHead );
     });
     
-    let body;
+    let clowleyBody;
     gltfloader.load( './data/model/body.glb',function( gltf ){
-        body = gltf.scene;
-        body.scale.set( 0.5, 0.5, 0.5 );
-        body.position.y = 0.2;
-        body.position.z = 0.2;
-        markerArray[3].add( body );
+        clowleyBody = gltf.scene;
+        clowleyBody.scale.set( 0.25, 0.25, 0.25 );
+        clowleyBody.position.y = 0.3;
+        clowleyBody.position.z = 0.2;
+        clowleyBody.position.x = 0.2;
+        markerArray[3].add( clowleyBody );
     });
 
     let apple;
@@ -119,7 +122,7 @@ function init() {
 
     const grassTex = texLoader.load( './data/tex/grass.png' );
     const grass = new THREE.Mesh(
-        new THREE.PlaneGeometry( 1.5, 1.5 ),
+        new THREE.PlaneGeometry( 1.6, 1.5 ),
         new THREE.MeshBasicMaterial( {map:grassTex} )
     );
     grass.rotation.x = -PI/2;
