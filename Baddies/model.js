@@ -45,7 +45,7 @@ function makeModel( markerArray ){
         model.bodyG.add( model.legGL );
         model.bodyG.add( model.legGR );
         //add mesh to scene
-        markerArray[1].add( model.bodyG );
+        markerArray[3].add( model.bodyG );
     }
 
     ///////////////////////////////////////////////
@@ -235,7 +235,7 @@ function legUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
     const legG = side == 0 ? model.legGL : model.legGR;
     const lowerlegG = side == 0 ? model.lowerlegGL : model.lowerlegGR;
     const sideRot = side * PI;
-    const pos = side == 0 ? 1 : -1;
+    const pos = side == 0 ? 0.14 : -0.14;
     //upperleg
     lastValClear();
     upperLimbUpdate( legG, upperLegObj, angle1 );
@@ -257,6 +257,7 @@ function legUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
     //position
     legG.rotation.y = PI/2;
     legG.position.x = pos;
+    legG.position.y = -0.03;
 }
 
 function armUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
@@ -264,6 +265,7 @@ function armUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
     const lowerarmG = side == 0 ? model.lowerarmGL : model.lowerarmGR;
     const handG = side == 0 ? model.handGL : model.handGR;
     const sideRot = side * PI;
+    const pos = side == 0 ? 0.1 : -0.1;
     //upperArm
     lastValClear();
     upperLimbUpdate( armG, upperArmObj, angle1 );
@@ -283,4 +285,6 @@ function armUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
     armG.applyQuaternion( q1 );
     lowerarmG.applyQuaternion( q2 );
     armG.rotation.y = sideRot;
+    armG.position.x = pos;
+    armG.position.y = 0.005;
 }
