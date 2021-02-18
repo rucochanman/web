@@ -15,15 +15,15 @@ let lastAngle = 0;
 let lastPos = new THREE.Vector2();
 
 //size
-const upperArmLength = 12;
-const lowerArmLength = 18;
-const upperArmThick = 5;
-const upperLegLength = 12;
-const lowerLegLength = 18;
-const upperLegThick = 4;
-const toeLength = 4;
-const bodyLength = 12;
-const bodyWidth = 10;
+const upperArmLength = 6;
+const lowerArmLength = 8;
+const upperArmThick = 2;
+const upperLegLength = 3.5;
+const lowerLegLength = 5.2;
+const upperLegThick = 2.7;
+const toeLength = 2;
+const bodyLength = 6;
+const bodyWidth = 4;
 
 //object
 const upperArmObj = new Limbs();
