@@ -289,5 +289,5 @@ function armUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
     lowerarmG.applyQuaternion( q2 );
     armG.rotation.y = sideRot;
     armG.position.x = pos;
-    armG.position.y = 0.04;
+    armG.position.y = 0.05;
 }
