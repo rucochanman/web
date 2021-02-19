@@ -98,7 +98,7 @@ function init() {
     let aziraphaleHead2;
     gltfloader.load( './data/model/aziraphale.glb',function( gltf ){
         aziraphaleHead2 = gltf.scene;
-        aziraphaleHead.position.y = -0.1;
+        aziraphaleHead2.position.y = -0.1;
         aziraphaleHead2.scale.set( 0.5, 0.5, 0.5 );
         markerArray[1].add( aziraphaleHead2 );
     });
@@ -134,8 +134,8 @@ function init() {
     gltfloader.load( './data/model/ice1.glb',function( gltf ){
         ice1 = gltf.scene;
         ice1.scale.set( 0.25, 0.25, 0.25 );
-        ice1.position.x = -0.5;
-        ice1.position.z = 0.25;
+        ice1.position.x = -0.55;
+        ice1.position.z = 0.3;
         ice1.position.y = 0.5;
         ice1.rotation.z = PI/4;
         markerArray[3].add( ice1 );
@@ -145,8 +145,8 @@ function init() {
     gltfloader.load( './data/model/ice2.glb',function( gltf ){
         ice2 = gltf.scene;
         ice2.scale.set( 0.25, 0.25, 0.25 );
-        ice2.position.x = 0.5;
-        ice2.position.z = 0.25;
+        ice2.position.x = 0.55;
+        ice2.position.z = 0.3;
         ice2.position.y = 0.5;
         ice2.rotation.z = -PI/4;
         markerArray[3].add( ice2 );
