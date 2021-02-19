@@ -66,21 +66,22 @@ function Limbs(){
 }
 
 const crowleyCol = {
-    armCol: new THREE.Color( 'gray' ),
+    armCol: new THREE.Color( 'black' ),
     skinCol: new THREE.Color( 'peachpuff' ),
-    legCol: new THREE.Color( 'gray' ),
-    shoeCol: new THREE.Color( 'gray' )
+    legCol: new THREE.Color( 'black' ),
+    shoeCol: new THREE.Color( 'black' )
 };
 
 const aziraphaleCol = {
     armCol: new THREE.Color( 'azure' ),
     skinCol: new THREE.Color( 'peachpuff' ),
-    legCol: new THREE.Color( 'tan' ),
+    legCol: new THREE.Color( 'gray' ),
     shoeCol: new THREE.Color( 'gray' )
 };
 
 const crowley = new model( crowleyCol );
 const aziraphale = new model( aziraphaleCol );
+const aziraphale2 = new model( aziraphaleCol );
 
 ////////////////////////////////////////////////
 //    　　　       　 reset                   //
