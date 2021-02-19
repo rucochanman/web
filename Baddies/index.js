@@ -134,8 +134,8 @@ function init() {
     gltfloader.load( './data/model/ice1.glb',function( gltf ){
         ice1 = gltf.scene;
         ice1.scale.set( 0.25, 0.25, 0.25 );
-        ice1.position.x = -0.55;
-        ice1.position.z = 0.3;
+        ice1.position.x = -0.5;
+        ice1.position.z = 0.28;
         ice1.position.y = 0.5;
         ice1.rotation.z = PI/4;
         markerArray[3].add( ice1 );
@@ -145,8 +145,8 @@ function init() {
     gltfloader.load( './data/model/ice2.glb',function( gltf ){
         ice2 = gltf.scene;
         ice2.scale.set( 0.25, 0.25, 0.25 );
-        ice2.position.x = 0.55;
-        ice2.position.z = 0.3;
+        ice2.position.x = 0.5;
+        ice2.position.z = 0.28;
         ice2.position.y = 0.5;
         ice2.rotation.z = -PI/4;
         markerArray[3].add( ice2 );
@@ -174,7 +174,7 @@ function init() {
         bench = gltf.scene;
         bench.scale.set( 0.7, 0.7, 0.7 );
         bench.position.z = -0.25;
-        //markerArray[3].add( bench );
+        markerArray[3].add( bench );
     });
 
     const grassTex = texLoader.load( './data/tex/grass.png' );
@@ -214,10 +214,10 @@ function init() {
     // arm
     const upperArmMove = new THREE.Object3D();
     const dur = [ 0, 2, 4 ];
-    const posVal1 = [ -0.2, 1, -0.2 ];
-    const posVal2 = [ 0, 1.5, 0 ];
-    const rotVal1 = [ 0, 0, 0 ];
-    const rotVal2 = [ 0, -PI/2, 0 ];
+    const posVal1 = [ -0.2, 0.5, -0.2 ];
+    const posVal2 = [ 0.2, 0.2, 0.2 ];
+    const rotVal1 = [ -PI/8, -PI/8, -PI/8 ];
+    const rotVal2 = [ 0, 0, 0 ];
 
     const upperArmPos = [];
     const upperArmRot = [];
@@ -262,8 +262,10 @@ function init() {
             apple.rotation.y += 0.03;
         }
         if ( markerArray[1].visible ){
-            //let angle1 = upperArmMove.position.x;
-            //aziraphale.bodyG.position.y = angle1;
+            let angle1 = upperArmMove.position.x + 0.2;
+            aziraphale.bodyG.position.y = angle1;
+            aziraphaleHead2.position.y = -0.1 + angle1;
+            aziraphaleBody2.position.y = angle1;
         }
         if ( markerArray[2].visible ){
             roadUpdate();
