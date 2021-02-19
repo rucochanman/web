@@ -36,10 +36,10 @@ function makeModel( markerArray ){
     legUpdate( RIGHT, crowley, 1, 0, 0, 0 );
 
     function makebody( model ){
-        model.armGL.scale.set( 0.015, 0.015, 0.015 );
-        model.armGR.scale.set( 0.015, 0.015, 0.015 );
-        model.legGL.scale.set( 0.015, 0.015, 0.015 );
-        model.legGR.scale.set( 0.015, 0.015, 0.015 );
+        model.armGL.scale.set( 0.012, 0.012, 0.012 );
+        model.armGR.scale.set( 0.012, 0.012, 0.012 );
+        model.legGL.scale.set( 0.012, 0.012, 0.012 );
+        model.legGR.scale.set( 0.012, 0.012, 0.012 );
         model.bodyG.add( model.armGL );
         model.bodyG.add( model.armGR );
         model.bodyG.add( model.legGL );
