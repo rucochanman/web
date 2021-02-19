@@ -104,6 +104,16 @@ function init() {
         crowleyBody.position.x = 0.3;
         markerArray[3].add( crowleyBody );
     });
+    
+    let aziraphaleBody;
+    gltfloader.load( './data/model/aziraphaleBody.glb',function( gltf ){
+        aziraphaleBody = gltf.scene;
+        aziraphaleBody.scale.set( 0.25, 0.25, 0.25 );
+        aziraphaleBody.position.y = 0.4;
+        aziraphaleBody.position.z = 0.2;
+        aziraphaleBody.position.x = -0.3;
+        markerArray[3].add( aziraphaleBody );
+    });
 
     let apple;
     gltfloader.load( './data/model/apple.glb',function( gltf ){
@@ -227,6 +237,9 @@ function init() {
             crowley.bodyG.position.y = 0.4;
             crowley.bodyG.position.z = 0.2;
             crowley.bodyG.position.x = 0.3;
+            aziraphale.bodyG.position.y = 0.4;
+            aziraphale.bodyG.position.z = 0.2;
+            aziraphale.bodyG.position.x = -0.3;
         }
     }
 
