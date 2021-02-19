@@ -115,6 +115,8 @@ function init() {
         markerArray[3].add( aziraphaleBody );
     });
     
+    /*
+    
     let ice1;
     gltfloader.load( './data/model/ice1.glb',function( gltf ){
         ice1 = gltf.scene;
@@ -137,6 +139,8 @@ function init() {
         markerArray[3].add( ice2 );
     });
 
+    */
+    
     let apple;
     gltfloader.load( './data/model/apple.glb',function( gltf ){
         apple = gltf.scene;
@@ -255,10 +259,10 @@ function init() {
             let angle2 = upperArmMove.position.y;
             let rot1 = upperArmMove.scale.x;
             let rot2 = upperArmMove.scale.y;
-            armUpdate( RIGHT, crowley, angle1, angle2, rot1, rot2 );
-            armUpdate( LEFT, crowley, 0.4, 0.5, 0, -PI/2 );
-            armUpdate( RIGHT, aziraphale, 0.4, 0.5, 0, PI/2 );
-            armUpdate( LEFT, aziraphale, angle1, angle2, rot1, rot2 );
+            //armUpdate( RIGHT, crowley, angle1, angle2, rot1, rot2 );
+            //armUpdate( LEFT, crowley, 0.4, 0.5, 0, -PI/2 );
+            //armUpdate( RIGHT, aziraphale, 0.4, 0.5, 0, PI/2 );
+            //armUpdate( LEFT, aziraphale, angle1, angle2, rot1, rot2 );
             crowley.bodyG.position.y = 0.4;
             crowley.bodyG.position.z = 0.2;
             crowley.bodyG.position.x = 0.3;
