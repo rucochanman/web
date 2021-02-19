@@ -36,17 +36,17 @@ function makeModel( markerArray ){
     legUpdate( RIGHT, crowley, 1, 0, 0, 0 );
 
     function makebody( model ){
-        model.armGL.scale.set( 0.01, 0.01, 0.01 );
-        model.armGR.scale.set( 0.01, 0.01, 0.01 );
-        model.legGL.scale.set( 0.01, 0.01, 0.01 );
-        model.legGR.scale.set( 0.01, 0.01, 0.01 );
+        model.armGL.scale.set( 0.015, 0.015, 0.015 );
+        model.armGR.scale.set( 0.015, 0.015, 0.015 );
+        model.legGL.scale.set( 0.015, 0.015, 0.015 );
+        model.legGR.scale.set( 0.015, 0.015, 0.015 );
         model.bodyG.add( model.armGL );
         model.bodyG.add( model.armGR );
         model.bodyG.add( model.legGL );
         model.bodyG.add( model.legGR );
         //add mesh to scene
         markerArray[3].add( model.bodyG );
-        model.bodyG.position.y = 0.5;
+        model.bodyG.position.y = 0.3;
         model.bodyG.position.z = 0.2;
         model.bodyG.position.x = 0.3;
     }
@@ -260,7 +260,7 @@ function legUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
     //position
     legG.rotation.y = PI/2;
     legG.position.x = pos;
-    legG.position.y = -0.01;
+    legG.position.y = -0.02;
 }
 
 function armUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
