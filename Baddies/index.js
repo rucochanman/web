@@ -281,12 +281,6 @@ function init() {
             //armUpdate( LEFT, crowley, 0.4, 0.5, 0, -PI/2 );
             //armUpdate( RIGHT, aziraphale, 0.4, 0.5, 0, PI/2 );
             //armUpdate( LEFT, aziraphale, angle1, angle2, rot1, rot2 );
-            crowley.bodyG.position.y = 0.4;
-            crowley.bodyG.position.z = 0.2;
-            crowley.bodyG.position.x = 0.3;
-            aziraphale.bodyG.position.y = 0.4;
-            aziraphale.bodyG.position.z = 0.2;
-            aziraphale.bodyG.position.x = -0.3;
         }
     }
 
