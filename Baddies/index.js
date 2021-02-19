@@ -114,6 +114,28 @@ function init() {
         aziraphaleBody.position.x = -0.3;
         markerArray[3].add( aziraphaleBody );
     });
+    
+    let ice1;
+    gltfloader.load( './data/model/ice1.glb',function( gltf ){
+        ice1 = gltf.scene;
+        ice1.scale.set( 0.25, 0.25, 0.25 );
+        ice1.position.x = -0.4;
+        ice1.position.z = 0.2;
+        ice1.position.y = 0.2;
+        ice1.rotation.z = PI/4;
+        markerArray[3].add( ice1 );
+    });
+
+    let ice2;
+    gltfloader.load( './data/model/ice2.glb',function( gltf ){
+        ice2 = gltf.scene;
+        ice2.scale.set( 0.25, 0.25, 0.25 );
+        ice2.position.x = 0.4;
+        ice2.position.z = 0.2;
+        ice2.position.y = 0.2;
+        ice2.rotation.z = -PI/4;
+        markerArray[3].add( ice2 );
+    });
 
     let apple;
     gltfloader.load( './data/model/apple.glb',function( gltf ){
@@ -233,7 +255,10 @@ function init() {
             let angle2 = upperArmMove.position.y;
             let rot1 = upperArmMove.scale.x;
             let rot2 = upperArmMove.scale.y;
-            armUpdate( LEFT, crowley, angle1, angle2, rot1, rot2 );
+            armUpdate( RIGHT, crowley, angle1, angle2, rot1, rot2 );
+            armUpdate( LEFT, crowley, 0.4, 0.5, 0, -PI/2 );
+            armUpdate( RIGHT, aziraphale, 0.4, 0.5, 0, PI/2 );
+            armUpdate( LEFT, aziraphale, angle1, angle2, rot1, rot2 );
             crowley.bodyG.position.y = 0.4;
             crowley.bodyG.position.z = 0.2;
             crowley.bodyG.position.x = 0.3;
