@@ -262,10 +262,13 @@ function init() {
             apple.rotation.y += 0.03;
         }
         if ( markerArray[1].visible ){
+            mixer.update( clock.getDelta() );
             let angle1 = upperArmMove.position.x + 0.2;
-            aziraphale.bodyG.position.y = angle1;
+            aziraphale2.bodyG.position.y = angle1;
             aziraphaleHead2.position.y = -0.1 + angle1;
             aziraphaleBody2.position.y = angle1;
+            armUpdate( LEFT, aziraphale2, angle1, 0.2, 0, 0 );
+            armUpdate( LEFT, aziraphale2, angle1, 0.2, 0, 0 );
         }
         if ( markerArray[2].visible ){
             roadUpdate();
