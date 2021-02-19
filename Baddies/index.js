@@ -95,14 +95,14 @@ function init() {
         markerArray[3].add( aziraphaleHead );
     });
  
-    /*
+    
     let aziraphaleHead2;
     gltfloader.load( './data/model/aziraphale.glb',function( gltf ){
         aziraphaleHead2 = gltf.scene;
         aziraphaleHead2.scale.set( 0.5, 0.5, 0.5 );
         markerArray[1].add( aziraphaleHead2 );
     });
-    */
+    
     
     let crowleyBody;
     gltfloader.load( './data/model/crowleyBody.glb',function( gltf ){
@@ -138,7 +138,7 @@ function init() {
         ice1 = gltf.scene;
         ice1.scale.set( 0.25, 0.25, 0.25 );
         ice1.position.x = -0.35;
-        //ice1.position.z = 0.2;
+        ice1.position.z = 0.2;
         ice1.position.y = 0.5;
         ice1.rotation.z = PI/4;
         markerArray[3].add( ice1 );
@@ -149,7 +149,7 @@ function init() {
         ice2 = gltf.scene;
         ice2.scale.set( 0.25, 0.25, 0.25 );
         ice2.position.x = 0.5;
-        //ice2.position.z = 0.2;
+        ice2.position.z = 0.2;
         ice2.position.y = 0.5;
         ice2.rotation.z = -PI/4;
         markerArray[3].add( ice2 );
