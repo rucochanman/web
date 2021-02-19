@@ -30,6 +30,9 @@ function makeModel( markerArray ){
 
     limbInit( crowley );
     makebody( crowley );
+    markerArray[3].add( crowley.bodyG );
+    limbInit( aziraphale );
+    makebody( aziraphale );
     armUpdate( LEFT, crowley, 0, 0, 0, 0 );
     armUpdate( RIGHT, crowley, 0.2, 0, 0, 0 );
     legUpdate( LEFT, crowley, 1, 0, 0, 0 );
@@ -44,8 +47,6 @@ function makeModel( markerArray ){
         model.bodyG.add( model.armGR );
         model.bodyG.add( model.legGL );
         model.bodyG.add( model.legGR );
-        //add mesh to scene
-        markerArray[3].add( model.bodyG );
     }
 
     ///////////////////////////////////////////////
@@ -286,5 +287,5 @@ function armUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
     lowerarmG.applyQuaternion( q2 );
     armG.rotation.y = sideRot;
     armG.position.x = pos;
-    armG.position.y = 0.0;
+    armG.position.y = 0.7;
 }
