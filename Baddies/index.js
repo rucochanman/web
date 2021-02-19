@@ -115,7 +115,7 @@ function init() {
         markerArray[3].add( aziraphaleBody );
     });
     
-    /*
+    
     
     let ice1;
     gltfloader.load( './data/model/ice1.glb',function( gltf ){
@@ -139,7 +139,7 @@ function init() {
         markerArray[3].add( ice2 );
     });
 
-    */
+    
     
     let apple;
     gltfloader.load( './data/model/apple.glb',function( gltf ){
