@@ -34,8 +34,8 @@ function makeModel( markerArray ){
     limbInit( aziraphale );
     makebody( aziraphale );
     markerArray[3].add( aziraphale.bodyG );
-    //markerArray[1].add( aziraphale.bodyG );
-    armUpdate( LEFT, crowley, 0, 0, 0, 0 );
+    aziraphale.bodyG.position.x = -0.3;
+    armUpdate( LEFT, crowley, 0.4, 0.5, 0, -PI/2 );
     armUpdate( RIGHT, crowley, 0.2, 0, 0, 0 );
     legUpdate( LEFT, crowley, 1, 0, 0, 0 );
     legUpdate( RIGHT, crowley, 1, 0, 0, 0 );
