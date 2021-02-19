@@ -33,6 +33,8 @@ function makeModel( markerArray ){
     markerArray[3].add( crowley.bodyG );
     limbInit( aziraphale );
     makebody( aziraphale );
+    markerArray[3].add( aziraphale.bodyG );
+    markerArray[1].add( aziraphale.bodyG );
     armUpdate( LEFT, crowley, 0, 0, 0, 0 );
     armUpdate( RIGHT, crowley, 0.2, 0, 0, 0 );
     legUpdate( LEFT, crowley, 1, 0, 0, 0 );
