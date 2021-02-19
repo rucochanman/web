@@ -33,7 +33,7 @@ function makeModel( markerArray ){
     markerArray[3].add( crowley.bodyG );
 
     armUpdate( LEFT, crowley, 0.4, 0.5, 0, -PI/2 );
-    armUpdate( RIGHT, crowley, 0.2, 0, 0, 0 );
+    armUpdate( RIGHT, crowley, 0, 0, 0, 0 );
     legUpdate( LEFT, crowley, 1, 0, 0, 0 );
     legUpdate( RIGHT, crowley, 1, 0, 0, 0 );
     
@@ -45,8 +45,8 @@ function makeModel( markerArray ){
     makebody( aziraphale );
     markerArray[3].add( aziraphale.bodyG );
     
-    armUpdate( LEFT, aziraphale, 0.4, 0.5, 0, -PI/2 );
-    armUpdate( RIGHT, aziraphale, 0.2, 0, 0, 0 );
+    armUpdate( LEFT, aziraphale, 0, 0, 0, 0 );
+    armUpdate( RIGHT, aziraphale, 0.4, 0.5, 0, -PI/2 );
     legUpdate( LEFT, aziraphale, 1, 0, 0, 0 );
     legUpdate( RIGHT, aziraphale, 1, 0, 0, 0 );
     
