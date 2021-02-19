@@ -17,10 +17,10 @@ let lastPos = new THREE.Vector2();
 //size
 const upperArmLength = 4;
 const lowerArmLength = 7;
-const upperArmThick = 3;
+const upperArmThick = 2.8;
 const upperLegLength = 3.5;
 const lowerLegLength = 5.2;
-const upperLegThick = 2.7;
+const upperLegThick = 3;
 const toeLength = 2;
 const bodyLength = 6;
 const bodyWidth = 4;
