@@ -15,9 +15,9 @@ let lastAngle = 0;
 let lastPos = new THREE.Vector2();
 
 //size
-const upperArmLength = 6;
-const lowerArmLength = 8;
-const upperArmThick = 2;
+const upperArmLength = 4;
+const lowerArmLength = 7;
+const upperArmThick = 3;
 const upperLegLength = 3.5;
 const lowerLegLength = 5.2;
 const upperLegThick = 2.7;
