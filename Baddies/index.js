@@ -224,8 +224,9 @@ function init() {
             let rot1 = upperArmMove.scale.x;
             let rot2 = upperArmMove.scale.y;
             armUpdate( LEFT, crowley, angle1, angle2, rot1, rot2 );
-            //armUpdate( RIGHT, crowley, 1, 0, 0, 0 );
-            //legUpdate( crowley, 0, 0, 0, 0 );
+            crowley.bodyG.position.y = 0.4;
+            crowley.bodyG.position.z = 0.2;
+            crowley.bodyG.position.x = 0.3;
         }
     }
 
