@@ -46,9 +46,6 @@ function makeModel( markerArray ){
         model.bodyG.add( model.legGR );
         //add mesh to scene
         markerArray[3].add( model.bodyG );
-        model.bodyG.position.y = 0.4;
-        model.bodyG.position.z = 0.2;
-        model.bodyG.position.x = 0.3;
     }
 
     ///////////////////////////////////////////////
@@ -238,7 +235,7 @@ function legUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
     const legG = side == 0 ? model.legGL : model.legGR;
     const lowerlegG = side == 0 ? model.lowerlegGL : model.lowerlegGR;
     const sideRot = side * PI;
-    const pos = side == 0 ? 0.1 : -0.1;
+    const pos = side == 0 ? 0.09 : -0.09;
     //upperleg
     lastValClear();
     upperLimbUpdate( legG, upperLegObj, angle1 );
