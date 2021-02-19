@@ -93,7 +93,13 @@ function init() {
         aziraphaleHead.position.z = 0.2;
         aziraphaleHead.position.x = -0.3;
         markerArray[3].add( aziraphaleHead );
-        //markerArray[1].add( aziraphaleHead );
+    });
+    
+    let aziraphaleHead2;
+    gltfloader.load( './data/model/aziraphale.glb',function( gltf ){
+        aziraphaleHead2 = gltf.scene;
+        aziraphaleHead2.scale.set( 0.5, 0.5, 0.5 );
+        markerArray[1].add( aziraphaleHead2 );
     });
     
     let crowleyBody;
@@ -114,7 +120,13 @@ function init() {
         aziraphaleBody.position.z = 0.2;
         aziraphaleBody.position.x = -0.3;
         markerArray[3].add( aziraphaleBody );
-        //markerArray[1].add( aziraphaleBody );
+    });
+    
+    let aziraphaleBody2;
+    gltfloader.load( './data/model/aziraphaleBody.glb',function( gltf ){
+        aziraphaleBody2 = gltf.scene;
+        aziraphaleBody2.scale.set( 0.25, 0.25, 0.25 );
+        markerArray[1].add( aziraphaleBody2 );
     });
     
     let ice1;
