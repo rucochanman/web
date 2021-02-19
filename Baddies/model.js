@@ -34,7 +34,7 @@ function makeModel( markerArray ){
     limbInit( aziraphale );
     makebody( aziraphale );
     markerArray[3].add( aziraphale.bodyG );
-    markerArray[1].add( aziraphale.bodyG );
+    //markerArray[1].add( aziraphale.bodyG );
     armUpdate( LEFT, crowley, 0, 0, 0, 0 );
     armUpdate( RIGHT, crowley, 0.2, 0, 0, 0 );
     legUpdate( LEFT, crowley, 1, 0, 0, 0 );
@@ -289,5 +289,5 @@ function armUpdate( side, model, angle1, angle2, rotate1, rotate2 ){
     lowerarmG.applyQuaternion( q2 );
     armG.rotation.y = sideRot;
     armG.position.x = pos;
-    armG.position.y = 0.7;
+    armG.position.y = 0.07;
 }
