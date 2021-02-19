@@ -93,6 +93,7 @@ function init() {
         aziraphaleHead.position.z = 0.2;
         aziraphaleHead.position.x = -0.3;
         markerArray[3].add( aziraphaleHead );
+        markerArray[1].add( aziraphaleHead );
     });
     
     let crowleyBody;
@@ -113,17 +114,16 @@ function init() {
         aziraphaleBody.position.z = 0.2;
         aziraphaleBody.position.x = -0.3;
         markerArray[3].add( aziraphaleBody );
+        markerArray[1].add( aziraphaleBody );
     });
-    
-    
     
     let ice1;
     gltfloader.load( './data/model/ice1.glb',function( gltf ){
         ice1 = gltf.scene;
         ice1.scale.set( 0.25, 0.25, 0.25 );
-        ice1.position.x = -0.4;
-        ice1.position.z = 0.2;
-        ice1.position.y = 0.2;
+        ice1.position.x = -0.35;
+        //ice1.position.z = 0.2;
+        ice1.position.y = 0.5;
         ice1.rotation.z = PI/4;
         markerArray[3].add( ice1 );
     });
@@ -132,15 +132,13 @@ function init() {
     gltfloader.load( './data/model/ice2.glb',function( gltf ){
         ice2 = gltf.scene;
         ice2.scale.set( 0.25, 0.25, 0.25 );
-        ice2.position.x = 0.4;
-        ice2.position.z = 0.2;
-        ice2.position.y = 0.2;
+        ice2.position.x = 0.35;
+        //ice2.position.z = 0.2;
+        ice2.position.y = 0.5;
         ice2.rotation.z = -PI/4;
         markerArray[3].add( ice2 );
     });
 
-    
-    
     let apple;
     gltfloader.load( './data/model/apple.glb',function( gltf ){
         apple = gltf.scene;
@@ -249,6 +247,10 @@ function init() {
     function update(){
         if ( markerArray[0].visible ){
             apple.rotation.y += 0.03;
+        }
+        if ( markerArray[1].visible ){
+            let angle1 = upperArmMove.position.x;
+            aziraphale.bodyG.position.y = angle1;
         }
         if ( markerArray[2].visible ){
             roadUpdate();
