@@ -95,15 +95,14 @@ function init() {
         markerArray[3].add( aziraphaleHead );
     });
  
-    
     let aziraphaleHead2;
     gltfloader.load( './data/model/aziraphale.glb',function( gltf ){
         aziraphaleHead2 = gltf.scene;
+        aziraphaleHead.position.y = -0.1;
         aziraphaleHead2.scale.set( 0.5, 0.5, 0.5 );
         markerArray[1].add( aziraphaleHead2 );
     });
-    
-    
+       
     let crowleyBody;
     gltfloader.load( './data/model/crowleyBody.glb',function( gltf ){
         crowleyBody = gltf.scene;
@@ -124,21 +123,19 @@ function init() {
         markerArray[3].add( aziraphaleBody );
     });
     
-    /*
     let aziraphaleBody2;
     gltfloader.load( './data/model/aziraphaleBody.glb',function( gltf ){
         aziraphaleBody2 = gltf.scene;
         aziraphaleBody2.scale.set( 0.25, 0.25, 0.25 );
         markerArray[1].add( aziraphaleBody2 );
     });
-    */
     
     let ice1;
     gltfloader.load( './data/model/ice1.glb',function( gltf ){
         ice1 = gltf.scene;
         ice1.scale.set( 0.25, 0.25, 0.25 );
-        ice1.position.x = -0.35;
-        ice1.position.z = 0.2;
+        ice1.position.x = -0.5;
+        ice1.position.z = 0.25;
         ice1.position.y = 0.5;
         ice1.rotation.z = PI/4;
         markerArray[3].add( ice1 );
@@ -149,7 +146,7 @@ function init() {
         ice2 = gltf.scene;
         ice2.scale.set( 0.25, 0.25, 0.25 );
         ice2.position.x = 0.5;
-        ice2.position.z = 0.2;
+        ice2.position.z = 0.25;
         ice2.position.y = 0.5;
         ice2.rotation.z = -PI/4;
         markerArray[3].add( ice2 );
@@ -277,10 +274,8 @@ function init() {
             let angle2 = upperArmMove.position.y;
             let rot1 = upperArmMove.scale.x;
             let rot2 = upperArmMove.scale.y;
-            //armUpdate( RIGHT, crowley, angle1, angle2, rot1, rot2 );
-            //armUpdate( LEFT, crowley, 0.4, 0.5, 0, -PI/2 );
-            //armUpdate( RIGHT, aziraphale, 0.4, 0.5, 0, PI/2 );
-            //armUpdate( LEFT, aziraphale, angle1, angle2, rot1, rot2 );
+            armUpdate( RIGHT, crowley, angle1, angle2, rot1, rot2 );
+            armUpdate( LEFT, aziraphale, angle1, angle2, rot1, rot2 );
         }
     }
 
