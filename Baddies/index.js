@@ -75,24 +75,34 @@ function init() {
 
     const gltfloader = new THREE.GLTFLoader();
     
-    let clowleyHead;
-    gltfloader.load( './data/model/clowley.glb',function( gltf ){
-        clowleyHead = gltf.scene;
-        clowleyHead.scale.set( 0.5, 0.5, 0.5 );
-        clowleyHead.position.y = 0.3;
-        clowleyHead.position.z = 0.2;
-        clowleyHead.position.x = 0.3;
-        markerArray[3].add( clowleyHead );
+    let crowleyHead;
+    gltfloader.load( './data/model/crowley.glb',function( gltf ){
+        crowleyHead = gltf.scene;
+        crowleyHead.scale.set( 0.5, 0.5, 0.5 );
+        crowleyHead.position.y = 0.3;
+        crowleyHead.position.z = 0.2;
+        crowleyHead.position.x = 0.3;
+        markerArray[3].add( crowleyHead );
     });
     
-    let clowleyBody;
-    gltfloader.load( './data/model/body.glb',function( gltf ){
-        clowleyBody = gltf.scene;
-        clowleyBody.scale.set( 0.25, 0.25, 0.25 );
-        clowleyBody.position.y = 0.4;
-        clowleyBody.position.z = 0.2;
-        clowleyBody.position.x = 0.3;
-        markerArray[3].add( clowleyBody );
+    let aziraphaleHead;
+    gltfloader.load( './data/model/aziraphale.glb',function( gltf ){
+        aziraphaleHead = gltf.scene;
+        aziraphaleHead.scale.set( 0.5, 0.5, 0.5 );
+        aziraphaleHead.position.y = 0.3;
+        aziraphaleHead.position.z = 0.2;
+        aziraphaleHead.position.x = -0.3;
+        markerArray[3].add( aziraphaleHead );
+    });
+    
+    let crowleyBody;
+    gltfloader.load( './data/model/crowleyBody.glb',function( gltf ){
+        crowleyBody = gltf.scene;
+        crowleyBody.scale.set( 0.25, 0.25, 0.25 );
+        crowleyBody.position.y = 0.4;
+        crowleyBody.position.z = 0.2;
+        crowleyBody.position.x = 0.3;
+        markerArray[3].add( crowleyBody );
     });
 
     let apple;
