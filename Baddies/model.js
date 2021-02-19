@@ -31,14 +31,28 @@ function makeModel( markerArray ){
     limbInit( crowley );
     makebody( crowley );
     markerArray[3].add( crowley.bodyG );
-    limbInit( aziraphale );
-    makebody( aziraphale );
-    markerArray[3].add( aziraphale.bodyG );
-    aziraphale.bodyG.position.x = -0.3;
+
     armUpdate( LEFT, crowley, 0.4, 0.5, 0, -PI/2 );
     armUpdate( RIGHT, crowley, 0.2, 0, 0, 0 );
     legUpdate( LEFT, crowley, 1, 0, 0, 0 );
     legUpdate( RIGHT, crowley, 1, 0, 0, 0 );
+    
+    crowley.bodyG.position.y = 0.4;
+    crowley.bodyG.position.z = 0.2;
+    crowley.bodyG.position.x = 0.3;
+    
+    limbInit( aziraphale );
+    makebody( aziraphale );
+    markerArray[3].add( aziraphale.bodyG );
+    
+    armUpdate( LEFT, aziraphale, 0.4, 0.5, 0, -PI/2 );
+    armUpdate( RIGHT, aziraphale, 0.2, 0, 0, 0 );
+    legUpdate( LEFT, aziraphale, 1, 0, 0, 0 );
+    legUpdate( RIGHT, aziraphale, 1, 0, 0, 0 );
+    
+    aziraphale.bodyG.position.y = 0.4;
+    aziraphale.bodyG.position.z = 0.2;
+    aziraphale.bodyG.position.x = -0.3;
 
     function makebody( model ){
         model.armGL.scale.set( 0.012, 0.012, 0.012 );
