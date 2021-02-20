@@ -212,28 +212,15 @@ function init() {
     //////////////////////////////////////////////
 
     // arm
-    const upperArmMove = new THREE.Object3D();
-    const dur = [ 0, 2, 4 ];
-    const posVal1 = [ -0.2, 0.5, -0.2 ];
-    const posVal2 = [ 0.2, 0.2, 0.2 ];
-    const rotVal1 = [ -PI/8, -PI/8, -PI/8 ];
-    const rotVal2 = [ 0, 0, 0 ];
+    const move = new THREE.Object3D();
+    const dur1 = [ 0, 2, 4 ];
+    const dur2 = [ 0, 1.2, 2.2, 3.5 ];
 
-    const upperArmPos = [];
-    const upperArmRot = [];
-    for( let i=0; i<dur.length; i++ ){
-        upperArmPos.push( posVal1[i] );
-        upperArmPos.push( posVal2[i] );
-        upperArmPos.push( 0 );
-        upperArmRot.push( rotVal1[i] );
-        upperArmRot.push( rotVal2[i] );
-        upperArmRot.push( 0 );
-    }
-
-    const uppperArmKF1 = new THREE.NumberKeyframeTrack( '.position', dur, upperArmPos );
-    const uppperArmKF2 = new THREE.NumberKeyframeTrack( '.scale', dur, upperArmRot );
-    const clip = new THREE.AnimationClip( 'Action', 4, [ uppperArmKF1, uppperArmKF2 ] );
-    const mixer = new THREE.AnimationMixer( upperArmMove );
+    const move1KF = new THREE.NumberKeyframeTrack( '.position', dur1, [-0.2, 0, 0, 0.5, 0, 0, -0.2, 0, 0] );
+    const move2KF = new THREE.NumberKeyframeTrack( '.scale', dur2,
+        [0, 0, 0, 0.45, 0, 0, 0.6, 0, 0, 0, 0, 0] );
+    const clip = new THREE.AnimationClip( 'Action', 4, [ move1KF, move2KF ] );
+    const mixer = new THREE.AnimationMixer( move );
     const clipAction = mixer.clipAction( clip );
     clipAction.play();
 
@@ -263,24 +250,22 @@ function init() {
         }
         if ( markerArray[1].visible ){
             mixer.update( clock.getDelta() );
-            let angle1 = upperArmMove.position.x + 0.2;
-            aziraphale2.bodyG.position.y = angle1;
-            aziraphaleHead2.position.y = -0.1 + angle1;
-            aziraphaleBody2.position.y = angle1;
-            armUpdate( LEFT, aziraphale2, angle1, 0.2, 0, 0 );
-            armUpdate( LEFT, aziraphale2, angle1, 0.2, 0, 0 );
+            let angle = move.position.x;
+            let pos = move.scale.x;
+            aziraphale2.bodyG.position.y = pos;
+            aziraphaleHead2.position.y = -0.1 + pos;
+            aziraphaleBody2.position.y = pos;
+            armUpdate( LEFT, aziraphale2, angle, 0.2, 0, 0 );
+            armUpdate( RIGHT, aziraphale2, angle, 0.2, 0, 0 );
         }
         if ( markerArray[2].visible ){
             roadUpdate();
         }
         if ( markerArray[3].visible ){
             mixer.update( clock.getDelta() );
-            let angle1 = upperArmMove.position.x;
-            let angle2 = upperArmMove.position.y;
-            let rot1 = upperArmMove.scale.x;
-            let rot2 = upperArmMove.scale.y;
-            armUpdate( RIGHT, crowley, angle1, angle2, rot1, rot2 );
-            armUpdate( LEFT, aziraphale, angle1, angle2, rot1, rot2 );
+            let angle1 = move.position.x;
+            armUpdate( RIGHT, crowley, angle1, 0.2, 0, 0 );
+            armUpdate( LEFT, aziraphale, angle1, 0.2, 0, 0 );
         }
     }
 
