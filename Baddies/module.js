@@ -67,14 +67,14 @@ function Limbs(){
 
 const crowleyCol = {
     armCol: new THREE.Color( 'black' ),
-    skinCol: new THREE.Color( 'peachpuff' ),
+    skinCol: new THREE.Color( 'darksalmon' ),
     legCol: new THREE.Color( 'black' ),
     shoeCol: new THREE.Color( 'black' )
 };
 
 const aziraphaleCol = {
     armCol: new THREE.Color( 'azure' ),
-    skinCol: new THREE.Color( 'peachpuff' ),
+    skinCol: new THREE.Color( 'darksalmon' ),
     legCol: new THREE.Color( 'gray' ),
     shoeCol: new THREE.Color( 'gray' )
 };
