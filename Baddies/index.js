@@ -213,13 +213,13 @@ function init() {
 
     // arm
     const move = new THREE.Object3D();
-    const dur1 = [ 0, 2, 4 ];
-    const dur2 = [ 0, 1.2, 2.2, 3.5 ];
+    const dur1 = [ 0, 1.5, 3 ];
+    const dur2 = [ 0, 1, 2.2, 3 ];
 
     const move1KF = new THREE.NumberKeyframeTrack( '.position', dur1, [-0.2, 0, 0, 0.5, 0, 0, -0.2, 0, 0] );
     const move2KF = new THREE.NumberKeyframeTrack( '.scale', dur2,
         [0, 0.5, 0.5, 0.2, 0, 0, 0.3, 0, 0, 0, 0.5, 0.5] );
-    const clip = new THREE.AnimationClip( 'Action', 4, [ move1KF, move2KF ] );
+    const clip = new THREE.AnimationClip( 'Action', 3, [ move1KF, move2KF ] );
     const mixer = new THREE.AnimationMixer( move );
     const clipAction = mixer.clipAction( clip );
     clipAction.play();
