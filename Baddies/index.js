@@ -136,7 +136,7 @@ function init() {
         ice1.scale.set( 0.25, 0.25, 0.25 );
         ice1.position.x = -0.5;
         ice1.position.z = 0.28;
-        ice1.position.y = 0.5;
+        ice1.position.y = 0.47;
         ice1.rotation.z = PI/4;
         markerArray[3].add( ice1 );
     });
@@ -147,7 +147,7 @@ function init() {
         ice2.scale.set( 0.25, 0.25, 0.25 );
         ice2.position.x = 0.5;
         ice2.position.z = 0.28;
-        ice2.position.y = 0.5;
+        ice2.position.y = 0.47;
         ice2.rotation.z = -PI/4;
         markerArray[3].add( ice2 );
     });
