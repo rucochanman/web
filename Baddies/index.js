@@ -208,7 +208,12 @@ function init() {
     //box
     const planeSize = 1;
     const planeGeo = new THREE.PlaneGeometry( planeSize, planeSize );
-    const planeMat = new THREE.MeshLambertMaterial( {color: 0x550055, side: THREE.DoubleSide} );
+    const planeMat = new THREE.MeshLambertMaterial( {
+      color: 0x550055,
+      opacity: 0.5,
+      transparent: true,
+      side: THREE.DoubleSide
+    } );
     const plane = new THREE.Mesh( planeGeo, planeMat );
     plane.rotation.x = PI/2;
     plane.position.y = -planeSize/2;
@@ -237,7 +242,7 @@ function init() {
 
     const move1KF = new THREE.NumberKeyframeTrack( '.position', dur1, [-0.2, 0, 0, 0.5, 0, 0, -0.2, 0, 0] );
     const move2KF = new THREE.NumberKeyframeTrack( '.scale', dur2,
-        [0, 0.5, 0.5, 0.2, 0, 0, 0.3, 0, 0, 0, 0.5, 0.5] );
+        [-0.2, 0.5, 0.5, 0.2, 0, 0, 0.3, 0, 0, -0.2, 0.5, 0.5] );
     const clip = new THREE.AnimationClip( 'Action', 3, [ move1KF, move2KF ] );
     const mixer = new THREE.AnimationMixer( move );
     const clipAction = mixer.clipAction( clip );
