@@ -218,7 +218,7 @@ function init() {
 
     const move1KF = new THREE.NumberKeyframeTrack( '.position', dur1, [-0.2, 0, 0, 0.5, 0, 0, -0.2, 0, 0] );
     const move2KF = new THREE.NumberKeyframeTrack( '.scale', dur2,
-        [0, 0, 0, 0.45, 0, 0, 0.6, 0, 0, 0, 0, 0] );
+        [0, 0.5, 0.5, 0.2, 0, 0, 0.3, 0, 0, 0, 0.5, 0.5] );
     const clip = new THREE.AnimationClip( 'Action', 4, [ move1KF, move2KF ] );
     const mixer = new THREE.AnimationMixer( move );
     const clipAction = mixer.clipAction( clip );
@@ -250,13 +250,17 @@ function init() {
         }
         if ( markerArray[1].visible ){
             mixer.update( clock.getDelta() );
-            let angle = move.position.x;
+            let arm = move.position.x;
             let pos = move.scale.x;
+            let leg1 = move.scale.y;
+            let leg2 = move.scale.z;
             aziraphale2.bodyG.position.y = pos;
             aziraphaleHead2.position.y = -0.1 + pos;
             aziraphaleBody2.position.y = pos;
-            armUpdate( LEFT, aziraphale2, angle, 0.2, 0, 0 );
-            armUpdate( RIGHT, aziraphale2, angle, 0.2, 0, 0 );
+            armUpdate( LEFT, aziraphale2, arm, 0.2, 0, 0 );
+            armUpdate( RIGHT, aziraphale2, arm, 0.2, 0, 0 );
+            legUpdate( LEFT, aziraphale, leg1, leg2, 0, 0 );
+            legUpdate( RIGHT, aziraphale, leg1, leg2, 0, 0 );
         }
         if ( markerArray[2].visible ){
             roadUpdate();
