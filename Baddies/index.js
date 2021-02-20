@@ -205,6 +205,25 @@ function init() {
     road.rotation.x = -PI/2;
     markerArray[2].add( road );
     
+    //box
+    const planeSize = 1;
+    const planeGeo = new THREE.PlaneGeometry( planeSize, planeSize );
+    const planeMat = new THREE.MeshLambertMaterial( {color: 0x550055, side: THREE.DoubleSide} );
+    const plane = new THREE.Mesh( planeGeo, planeMat );
+    plane.rotation.x = PI/2;
+    plane.position.y = -planeSize/2;
+    markerArray[1].add( plane );
+    for( let i=0; i<4; i++ ){
+        const side = new THREE.Mesh( planeGeo, planeMat );
+        const rot = i * -PI/2;
+        const posx = [0, -planeSize/2, 0, planeSize/2];
+        const posz = [planeSize/2, 0, -planeSize/2, 0];
+        side.rotation.y = rot;
+        side.position.x = posx[i];
+        side.position.z = posz[i];
+        markerArray[1].add( side );
+    }
+    
     makeModel( markerArray );
 
     ///////////////////////////////////////////////
@@ -259,8 +278,8 @@ function init() {
             aziraphaleBody2.position.y = pos;
             armUpdate( LEFT, aziraphale2, arm, 0.2, 0, 0 );
             armUpdate( RIGHT, aziraphale2, arm, 0.2, 0, 0 );
-            legUpdate( LEFT, aziraphale, leg1, leg2, 0, 0 );
-            legUpdate( RIGHT, aziraphale, leg1, leg2, 0, 0 );
+            legUpdate( LEFT, aziraphale2, leg1, leg2, 0, 0 );
+            legUpdate( RIGHT, aziraphale2, leg1, leg2, 0, 0 );
         }
         if ( markerArray[2].visible ){
             roadUpdate();
