@@ -206,11 +206,11 @@ function init() {
     markerArray[2].add( road );
     
     //box
-    const planeSize = 1;
+    const planeSize = 0.9;
     const planeGeo = new THREE.PlaneGeometry( planeSize, planeSize );
     const planeMat = new THREE.MeshLambertMaterial( {
       color: 0x550055,
-      opacity: 0.5,
+      opacity: 0.8,
       transparent: true,
       side: THREE.DoubleSide
     } );
