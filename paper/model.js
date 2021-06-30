@@ -1,4 +1,4 @@
-function makeModel( marker ){
+function makeModel( markerArray ){
 
     ///////////////////////////////////////////////
     //    　　　　 マテリアル配置                  //
@@ -30,7 +30,7 @@ function makeModel( marker ){
 
     limbInit( crowley );
     makebody( crowley );
-    marker.add( crowley.bodyG );
+    markerArray[3].add( crowley.bodyG );
 
     armUpdate( LEFT, crowley, 0.4, 0.5, 0, -PI/2 );
     armUpdate( RIGHT, crowley, 0, 0, 0, 0 );
@@ -43,7 +43,7 @@ function makeModel( marker ){
 
     limbInit( aziraphale );
     makebody( aziraphale );
-    marker.add( aziraphale.bodyG );
+    markerArray[3].add( aziraphale.bodyG );
 
     armUpdate( LEFT, aziraphale, 0, 0, 0, 0 );
     armUpdate( RIGHT, aziraphale, 0.4, 0.5, 0, -PI/2 );
@@ -53,6 +53,15 @@ function makeModel( marker ){
     aziraphale.bodyG.position.y = 0.4;
     aziraphale.bodyG.position.z = 0.2;
     aziraphale.bodyG.position.x = -0.3;
+
+    limbInit( aziraphale2 );
+    makebody( aziraphale2 );
+    markerArray[1].add( aziraphale2.bodyG );
+
+    armUpdate( LEFT, aziraphale2, 0, 0, 0, 0 );
+    armUpdate( RIGHT, aziraphale2, 0, 0, 0, 0 );
+    legUpdate( LEFT, aziraphale2, 0, 0, 0, 0 );
+    legUpdate( RIGHT, aziraphale2, 0, 0, 0, 0 );
 
     function makebody( model ){
         model.armGL.scale.set( 0.012, 0.012, 0.012 );
