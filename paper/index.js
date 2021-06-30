@@ -95,7 +95,7 @@ function init() {
         marker.add( crowleyHead );
     });
 
-    //makeModel( markerArray );
+    makeModel( marker );
 
     ///////////////////////////////////////////////
     //    　　　　  　animation設定               //
