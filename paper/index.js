@@ -56,7 +56,6 @@ function init() {
     //    　　       マーカーの設定               //
     //////////////////////////////////////////////
 
-    /*
     const markerNames = [ "sneak", "box", "stop", "wing" ];
     const markerArray = [];
 
@@ -69,15 +68,6 @@ function init() {
             patternUrl: "data/pattern/pattern-" + markerNames[i] + ".patt",
         });
     }
-
-    */
-
-    const marker = new THREE.Group();
-    scene.add( marker );
-    const arMarkerControls = new THREEx.ArMarkerControls( arToolkitContext, marker, {
-        type: 'pattern',
-        patternUrl: "data/pattern/pattern-box.patt",
-    });
 
     ///////////////////////////////////////////////
     //    　　     モデルの読み込み               //
@@ -92,24 +82,161 @@ function init() {
         crowleyHead.position.y = 0.3;
         crowleyHead.position.z = 0.2;
         crowleyHead.position.x = 0.3;
-        marker.add( crowleyHead );
-    });
-    
-    let apple;
-        gltfloader.load( './data/model/apple.glb',function( gltf ){
-        apple = gltf.scene;
-        apple.scale.set( 0.5, 0.5, 0.5 );
-        marker.add( apple );
+        markerArray[3].add( crowleyHead );
     });
 
-    makeModel( marker );
+    let aziraphaleHead;
+    gltfloader.load( './data/model/aziraphale.glb',function( gltf ){
+        aziraphaleHead = gltf.scene;
+        aziraphaleHead.scale.set( 0.5, 0.5, 0.5 );
+        aziraphaleHead.position.y = 0.3;
+        aziraphaleHead.position.z = 0.2;
+        aziraphaleHead.position.x = -0.3;
+        markerArray[3].add( aziraphaleHead );
+    });
+
+    let aziraphaleHead2;
+    gltfloader.load( './data/model/aziraphale.glb',function( gltf ){
+        aziraphaleHead2 = gltf.scene;
+        aziraphaleHead2.position.y = -0.1;
+        aziraphaleHead2.rotation.x = -PI/32;
+        aziraphaleHead2.scale.set( 0.5, 0.5, 0.5 );
+        markerArray[1].add( aziraphaleHead2 );
+    });
+
+    let crowleyBody;
+    gltfloader.load( './data/model/crowleyBody.glb',function( gltf ){
+        crowleyBody = gltf.scene;
+        crowleyBody.scale.set( 0.25, 0.25, 0.25 );
+        crowleyBody.position.y = 0.4;
+        crowleyBody.position.z = 0.2;
+        crowleyBody.position.x = 0.3;
+        markerArray[3].add( crowleyBody );
+    });
+
+    let aziraphaleBody;
+    gltfloader.load( './data/model/aziraphaleBody.glb',function( gltf ){
+        aziraphaleBody = gltf.scene;
+        aziraphaleBody.scale.set( 0.25, 0.25, 0.25 );
+        aziraphaleBody.position.y = 0.4;
+        aziraphaleBody.position.z = 0.2;
+        aziraphaleBody.position.x = -0.3;
+        markerArray[3].add( aziraphaleBody );
+    });
+
+    let aziraphaleBody2;
+    gltfloader.load( './data/model/aziraphaleBody.glb',function( gltf ){
+        aziraphaleBody2 = gltf.scene;
+        aziraphaleBody2.scale.set( 0.25, 0.25, 0.25 );
+        markerArray[1].add( aziraphaleBody2 );
+    });
+
+    let ice1;
+    gltfloader.load( './data/model/ice1.glb',function( gltf ){
+        ice1 = gltf.scene;
+        ice1.scale.set( 0.25, 0.25, 0.25 );
+        ice1.position.x = -0.5;
+        ice1.position.z = 0.28;
+        ice1.position.y = 0.47;
+        ice1.rotation.z = PI/4;
+        markerArray[3].add( ice1 );
+    });
+
+    let ice2;
+    gltfloader.load( './data/model/ice2.glb',function( gltf ){
+        ice2 = gltf.scene;
+        ice2.scale.set( 0.25, 0.25, 0.25 );
+        ice2.position.x = 0.5;
+        ice2.position.z = 0.28;
+        ice2.position.y = 0.47;
+        ice2.rotation.z = -PI/4;
+        markerArray[3].add( ice2 );
+    });
+
+    let apple;
+    gltfloader.load( './data/model/apple.glb',function( gltf ){
+        apple = gltf.scene;
+        apple.scale.set( 0.5, 0.5, 0.5 );
+        markerArray[0].add( apple );
+    });
+
+    let bentley;
+    gltfloader.load( './data/model/bentley.glb',function( gltf ){
+        bentley = gltf.scene;
+        bentley.scale.set( 0.65, 0.65, 0.65 );
+        bentley.position.y = 0.5;
+        bentley.position.z = -0.25;
+        bentley.rotation.y = -PI/2;
+        markerArray[2].add( bentley );
+    });
+
+    let bench;
+    gltfloader.load( './data/model/bench.glb',function( gltf ){
+        bench = gltf.scene;
+        bench.scale.set( 0.7, 0.7, 0.7 );
+        bench.position.z = -0.25;
+        markerArray[3].add( bench );
+    });
+
+    const grassTex = texLoader.load( './data/tex/grass.png' );
+    const grass = new THREE.Mesh(
+        new THREE.PlaneGeometry( 1.65, 1.6 ),
+        new THREE.MeshBasicMaterial( {map:grassTex} )
+    );
+    grass.rotation.x = -PI/2;
+    markerArray[3].add( grass );
+
+    const roadTex = texLoader.load( './data/tex/road.png' );
+    const road = new THREE.Mesh(
+        new THREE.PlaneGeometry( 1.5, 1.5 ),
+        new THREE.MeshBasicMaterial( {map:roadTex} )
+    );
+    const roadUv1 = [
+        new THREE.Vector2(0, 1),
+        new THREE.Vector2(0, 0),
+        new THREE.Vector2(0.2, 1)
+    ];
+    const roadUv2 = [
+        new THREE.Vector2(0, 0),
+        new THREE.Vector2(0.2, 0),
+        new THREE.Vector2(0.2, 1.0)
+    ];
+    road.geometry.faceVertexUvs[0][0] = roadUv1;
+    road.geometry.faceVertexUvs[0][1] = roadUv2;
+    road.rotation.x = -PI/2;
+    markerArray[2].add( road );
+
+    //box
+    const planeSize = 1;
+    const planeGeo = new THREE.PlaneGeometry( planeSize, planeSize );
+    const planeMat = new THREE.MeshLambertMaterial( {
+      color: 0x550055,
+      opacity: 0.9,
+      transparent: true,
+      side: THREE.DoubleSide
+    } );
+    const plane = new THREE.Mesh( planeGeo, planeMat );
+    plane.rotation.x = PI/2;
+    plane.position.y = -planeSize/2;
+    markerArray[1].add( plane );
+    for( let i=0; i<4; i++ ){
+        const side = new THREE.Mesh( planeGeo, planeMat );
+        const rot = i * -PI/2;
+        const posx = [0, -planeSize/2, 0, planeSize/2];
+        const posz = [planeSize/2, 0, -planeSize/2, 0];
+        side.rotation.y = rot;
+        side.position.x = posx[i];
+        side.position.z = posz[i];
+        markerArray[1].add( side );
+    }
+
+    makeModel( markerArray );
 
     ///////////////////////////////////////////////
     //    　　　　  　animation設定               //
     //////////////////////////////////////////////
 
     // arm
-    /*
     const move = new THREE.Object3D();
     const dur1 = [ 0, 1.5, 3 ];
     const dur2 = [ 0, 1, 2.2, 3 ];
@@ -135,7 +262,6 @@ function init() {
         road.geometry.faceVertexUvs[0][1][2].x = pos1;
         road.geometry.uvsNeedUpdate = true;
     }
-    */
 
     ///////////////////////////////////////////////
     //    　　　　  　レンダリング開始             //
@@ -144,7 +270,9 @@ function init() {
     const clock = new THREE.Clock();
 
     function update(){
-        /*
+        if ( markerArray[0].visible ){
+            apple.rotation.y += 0.03;
+        }
         if ( markerArray[1].visible ){
             mixer.update( clock.getDelta() );
             let arm = move.position.x;
@@ -168,7 +296,6 @@ function init() {
             armUpdate( RIGHT, crowley, angle1, 0.2, 0, 0 );
             armUpdate( LEFT, aziraphale, angle1, 0.2, 0, 0 );
         }
-        */
     }
 
     requestAnimationFrame( function animate(){
