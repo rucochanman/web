@@ -1,4 +1,4 @@
-function makeModel( markerArray ){
+function makeModel( marker ){
 
     ///////////////////////////////////////////////
     //    　　　　 マテリアル配置                  //
