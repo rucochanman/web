@@ -131,6 +131,7 @@ function init() {
         markerArray[1].add( aziraphaleBody2 );
     });
 
+    /*
     let ice1;
     gltfloader.load( './data/model/ice1.glb',function( gltf ){
         ice1 = gltf.scene;
@@ -152,6 +153,7 @@ function init() {
         ice2.rotation.z = -PI/4;
         markerArray[3].add( ice2 );
     });
+    */
 
     let apple;
     gltfloader.load( './data/model/apple.glb',function( gltf ){
@@ -160,6 +162,7 @@ function init() {
         markerArray[0].add( apple );
     });
 
+    /*
     let bentley;
     gltfloader.load( './data/model/bentley.glb',function( gltf ){
         bentley = gltf.scene;
@@ -229,6 +232,7 @@ function init() {
         side.position.z = posz[i];
         markerArray[1].add( side );
     }
+    */
 
     makeModel( markerArray );
 
