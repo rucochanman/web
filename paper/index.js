@@ -94,6 +94,13 @@ function init() {
         crowleyHead.position.x = 0.3;
         marker.add( crowleyHead );
     });
+    
+    let apple;
+        gltfloader.load( './data/model/apple.glb',function( gltf ){
+        apple = gltf.scene;
+        apple.scale.set( 0.5, 0.5, 0.5 );
+        marker.add( apple );
+    });
 
     makeModel( marker );
 
